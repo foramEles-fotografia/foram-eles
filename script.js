@@ -1,7 +1,11 @@
 /**
  * FORAM Eles — Script Principal
  * 1. Efeito do Primeiro Container: Cores vivas abstratas desfocadas ("respirando")
- *    que se movem sozinhas organicamente e acompanham o mouse quando o usuário interage.
+ *    - Movimento lento, calmo e orgânico.
+ *    - Acompanha o mouse suavemente.
+ *    - Quando o mouse para ou sai do container (ex.: indo para as abas do navegador),
+ *      NÃO reseta para o centro: permanece na última posição conhecida e vai se
+ *      dispersando bem devagarzinho a partir dali.
  * 2. Filtro de Portfólio, Scroll Reveal e Menu Mobile.
  */
 
@@ -13,131 +17,154 @@
   let width = 0;
   let height = 0;
   let dpr = Math.min(window.devicePixelRatio || 1, 2);
+  let initialized = false;
 
-  // Estado do mouse (acompanhamento suave com física elástica)
-  const mouse = {
+  // Âncora persistente: guarda a posição onde o cluster de cores gravita.
+  // Nunca reseta ao sair da tela — permanece onde o cursor esteve por último.
+  const anchor = {
     x: 0,
     y: 0,
     targetX: 0,
     targetY: 0,
-    active: false,
-    lastMove: 0
+    isInside: false,
+    lastMoveTime: 0,
+    // dispersion: 0.25 = mais próximo do mouse em movimento; 1.0 = espalhado suavemente pelo container
+    dispersion: 0.85,
+    targetDispersion: 0.85
   };
 
   function resize() {
     const rect = canvas.parentElement.getBoundingClientRect();
+    const prevWidth = width || rect.width;
+    const prevHeight = height || rect.height;
+
     width = rect.width;
     height = rect.height;
     canvas.width = width * dpr;
     canvas.height = height * dpr;
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-    if (!mouse.active) {
-      mouse.x = width / 2;
-      mouse.y = height / 2;
-      mouse.targetX = width / 2;
-      mouse.targetY = height / 2;
+    if (!initialized) {
+      anchor.x = width * 0.5;
+      anchor.y = height * 0.5;
+      anchor.targetX = width * 0.5;
+      anchor.targetY = height * 0.5;
+      initialized = true;
+    } else {
+      // Mantém a proporção relativa caso a janela seja redimensionada
+      anchor.x = (anchor.x / prevWidth) * width;
+      anchor.y = (anchor.y / prevHeight) * height;
+      anchor.targetX = (anchor.targetX / prevWidth) * width;
+      anchor.targetY = (anchor.targetY / prevHeight) * height;
     }
   }
 
   window.addEventListener('resize', resize);
   resize();
 
-  // Paleta de cores vivas para os blobs abstratos que "respiram" (incluindo o Azul Royal da logo FORAM Eles.)
+  // Paleta de cores vivas (exclusiva do 1º container) com movimentos bem lentos
   const colorConfigs = [
-    { r: 27,  g: 98,  b: 248, baseRadius: 310, breatheSpeed: 0.0016, orbitSpeedX: 0.0007, orbitSpeedY: 0.0009, mousePull: 0.65, phase: 0.0 }, // Azul Royal Oficial (FORAM Eles.)
-    { r: 124, g: 92,  b: 255, baseRadius: 280, breatheSpeed: 0.0014, orbitSpeedX: 0.0006, orbitSpeedY: 0.0008, mousePull: 0.45, phase: 1.4 }, // Violeta elétrico
-    { r: 0,   g: 210, b: 255, baseRadius: 240, breatheSpeed: 0.0021, orbitSpeedX: 0.0009, orbitSpeedY: 0.0006, mousePull: 0.60, phase: 2.8 }, // Ciano vibrante
-    { r: 255, g: 95,  b: 65,  baseRadius: 230, breatheSpeed: 0.0018, orbitSpeedX: 0.0008, orbitSpeedY: 0.0010, mousePull: 0.50, phase: 4.1 }, // Coral vivo
-    { r: 255, g: 185, b: 45,  baseRadius: 190, breatheSpeed: 0.0024, orbitSpeedX: 0.0011, orbitSpeedY: 0.0007, mousePull: 0.75, phase: 5.2 }  // Âmbar dourado (luz de lente)
+    { r: 27,  g: 98,  b: 248, baseRadius: 320, breatheSpeed: 0.00055, driftSpeedX: 0.00022, driftSpeedY: 0.00027, spreadX: 0.30, spreadY: 0.26, phase: 0.0 }, // Azul Royal FORAM Eles
+    { r: 124, g: 92,  b: 255, baseRadius: 290, breatheSpeed: 0.00045, driftSpeedX: 0.00019, driftSpeedY: 0.00024, spreadX: 0.34, spreadY: 0.28, phase: 1.5 }, // Violeta
+    { r: 0,   g: 205, b: 255, baseRadius: 260, breatheSpeed: 0.00062, driftSpeedX: 0.00025, driftSpeedY: 0.00020, spreadX: 0.28, spreadY: 0.25, phase: 3.1 }, // Ciano vivo
+    { r: 255, g: 95,  b: 65,  baseRadius: 250, breatheSpeed: 0.00050, driftSpeedX: 0.00021, driftSpeedY: 0.00026, spreadX: 0.32, spreadY: 0.27, phase: 4.4 }, // Coral quente
+    { r: 255, g: 185, b: 45,  baseRadius: 210, breatheSpeed: 0.00068, driftSpeedX: 0.00028, driftSpeedY: 0.00022, spreadX: 0.24, spreadY: 0.22, phase: 5.6 }  // Âmbar dourado
   ];
 
-  const blobs = colorConfigs.map((cfg, index) => ({
-    ...cfg,
-    x: width * (0.25 + (index * 0.13)),
-    y: height * (0.3 + ((index % 3) * 0.2)),
-    vx: 0,
-    vy: 0
-  }));
+  const blobs = colorConfigs.map((cfg, i) => {
+    const startAngle = (i / colorConfigs.length) * Math.PI * 2;
+    return {
+      ...cfg,
+      x: anchor.x + Math.cos(startAngle) * (width * 0.15),
+      y: anchor.y + Math.sin(startAngle) * (height * 0.15)
+    };
+  });
 
-  // Eventos de mouse e toque no primeiro container
+  // Eventos no primeiro container
   const heroSection = document.getElementById('hero');
   if (heroSection) {
     heroSection.addEventListener('mousemove', (e) => {
       const rect = canvas.getBoundingClientRect();
-      mouse.targetX = e.clientX - rect.left;
-      mouse.targetY = e.clientY - rect.top;
-      mouse.active = true;
-      mouse.lastMove = performance.now();
+      anchor.targetX = e.clientX - rect.left;
+      anchor.targetY = e.clientY - rect.top;
+      anchor.isInside = true;
+      anchor.lastMoveTime = performance.now();
+      // Quando o mouse se move, as cores se aproximam suavemente do cursor
+      anchor.targetDispersion = 0.26;
     });
 
     heroSection.addEventListener('mouseleave', () => {
-      mouse.active = false;
+      // Quando o mouse sai (ex: vai para as abas do navegador), NÃO mudamos targetX/targetY!
+      // Ele fica exatamente onde saiu e apenas aumenta a dispersão bem devagar.
+      anchor.isInside = false;
+      anchor.targetDispersion = 0.92;
     });
 
     heroSection.addEventListener('touchmove', (e) => {
       if (e.touches.length > 0) {
         const rect = canvas.getBoundingClientRect();
-        mouse.targetX = e.touches[0].clientX - rect.left;
-        mouse.targetY = e.touches[0].clientY - rect.top;
-        mouse.active = true;
-        mouse.lastMove = performance.now();
+        anchor.targetX = e.touches[0].clientX - rect.left;
+        anchor.targetY = e.touches[0].clientY - rect.top;
+        anchor.isInside = true;
+        anchor.lastMoveTime = performance.now();
+        anchor.targetDispersion = 0.26;
       }
     }, { passive: true });
+
+    heroSection.addEventListener('touchend', () => {
+      anchor.isInside = false;
+      anchor.targetDispersion = 0.92;
+    });
   }
 
   function animate(time) {
     ctx.clearRect(0, 0, width, height);
 
-    // Se o usuário parou de mexer o mouse por mais de 3.5s, volta suavemente ao movimento autônomo
-    if (mouse.active && time - mouse.lastMove > 3500) {
-      mouse.active = false;
+    // Se o cursor estiver parado dentro do container por mais de 1.2s,
+    // começa a dispersar lentamente ao redor do próprio cursor parado
+    if (anchor.isInside && time - anchor.lastMoveTime > 1200) {
+      anchor.targetDispersion = 0.72;
     }
 
-    // Interpolação suave da posição do cursor
-    mouse.x += (mouse.targetX - mouse.x) * 0.08;
-    mouse.y += (mouse.targetY - mouse.y) * 0.08;
+    // Quando o mouse está fora por bastante tempo, a âncora deriva ultra devagar
+    // a partir de onde parou, sem nunca dar "salto" para o centro
+    if (!anchor.isInside) {
+      const gentleCenterPull = 0.00035;
+      anchor.targetX += (width * 0.5 - anchor.targetX) * gentleCenterPull;
+      anchor.targetY += (height * 0.5 - anchor.targetY) * gentleCenterPull;
+    }
+
+    // Interpolação bem suave da âncora e da dispersão (sem movimentos bruscos)
+    anchor.x += (anchor.targetX - anchor.x) * 0.022;
+    anchor.y += (anchor.targetY - anchor.y) * 0.022;
+    anchor.dispersion += (anchor.targetDispersion - anchor.dispersion) * 0.008;
 
     ctx.globalCompositeOperation = 'screen';
 
     blobs.forEach((blob, i) => {
-      // Movimento autônomo orgânico (mesmo sem mouse, as cores se mexem sozinhas)
-      const autonomousX =
-        width * 0.5 +
-        Math.cos(time * blob.orbitSpeedX + blob.phase) * (width * 0.28) +
-        Math.sin(time * (blob.orbitSpeedX * 0.6) + i) * (width * 0.1);
+      // Deslocamento orgânico lento ao redor da âncora atual
+      const maxOffsetX = Math.min(width, 1100) * blob.spreadX * anchor.dispersion;
+      const maxOffsetY = Math.min(height, 800) * blob.spreadY * anchor.dispersion;
 
-      const autonomousY =
-        height * 0.5 +
-        Math.sin(time * blob.orbitSpeedY + blob.phase) * (height * 0.25) +
-        Math.cos(time * (blob.orbitSpeedY * 0.7) + i) * (height * 0.08);
+      const organicOffsetX =
+        Math.cos(time * blob.driftSpeedX + blob.phase) * maxOffsetX +
+        Math.sin(time * (blob.driftSpeedX * 0.65) + i * 1.7) * (maxOffsetX * 0.35);
 
-      // Quando o mouse está ativo, cada cor acompanha o mouse com um deslocamento orgânico próprio
-      let desiredX = autonomousX;
-      let desiredY = autonomousY;
+      const organicOffsetY =
+        Math.sin(time * blob.driftSpeedY + blob.phase) * maxOffsetY +
+        Math.cos(time * (blob.driftSpeedY * 0.7) + i * 1.7) * (maxOffsetY * 0.35);
 
-      if (mouse.active) {
-        const orbitOffsetAngle = time * 0.0015 + blob.phase;
-        const orbitOffsetRadius = 55 + i * 22;
-        const cursorClusterX = mouse.x + Math.cos(orbitOffsetAngle) * orbitOffsetRadius;
-        const cursorClusterY = mouse.y + Math.sin(orbitOffsetAngle) * orbitOffsetRadius;
+      const desiredX = anchor.x + organicOffsetX;
+      const desiredY = anchor.y + organicOffsetY;
 
-        desiredX = autonomousX * (1 - blob.mousePull) + cursorClusterX * blob.mousePull;
-        desiredY = autonomousY * (1 - blob.mousePull) + cursorClusterY * blob.mousePull;
-      }
+      // Movimento super fluido e calmo de cada mancha de cor
+      blob.x += (desiredX - blob.x) * 0.018;
+      blob.y += (desiredY - blob.y) * 0.018;
 
-      // Física de mola suave para transição fluida
-      blob.vx += (desiredX - blob.x) * 0.035;
-      blob.vy += (desiredY - blob.y) * 0.035;
-      blob.vx *= 0.86;
-      blob.vy *= 0.86;
-      blob.x += blob.vx;
-      blob.y += blob.vy;
-
-      // Efeito "Respirando" (pulsação contínua de tamanho e intensidade de luz)
+      // Efeito "Respirando" bem calmo (pulsação lenta de raio e luz)
       const breatheWave = Math.sin(time * blob.breatheSpeed + blob.phase);
-      const currentRadius = blob.baseRadius * (1 + breatheWave * 0.26);
-      const alpha = 0.58 + breatheWave * 0.16;
+      const currentRadius = blob.baseRadius * (1 + breatheWave * 0.18);
+      const alpha = 0.52 + breatheWave * 0.12;
 
       const grad = ctx.createRadialGradient(
         blob.x,
@@ -149,7 +176,7 @@
       );
 
       grad.addColorStop(0, `rgba(${blob.r}, ${blob.g}, ${blob.b}, ${alpha})`);
-      grad.addColorStop(0.55, `rgba(${blob.r}, ${blob.g}, ${blob.b}, ${alpha * 0.45})`);
+      grad.addColorStop(0.55, `rgba(${blob.r}, ${blob.g}, ${blob.b}, ${alpha * 0.42})`);
       grad.addColorStop(1, `rgba(${blob.r}, ${blob.g}, ${blob.b}, 0)`);
 
       ctx.fillStyle = grad;
