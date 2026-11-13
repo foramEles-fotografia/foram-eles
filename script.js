@@ -55,6 +55,7 @@
     const prevH = height || parent.offsetHeight || window.innerHeight * 2;
 
     isMobile = mobileQuery.matches;
+    syncBlobsPalette(isMobile);
     width = parent.offsetWidth || window.innerWidth;
     height = parent.offsetHeight || window.innerHeight * 2;
     viewH = window.innerHeight;
@@ -76,17 +77,8 @@
     }
   }
 
-  // Redimensionamento inteligente sem quebrar no scroll mobile
-  window.addEventListener('resize', () => {
-    const parent = canvas.parentElement;
-    if (parent && parent.offsetWidth === width && Math.abs(window.innerHeight - viewH) < 160) return;
-    resize();
-  }, { passive: true });
-  resize();
-
-  // Mix de cores vibrantes com roxo, laranja, azul royal, ciano elétrico, magenta e âmbar
-  // Bolinhas maiores com órbitas elípticas e velocidades dinâmicas para movimento vivo e fluido
-  const palette = [
+  // Paleta Desktop: espectro completo original com roxo, laranja, azul royal, ciano elétrico, magenta e âmbar
+  const desktopPalette = [
     { r: 138, g: 43,  b: 226, radius: 380, angle: 0.00, orbitX: 1.15, orbitY: 0.95, speed:  0.00078, breathe: 0.00045, alpha: 0.72 }, // Roxo / Violeta vibrante
     { r: 255, g: 108, b: 20,  radius: 410, angle: 0.95, orbitX: 1.28, orbitY: 1.10, speed: -0.00068, breathe: 0.00048, alpha: 0.68 }, // Laranja pôr-do-sol
     { r: 27,  g: 98,  b: 248, radius: 440, angle: 1.95, orbitX: 0.95, orbitY: 1.05, speed:  0.00060, breathe: 0.00038, alpha: 0.70 }, // Azul Royal da marca
@@ -96,16 +88,55 @@
     { r: 112, g: 38,  b: 238, radius: 390, angle: 5.65, orbitX: 0.92, orbitY: 1.18, speed:  0.00064, breathe: 0.00039, alpha: 0.68 }  // Violeta profundo
   ];
 
-  const blobs = palette.map((p) => ({ ...p, x: 0, y: 0, ready: false }));
-
-  // Manchas suaves que se estendem por trás do vídeo para conexão perfeita
-  const lowerBlobs = [
+  const desktopLowerBlobs = [
     { r: 138, g: 43,  b: 226, radius: 480, xr: 0.28, yr: 0.44, speed: 0.00028, phase: 0.8,  alpha: 0.36 }, // Roxo
     { r: 255, g: 110, b: 20,  radius: 460, xr: 0.72, yr: 0.48, speed: 0.00024, phase: 2.1,  alpha: 0.34 }, // Laranja
     { r: 27,  g: 98,  b: 248, radius: 500, xr: 0.48, yr: 0.58, speed: 0.00022, phase: 3.6,  alpha: 0.38 }, // Azul Royal
     { r: 0,   g: 215, b: 255, radius: 430, xr: 0.22, yr: 0.68, speed: 0.00025, phase: 4.9,  alpha: 0.32 }, // Ciano
     { r: 242, g: 42,  b: 142, radius: 450, xr: 0.76, yr: 0.72, speed: 0.00026, phase: 1.2,  alpha: 0.34 }  // Magenta
   ];
+
+  // Paleta Mobile exclusiva: ZERO roxo e ZERO magenta.
+  // Dominada por azuis (royal, oceano celeste, ciano sky), verdes e variações (esmeralda, turquesa límpido, menta fresca)
+  // e um toque de laranja solar, com opacidade mais suave e leve para uma estética arejada e elegante.
+  const mobilePalette = [
+    { r: 27,  g: 98,  b: 248, radius: 410, angle: 0.00, orbitX: 1.10, orbitY: 0.95, speed:  0.00065, breathe: 0.00042, alpha: 0.44 }, // Azul Royal dominante
+    { r: 255, g: 122, b: 22,  radius: 370, angle: 0.92, orbitX: 1.22, orbitY: 1.08, speed: -0.00060, breathe: 0.00045, alpha: 0.40 }, // Laranja solar
+    { r: 14,  g: 135, b: 250, radius: 400, angle: 1.88, orbitX: 0.95, orbitY: 1.05, speed:  0.00062, breathe: 0.00038, alpha: 0.42 }, // Azul Oceano celeste
+    { r: 20,  g: 205, b: 135, radius: 370, angle: 2.82, orbitX: 1.20, orbitY: 0.90, speed: -0.00064, breathe: 0.00044, alpha: 0.38 }, // Verde Esmeralda límpido
+    { r: 0,   g: 212, b: 255, radius: 380, angle: 3.75, orbitX: 1.05, orbitY: 1.20, speed:  0.00068, breathe: 0.00040, alpha: 0.40 }, // Ciano elétrico / Sky
+    { r: 12,  g: 198, b: 212, radius: 370, angle: 4.70, orbitX: 1.15, orbitY: 0.92, speed: -0.00058, breathe: 0.00042, alpha: 0.38 }, // Turquesa / Verde-Azul
+    { r: 36,  g: 228, b: 172, radius: 350, angle: 5.58, orbitX: 0.92, orbitY: 1.15, speed:  0.00060, breathe: 0.00039, alpha: 0.36 }  // Verde Menta / Aqua
+  ];
+
+  const mobileLowerBlobs = [
+    { r: 27,  g: 98,  b: 248, radius: 460, xr: 0.28, yr: 0.45, speed: 0.00026, phase: 0.8, alpha: 0.22 }, // Azul Royal
+    { r: 255, g: 122, b: 22,  radius: 420, xr: 0.72, yr: 0.50, speed: 0.00024, phase: 2.2, alpha: 0.20 }, // Laranja
+    { r: 12,  g: 198, b: 212, radius: 450, xr: 0.48, yr: 0.60, speed: 0.00022, phase: 3.7, alpha: 0.22 }, // Turquesa
+    { r: 0,   g: 212, b: 255, radius: 410, xr: 0.22, yr: 0.70, speed: 0.00025, phase: 5.0, alpha: 0.20 }, // Ciano
+    { r: 20,  g: 205, b: 135, radius: 430, xr: 0.76, yr: 0.72, speed: 0.00026, phase: 1.4, alpha: 0.20 }  // Verde Esmeralda
+  ];
+
+  let blobs = [];
+  let lowerBlobs = [];
+  let appliedDeviceIsMobile = null;
+
+  function syncBlobsPalette(mobile) {
+    if (appliedDeviceIsMobile === mobile && blobs.length > 0) return;
+    appliedDeviceIsMobile = mobile;
+    const pal = mobile ? mobilePalette : desktopPalette;
+    blobs = pal.map((p) => ({ ...p, x: 0, y: 0, ready: false }));
+    const low = mobile ? mobileLowerBlobs : desktopLowerBlobs;
+    lowerBlobs = low.map((p) => ({ ...p }));
+  }
+
+  // Redimensionamento inteligente sem quebrar no scroll mobile
+  window.addEventListener('resize', () => {
+    const parent = canvas.parentElement;
+    if (parent && parent.offsetWidth === width && Math.abs(window.innerHeight - viewH) < 160) return;
+    resize();
+  }, { passive: true });
+  resize();
 
   function pointerMove(x, y) {
     if (isMobile || !isHeroVisible) return;
