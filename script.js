@@ -433,13 +433,8 @@
 
   function applyVideoTransform(factor) {
     const minScale = isMobileView ? 0.88 : 0.60;
-    const maxRadius = isMobileView ? 22 : 32;
-
     const scale = minScale + (1 - minScale) * factor;
-    const radius = maxRadius * (1 - factor);
-
     videoCard.style.transform = `scale3d(${scale.toFixed(4)}, ${scale.toFixed(4)}, 1)`;
-    videoCard.style.borderRadius = `${radius.toFixed(1)}px`;
   }
 
   function tickVideo() {
