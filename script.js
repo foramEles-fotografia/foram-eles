@@ -259,23 +259,49 @@
   window.addEventListener('resize', resizeContactCanvas, { passive: true });
   resizeContactCanvas();
 
-  // Cores mais unidas no centro e velocidade mais rápida e vibrante no container de contato
-  const autonomousBlobs = [
-    { r: 138, g: 43,  b: 226, baseRadius: 360, xRatio: 0.45, yRatio: 0.46, speedX:  0.00135, speedY:  0.00110, ampX: 0.16, ampY: 0.15, phase: 0.0, alpha: 0.52 }, // Roxo
-    { r: 255, g: 110, b: 20,  baseRadius: 340, xRatio: 0.55, yRatio: 0.43, speedX: -0.00125, speedY:  0.00122, ampX: 0.15, ampY: 0.16, phase: 1.5, alpha: 0.50 }, // Laranja
-    { r: 27,  g: 98,  b: 248, baseRadius: 380, xRatio: 0.50, yRatio: 0.54, speedX:  0.00115, speedY: -0.00110, ampX: 0.17, ampY: 0.14, phase: 3.1, alpha: 0.54 }, // Azul Royal
-    { r: 0,   g: 215, b: 255, baseRadius: 330, xRatio: 0.57, yRatio: 0.52, speedX: -0.00130, speedY:  0.00105, ampX: 0.14, ampY: 0.15, phase: 4.4, alpha: 0.46 }, // Ciano
-    { r: 242, g: 42,  b: 142, baseRadius: 340, xRatio: 0.43, yRatio: 0.55, speedX:  0.00140, speedY: -0.00118, ampX: 0.15, ampY: 0.14, phase: 5.6, alpha: 0.48 }, // Magenta
-    { r: 255, g: 168, b: 24,  baseRadius: 320, xRatio: 0.48, yRatio: 0.39, speedX: -0.00110, speedY:  0.00125, ampX: 0.16, ampY: 0.13, phase: 2.3, alpha: 0.44 }  // Âmbar
+  // Paleta oficial de cores da marca para transição contínua
+  const contactBrandPalette = [
+    { r: 138, g: 43,  b: 226 }, // Roxo / Violeta
+    { r: 27,  g: 98,  b: 248 }, // Azul Royal
+    { r: 0,   g: 215, b: 255 }, // Ciano elétrico
+    { r: 242, g: 42,  b: 142 }, // Magenta vivo
+    { r: 255, g: 110, b: 20  }, // Laranja pôr-do-sol
+    { r: 255, g: 175, b: 24  }  // Âmbar solar
   ];
+
+  // Cores mais transparentes, unidas no centro e mudando continuamente entre as cores disponíveis
+  const autonomousBlobs = [
+    { baseRadius: 360, xRatio: 0.46, yRatio: 0.46, speedX:  0.00135, speedY:  0.00110, ampX: 0.16, ampY: 0.15, phase: 0.0, colorOffset: 0.0, baseAlpha: 0.24 },
+    { baseRadius: 340, xRatio: 0.54, yRatio: 0.43, speedX: -0.00125, speedY:  0.00122, ampX: 0.15, ampY: 0.16, phase: 1.5, colorOffset: 1.0, baseAlpha: 0.22 },
+    { baseRadius: 380, xRatio: 0.50, yRatio: 0.54, speedX:  0.00115, speedY: -0.00110, ampX: 0.17, ampY: 0.14, phase: 3.1, colorOffset: 2.0, baseAlpha: 0.26 },
+    { baseRadius: 330, xRatio: 0.57, yRatio: 0.52, speedX: -0.00130, speedY:  0.00105, ampX: 0.14, ampY: 0.15, phase: 4.4, colorOffset: 3.0, baseAlpha: 0.20 },
+    { baseRadius: 340, xRatio: 0.43, yRatio: 0.55, speedX:  0.00140, speedY: -0.00118, ampX: 0.15, ampY: 0.14, phase: 5.6, colorOffset: 4.0, baseAlpha: 0.23 },
+    { baseRadius: 320, xRatio: 0.48, yRatio: 0.39, speedX: -0.00110, speedY:  0.00125, ampX: 0.16, ampY: 0.13, phase: 2.3, colorOffset: 5.0, baseAlpha: 0.21 }
+  ];
+
+  function getInterpolatedContactColor(time, offset) {
+    // Muda continuamente entre as cores disponíveis da marca
+    const cycle = (time * 0.00065 + offset) % contactBrandPalette.length;
+    const i1 = Math.floor(cycle);
+    const i2 = (i1 + 1) % contactBrandPalette.length;
+    const blend = cycle - i1;
+    const c1 = contactBrandPalette[i1];
+    const c2 = contactBrandPalette[i2];
+    return {
+      r: Math.round(c1.r + (c2.r - c1.r) * blend),
+      g: Math.round(c1.g + (c2.g - c1.g) * blend),
+      b: Math.round(c1.b + (c2.b - c1.b) * blend)
+    };
+  }
 
   function drawContactBlob(x, y, rad, r, g, b, alpha) {
     if (rad <= 0 || alpha <= 0) return;
     const grad = ctx.createRadialGradient(x, y, 0, x, y, rad);
+    // Transparência suave e degradê fluido sem pesar visualmente
     grad.addColorStop(0.00, `rgba(${r}, ${g}, ${b}, ${alpha.toFixed(3)})`);
-    grad.addColorStop(0.28, `rgba(${r}, ${g}, ${b}, ${(alpha * 0.70).toFixed(3)})`);
-    grad.addColorStop(0.58, `rgba(${r}, ${g}, ${b}, ${(alpha * 0.34).toFixed(3)})`);
-    grad.addColorStop(0.82, `rgba(${r}, ${g}, ${b}, ${(alpha * 0.10).toFixed(3)})`);
+    grad.addColorStop(0.32, `rgba(${r}, ${g}, ${b}, ${(alpha * 0.65).toFixed(3)})`);
+    grad.addColorStop(0.62, `rgba(${r}, ${g}, ${b}, ${(alpha * 0.28).toFixed(3)})`);
+    grad.addColorStop(0.85, `rgba(${r}, ${g}, ${b}, ${(alpha * 0.08).toFixed(3)})`);
     grad.addColorStop(1.00, `rgba(${r}, ${g}, ${b}, 0)`);
     ctx.fillStyle = grad;
     ctx.beginPath();
@@ -306,9 +332,11 @@
 
       const breathe = Math.sin(time * 0.00032 + b.phase);
       const rad = b.baseRadius * mobileScale * (1 + breathe * 0.12);
-      const alpha = b.alpha + breathe * 0.05;
+      const alpha = b.baseAlpha + breathe * 0.03;
 
-      drawContactBlob(x, y, rad, b.r, b.g, b.b, alpha);
+      const col = getInterpolatedContactColor(time, b.colorOffset);
+
+      drawContactBlob(x, y, rad, col.r, col.g, col.b, alpha);
     }
 
     contactRafId = requestAnimationFrame(animateContact);
@@ -433,15 +461,13 @@
   }
 
   function applyVideoTransform(factor) {
-    if (isMobileView) {
-      // No celular: 100% da tela ocupada sem corte na altura e sem bordas brancas
-      videoCard.style.transform = 'none';
-      videoCard.style.borderRadius = '0';
-      return;
-    }
-    const minScale = 0.60;
+    const minScale = isMobileView ? 0.82 : 0.60;
+    const maxRadius = isMobileView ? 24 : 32;
     const scale = minScale + (1 - minScale) * factor;
+    const radius = Math.round(maxRadius * (1 - factor));
+
     videoCard.style.transform = `scale3d(${scale.toFixed(4)}, ${scale.toFixed(4)}, 1)`;
+    videoCard.style.borderRadius = `${radius}px`;
   }
 
   function tickVideo() {
