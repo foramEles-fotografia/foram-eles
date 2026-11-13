@@ -259,28 +259,28 @@
   window.addEventListener('resize', resizeContactCanvas, { passive: true });
   resizeContactCanvas();
 
-  // Paleta oficial de cores da marca para transição contínua
+  // Paleta de tons pastéis alegres, claros e luminosos (alta claridade, zero tons escuros/mortos)
   const contactBrandPalette = [
-    { r: 138, g: 43,  b: 226 }, // Roxo / Violeta
-    { r: 27,  g: 98,  b: 248 }, // Azul Royal
-    { r: 0,   g: 215, b: 255 }, // Ciano elétrico
-    { r: 242, g: 42,  b: 142 }, // Magenta vivo
-    { r: 255, g: 110, b: 20  }, // Laranja pôr-do-sol
-    { r: 255, g: 175, b: 24  }  // Âmbar solar
+    { r: 255, g: 160, b: 210 }, // Rosa pastel alegre e vivo
+    { r: 200, g: 172, b: 255 }, // Lavanda / Lilás pastel luminoso
+    { r: 140, g: 212, b: 255 }, // Azul céu pastel radiante
+    { r: 130, g: 242, b: 230 }, // Menta / Ciano pastel fresco
+    { r: 255, g: 192, b: 140 }, // Pêssego pastel solar
+    { r: 255, g: 226, b: 132 }  // Amarelo manteiga / Âmbar claro alegre
   ];
 
-  // Cores mais transparentes, unidas no centro e mudando continuamente entre as cores disponíveis
+  // Cores pastéis suaves, unidas no centro e mudando continuamente entre tons claros e alegres
   const autonomousBlobs = [
-    { baseRadius: 360, xRatio: 0.46, yRatio: 0.46, speedX:  0.00135, speedY:  0.00110, ampX: 0.16, ampY: 0.15, phase: 0.0, colorOffset: 0.0, baseAlpha: 0.24 },
-    { baseRadius: 340, xRatio: 0.54, yRatio: 0.43, speedX: -0.00125, speedY:  0.00122, ampX: 0.15, ampY: 0.16, phase: 1.5, colorOffset: 1.0, baseAlpha: 0.22 },
-    { baseRadius: 380, xRatio: 0.50, yRatio: 0.54, speedX:  0.00115, speedY: -0.00110, ampX: 0.17, ampY: 0.14, phase: 3.1, colorOffset: 2.0, baseAlpha: 0.26 },
-    { baseRadius: 330, xRatio: 0.57, yRatio: 0.52, speedX: -0.00130, speedY:  0.00105, ampX: 0.14, ampY: 0.15, phase: 4.4, colorOffset: 3.0, baseAlpha: 0.20 },
-    { baseRadius: 340, xRatio: 0.43, yRatio: 0.55, speedX:  0.00140, speedY: -0.00118, ampX: 0.15, ampY: 0.14, phase: 5.6, colorOffset: 4.0, baseAlpha: 0.23 },
-    { baseRadius: 320, xRatio: 0.48, yRatio: 0.39, speedX: -0.00110, speedY:  0.00125, ampX: 0.16, ampY: 0.13, phase: 2.3, colorOffset: 5.0, baseAlpha: 0.21 }
+    { baseRadius: 370, xRatio: 0.46, yRatio: 0.46, speedX:  0.00135, speedY:  0.00110, ampX: 0.16, ampY: 0.15, phase: 0.0, colorOffset: 0.0, baseAlpha: 0.38 },
+    { baseRadius: 350, xRatio: 0.54, yRatio: 0.43, speedX: -0.00125, speedY:  0.00122, ampX: 0.15, ampY: 0.16, phase: 1.5, colorOffset: 1.0, baseAlpha: 0.36 },
+    { baseRadius: 390, xRatio: 0.50, yRatio: 0.54, speedX:  0.00115, speedY: -0.00110, ampX: 0.17, ampY: 0.14, phase: 3.1, colorOffset: 2.0, baseAlpha: 0.40 },
+    { baseRadius: 340, xRatio: 0.57, yRatio: 0.52, speedX: -0.00130, speedY:  0.00105, ampX: 0.14, ampY: 0.15, phase: 4.4, colorOffset: 3.0, baseAlpha: 0.34 },
+    { baseRadius: 350, xRatio: 0.43, yRatio: 0.55, speedX:  0.00140, speedY: -0.00118, ampX: 0.15, ampY: 0.14, phase: 5.6, colorOffset: 4.0, baseAlpha: 0.37 },
+    { baseRadius: 330, xRatio: 0.48, yRatio: 0.39, speedX: -0.00110, speedY:  0.00125, ampX: 0.16, ampY: 0.13, phase: 2.3, colorOffset: 5.0, baseAlpha: 0.34 }
   ];
 
   function getInterpolatedContactColor(time, offset) {
-    // Muda continuamente entre as cores disponíveis da marca
+    // Muda continuamente entre os tons pastéis alegres da paleta
     const cycle = (time * 0.00065 + offset) % contactBrandPalette.length;
     const i1 = Math.floor(cycle);
     const i2 = (i1 + 1) % contactBrandPalette.length;
@@ -297,11 +297,11 @@
   function drawContactBlob(x, y, rad, r, g, b, alpha) {
     if (rad <= 0 || alpha <= 0) return;
     const grad = ctx.createRadialGradient(x, y, 0, x, y, rad);
-    // Transparência suave e degradê fluido sem pesar visualmente
+    // Gradiente aveludado e luminoso que clareia o fundo com elegância
     grad.addColorStop(0.00, `rgba(${r}, ${g}, ${b}, ${alpha.toFixed(3)})`);
-    grad.addColorStop(0.32, `rgba(${r}, ${g}, ${b}, ${(alpha * 0.65).toFixed(3)})`);
-    grad.addColorStop(0.62, `rgba(${r}, ${g}, ${b}, ${(alpha * 0.28).toFixed(3)})`);
-    grad.addColorStop(0.85, `rgba(${r}, ${g}, ${b}, ${(alpha * 0.08).toFixed(3)})`);
+    grad.addColorStop(0.35, `rgba(${r}, ${g}, ${b}, ${(alpha * 0.72).toFixed(3)})`);
+    grad.addColorStop(0.68, `rgba(${r}, ${g}, ${b}, ${(alpha * 0.35).toFixed(3)})`);
+    grad.addColorStop(0.88, `rgba(${r}, ${g}, ${b}, ${(alpha * 0.10).toFixed(3)})`);
     grad.addColorStop(1.00, `rgba(${r}, ${g}, ${b}, 0)`);
     ctx.fillStyle = grad;
     ctx.beginPath();
