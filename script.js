@@ -85,26 +85,26 @@
   resize();
 
   // Mix de cores vibrantes com roxo, laranja, azul royal, ciano elétrico, magenta e âmbar
-  // Bolinhas maiores com órbitas elípticas e velocidades distintas para movimento vivo
+  // Bolinhas maiores com órbitas elípticas e velocidades dinâmicas para movimento vivo e fluido
   const palette = [
-    { r: 138, g: 43,  b: 226, radius: 380, angle: 0.00, orbitX: 1.15, orbitY: 0.95, speed:  0.00052, breathe: 0.00030, alpha: 0.72 }, // Roxo / Violeta vibrante
-    { r: 255, g: 108, b: 20,  radius: 410, angle: 0.95, orbitX: 1.28, orbitY: 1.10, speed: -0.00046, breathe: 0.00034, alpha: 0.68 }, // Laranja pôr-do-sol
-    { r: 27,  g: 98,  b: 248, radius: 440, angle: 1.95, orbitX: 0.95, orbitY: 1.05, speed:  0.00040, breathe: 0.00026, alpha: 0.70 }, // Azul Royal da marca
-    { r: 0,   g: 216, b: 255, radius: 360, angle: 2.95, orbitX: 1.22, orbitY: 0.88, speed: -0.00044, breathe: 0.00032, alpha: 0.65 }, // Ciano elétrico
-    { r: 242, g: 42,  b: 142, radius: 370, angle: 3.90, orbitX: 1.05, orbitY: 1.22, speed:  0.00048, breathe: 0.00028, alpha: 0.66 }, // Rosa / Magenta vivo
-    { r: 255, g: 168, b: 24,  radius: 350, angle: 4.85, orbitX: 1.18, orbitY: 0.92, speed: -0.00040, breathe: 0.00031, alpha: 0.62 }, // Âmbar solar
-    { r: 112, g: 38,  b: 238, radius: 390, angle: 5.65, orbitX: 0.92, orbitY: 1.18, speed:  0.00044, breathe: 0.00027, alpha: 0.68 }  // Violeta profundo
+    { r: 138, g: 43,  b: 226, radius: 380, angle: 0.00, orbitX: 1.15, orbitY: 0.95, speed:  0.00078, breathe: 0.00045, alpha: 0.72 }, // Roxo / Violeta vibrante
+    { r: 255, g: 108, b: 20,  radius: 410, angle: 0.95, orbitX: 1.28, orbitY: 1.10, speed: -0.00068, breathe: 0.00048, alpha: 0.68 }, // Laranja pôr-do-sol
+    { r: 27,  g: 98,  b: 248, radius: 440, angle: 1.95, orbitX: 0.95, orbitY: 1.05, speed:  0.00060, breathe: 0.00038, alpha: 0.70 }, // Azul Royal da marca
+    { r: 0,   g: 216, b: 255, radius: 360, angle: 2.95, orbitX: 1.22, orbitY: 0.88, speed: -0.00065, breathe: 0.00044, alpha: 0.65 }, // Ciano elétrico
+    { r: 242, g: 42,  b: 142, radius: 370, angle: 3.90, orbitX: 1.05, orbitY: 1.22, speed:  0.00070, breathe: 0.00040, alpha: 0.66 }, // Rosa / Magenta vivo
+    { r: 255, g: 168, b: 24,  radius: 350, angle: 4.85, orbitX: 1.18, orbitY: 0.92, speed: -0.00058, breathe: 0.00042, alpha: 0.62 }, // Âmbar solar
+    { r: 112, g: 38,  b: 238, radius: 390, angle: 5.65, orbitX: 0.92, orbitY: 1.18, speed:  0.00064, breathe: 0.00039, alpha: 0.68 }  // Violeta profundo
   ];
 
   const blobs = palette.map((p) => ({ ...p, x: 0, y: 0, ready: false }));
 
   // Manchas suaves que se estendem por trás do vídeo para conexão perfeita
   const lowerBlobs = [
-    { r: 138, g: 43,  b: 226, radius: 480, xr: 0.28, yr: 0.44, speed: 0.00018, phase: 0.8,  alpha: 0.36 }, // Roxo
-    { r: 255, g: 110, b: 20,  radius: 460, xr: 0.72, yr: 0.48, speed: 0.00015, phase: 2.1,  alpha: 0.34 }, // Laranja
-    { r: 27,  g: 98,  b: 248, radius: 500, xr: 0.48, yr: 0.58, speed: 0.00014, phase: 3.6,  alpha: 0.38 }, // Azul Royal
-    { r: 0,   g: 215, b: 255, radius: 430, xr: 0.22, yr: 0.68, speed: 0.00016, phase: 4.9,  alpha: 0.32 }, // Ciano
-    { r: 242, g: 42,  b: 142, radius: 450, xr: 0.76, yr: 0.72, speed: 0.00017, phase: 1.2,  alpha: 0.34 }  // Magenta
+    { r: 138, g: 43,  b: 226, radius: 480, xr: 0.28, yr: 0.44, speed: 0.00028, phase: 0.8,  alpha: 0.36 }, // Roxo
+    { r: 255, g: 110, b: 20,  radius: 460, xr: 0.72, yr: 0.48, speed: 0.00024, phase: 2.1,  alpha: 0.34 }, // Laranja
+    { r: 27,  g: 98,  b: 248, radius: 500, xr: 0.48, yr: 0.58, speed: 0.00022, phase: 3.6,  alpha: 0.38 }, // Azul Royal
+    { r: 0,   g: 215, b: 255, radius: 430, xr: 0.22, yr: 0.68, speed: 0.00025, phase: 4.9,  alpha: 0.32 }, // Ciano
+    { r: 242, g: 42,  b: 142, radius: 450, xr: 0.76, yr: 0.72, speed: 0.00026, phase: 1.2,  alpha: 0.34 }  // Magenta
   ];
 
   function pointerMove(x, y) {
@@ -260,12 +260,12 @@
   resizeContactCanvas();
 
   const autonomousBlobs = [
-    { r: 138, g: 43,  b: 226, baseRadius: 280, xRatio: 0.24, yRatio: 0.35, speedX:  0.00032, speedY:  0.00024, ampX: 0.22, ampY: 0.24, phase: 0.0, alpha: 0.46 }, // Roxo
-    { r: 255, g: 110, b: 20,  baseRadius: 260, xRatio: 0.78, yRatio: 0.30, speedX: -0.00028, speedY:  0.00029, ampX: 0.20, ampY: 0.22, phase: 1.5, alpha: 0.44 }, // Laranja
-    { r: 27,  g: 98,  b: 248, baseRadius: 310, xRatio: 0.50, yRatio: 0.70, speedX:  0.00025, speedY: -0.00026, ampX: 0.25, ampY: 0.20, phase: 3.1, alpha: 0.48 }, // Azul Royal
-    { r: 0,   g: 215, b: 255, baseRadius: 250, xRatio: 0.82, yRatio: 0.75, speedX: -0.00030, speedY:  0.00022, ampX: 0.21, ampY: 0.23, phase: 4.4, alpha: 0.40 }, // Ciano
-    { r: 242, g: 42,  b: 142, baseRadius: 240, xRatio: 0.22, yRatio: 0.68, speedX:  0.00033, speedY: -0.00025, ampX: 0.19, ampY: 0.21, phase: 5.6, alpha: 0.42 }, // Magenta
-    { r: 255, g: 168, b: 24,  baseRadius: 230, xRatio: 0.55, yRatio: 0.32, speedX: -0.00024, speedY:  0.00031, ampX: 0.23, ampY: 0.19, phase: 2.3, alpha: 0.38 }  // Âmbar
+    { r: 138, g: 43,  b: 226, baseRadius: 280, xRatio: 0.24, yRatio: 0.35, speedX:  0.00052, speedY:  0.00038, ampX: 0.22, ampY: 0.24, phase: 0.0, alpha: 0.46 }, // Roxo
+    { r: 255, g: 110, b: 20,  baseRadius: 260, xRatio: 0.78, yRatio: 0.30, speedX: -0.00045, speedY:  0.00046, ampX: 0.20, ampY: 0.22, phase: 1.5, alpha: 0.44 }, // Laranja
+    { r: 27,  g: 98,  b: 248, baseRadius: 310, xRatio: 0.50, yRatio: 0.70, speedX:  0.00042, speedY: -0.00040, ampX: 0.25, ampY: 0.20, phase: 3.1, alpha: 0.48 }, // Azul Royal
+    { r: 0,   g: 215, b: 255, baseRadius: 250, xRatio: 0.82, yRatio: 0.75, speedX: -0.00048, speedY:  0.00036, ampX: 0.21, ampY: 0.23, phase: 4.4, alpha: 0.40 }, // Ciano
+    { r: 242, g: 42,  b: 142, baseRadius: 240, xRatio: 0.22, yRatio: 0.68, speedX:  0.00050, speedY: -0.00042, ampX: 0.19, ampY: 0.21, phase: 5.6, alpha: 0.42 }, // Magenta
+    { r: 255, g: 168, b: 24,  baseRadius: 230, xRatio: 0.55, yRatio: 0.32, speedX: -0.00039, speedY:  0.00049, ampX: 0.23, ampY: 0.19, phase: 2.3, alpha: 0.38 }  // Âmbar
   ];
 
   function drawContactBlob(x, y, rad, r, g, b, alpha) {
