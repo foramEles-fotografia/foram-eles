@@ -193,11 +193,6 @@ body {
   transition: background 0.25s ease, transform 0.25s ease;
 }
 
-.nav-cta:hover {
-  background: var(--blue-hover);
-  transform: translateY(-1px);
-}
-
 .menu-toggle {
   display: none;
   width: 40px;
@@ -338,13 +333,9 @@ body {
   margin-bottom: 1.6rem;
 }
 
-.hero-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.85rem;
-  justify-content: center;
-}
-
+/* ==========================================================================
+   BOTÕES: crescem de leve no hover com sombra/neon suave para baixo e para a direita
+   ========================================================================== */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -357,18 +348,13 @@ body {
   text-decoration: none;
   cursor: pointer;
   border: none;
-  transition: transform 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease;
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.35s ease, border-color 0.35s ease, box-shadow 0.45s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .btn-primary {
   background: var(--blue-primary);
   color: #ffffff;
-  box-shadow: 0 10px 24px -6px rgba(27, 98, 248, 0.42);
-}
-
-.btn-primary:hover {
-  background: var(--blue-hover);
-  transform: translateY(-2px);
+  box-shadow: 2px 4px 14px -4px rgba(27, 98, 248, 0.32);
 }
 
 .btn-secondary {
@@ -377,10 +363,37 @@ body {
   border: 1.5px solid var(--blue-border);
 }
 
-.btn-secondary:hover {
-  background: var(--blue-tint);
-  border-color: var(--blue-primary);
-  transform: translateY(-2px);
+.nav-cta,
+.filter-btn {
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.35s ease, border-color 0.35s ease, color 0.3s ease, box-shadow 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (hover: hover) {
+  .btn:hover,
+  .nav-cta:hover,
+  .filter-btn:hover {
+    transform: scale(1.045);
+    box-shadow:
+      6px 9px 22px -6px rgba(27, 98, 248, 0.42),
+      10px 14px 34px -10px rgba(0, 190, 255, 0.4);
+  }
+
+  .btn-primary:hover,
+  .nav-cta:hover {
+    background: var(--blue-hover);
+  }
+
+  .btn-secondary:hover,
+  .filter-btn:hover {
+    background: var(--blue-tint);
+    border-color: var(--blue-primary);
+  }
+}
+
+.btn:active,
+.nav-cta:active,
+.filter-btn:active {
+  transform: scale(0.98);
 }
 
 /* ==========================================================================
@@ -1369,21 +1382,12 @@ body {
   .hero-subtitle {
     font-size: 0.9rem;
     line-height: 1.54;
-    margin-bottom: 1.3rem;
+    margin-bottom: 0.4rem;
     padding: 0 0.2rem;
   }
 
-  .hero-actions {
-    width: 100%;
-    max-width: 310px;
-    flex-direction: column;
-    gap: 0.6rem;
-  }
-
-  .hero-actions .btn {
-    width: 100%;
-    padding: 0.8rem 1.35rem;
-    font-size: 0.88rem;
+  .contact-buttons .btn:hover {
+    transform: none;
   }
 
   /* 2º Container (Vídeo) leve e proporcional no celular */
@@ -1393,8 +1397,8 @@ body {
   }
 
   .video-expand-card {
-    height: 76vh;
-    height: 76svh;
+    height: 86vh;
+    height: 86svh;
     border-radius: 22px;
   }
 

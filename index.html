@@ -61,16 +61,6 @@
           Qualidade, naturalidade e direção autêntica em fotos corporativas e profissionais trabalhando.
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.
         </p>
-
-        <div class="hero-actions">
-          <a href="#portfolio" class="btn btn-primary">
-            Ver Trabalhos Realizados
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M5 12h14M12 5l7 7-7 7"/>
-            </svg>
-          </a>
-          <a href="#sobre" class="btn btn-secondary">Conheça a Dupla</a>
-        </div>
       </div>
     </section>
 
@@ -78,16 +68,19 @@
     <section class="video-scroll-track" id="destaque">
       <div class="video-sticky-stage" id="video-sticky-stage">
         <div class="video-expand-card" id="video-expand-card">
+          <!-- Começa pausado: só toca quando pelo menos 20% do vídeo aparece na tela -->
           <video
             id="showcase-video"
             class="showcase-video"
-            src="assets/video-foram-eles.mp4?v=5"
-            autoplay
+            poster="assets/video-poster.jpg"
             muted
             loop
             playsinline
-            preload="metadata"
-          ></video>
+            preload="auto"
+          >
+            <source src="assets/video-foram-eles-mobile.mp4?v=2" type="video/mp4" media="(max-width: 768px)" />
+            <source src="assets/video-foram-eles.mp4?v=6" type="video/mp4" />
+          </video>
 
           <div class="video-gradient-overlay"></div>
 
