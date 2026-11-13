@@ -1,33 +1,32 @@
 /**
- * FORAM Eles. — Script Principal
- * 1. 1º Container (#breathing-canvas):
- *    - Degradê colorido mais concentrado (ocupando menos área para não tomar a tela toda).
- *    - Estende-se por trás do container do vídeo até perto do final do vídeo (sem linha ou corte seco).
- *    - Acompanha o mouse com fluidez; quando o cursor para ou sai da janela, permanece na última posição e dispersa devagar.
- * 2. 2º Container (#destaque / #video-expand-card):
- *    - No 1º scroll, enquanto o vídeo sobe até o centro da tela, ele já vai crescendo gradualmente de 60% até 100%,
- *      chegando em 100% da tela exatamente quando atinge o centro.
- *    - Permanece em 100% no centro por mais uma scrollada e depois volta suavemente para o tamanho de origem (60%).
- * 3. 3º Container (#portfolio / #album-modal):
- *    - Cards estilo pilhas de cartas Apple (de 2 commits atrás) + Modal com fundo desfocado ao clicar.
- * 4. 6º Container (#contact-breathing-canvas):
- *    - Mesmo efeito das cores em degradê desfocadas dentro do card limitado do WhatsApp/Contato,
- *      porém de forma autônoma (não interativa), apenas se movimentando suavemente lá dentro.
+ * FORAM Eles. — Script Principal Ultra-Otimizado (60/120fps Liso no Desktop e Celular)
+ *
+ * Otimizações de Performance Aplicadas:
+ * 1. Canvases (#breathing-canvas e #contact-breathing-canvas) renderizados em buffer interno
+ *    reduzido (0.15x no celular / 0.20x no desktop) com gradientes radiais multi-stop suaves
+ *    e interpolação bilinear nativa da GPU — eliminando 100% do pesado CSS filter:blur()!
+ * 2. IntersectionObserver pausa automaticamente a animação do 1º container quando ele sai da tela
+ *    e só ativa a animação do card do WhatsApp/Contato quando ele entra na tela.
+ * 3. Vídeo (#showcase-video) pausado automaticamente fora da tela para economizar decodificação de GPU/bateria,
+ *    e cálculo do scroll sem getBoundingClientRect() por frame (zero layout thrashing), parando o loop rAF
+ *    assim que a interpolação estabiliza.
  */
 
 /* ==========================================================================
-   1º CONTAINER: CANVAS DE CORES INTERATIVO (MAIS CONCENTRADO E ESTENDIDO ATÉ O VÍDEO)
+   1º CONTAINER: CANVAS DE CORES INTERATIVO ULTRA-LEVE
    ========================================================================== */
 (function () {
   const canvas = document.getElementById('breathing-canvas');
   if (!canvas) return;
-  const ctx = canvas.getContext('2d');
+  const ctx = canvas.getContext('2d', { alpha: true });
 
   let width = 0;
   let height = 0;
   let heroViewportH = window.innerHeight;
-  let dpr = Math.min(window.devicePixelRatio || 1, 2);
+  let renderScale = 0.2;
   let initialized = false;
+  let isHeroVisible = true;
+  let rafId = 0;
 
   // Âncora persistente: nunca reseta para o centro quando o mouse para ou sai!
   const anchor = {
@@ -42,17 +41,20 @@
   };
 
   function resize() {
-    const rect = canvas.parentElement.getBoundingClientRect();
-    const prevWidth = width || rect.width;
-    const prevHeight = height || rect.height;
+    const parent = canvas.parentElement;
+    if (!parent) return;
+    const prevWidth = width || parent.offsetWidth || window.innerWidth;
+    const prevHeight = height || parent.offsetHeight || window.innerHeight * 2;
 
-    width = rect.width;
-    height = rect.height;
+    width = parent.offsetWidth || window.innerWidth;
+    height = parent.offsetHeight || window.innerHeight * 2;
     heroViewportH = window.innerHeight;
 
-    canvas.width = width * dpr;
-    canvas.height = height * dpr;
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    // Buffer reduzido: 96% menos pixels para processar e desfoque natural via interpolação da GPU
+    renderScale = width <= 768 ? 0.14 : 0.20;
+    canvas.width = Math.max(64, Math.round(width * renderScale));
+    canvas.height = Math.max(64, Math.round(height * renderScale));
+    ctx.setTransform(renderScale, 0, 0, renderScale, 0, 0);
 
     if (!initialized) {
       anchor.x = width * 0.5;
@@ -68,16 +70,16 @@
     }
   }
 
-  window.addEventListener('resize', resize);
+  window.addEventListener('resize', resize, { passive: true });
   resize();
 
-  // Raios menores e espalhamento reduzido para não ocupar a tela toda, mantendo o degradê rico
+  // Gradientes radiais amplos e suaves (substituem o antigo CSS filter:blur pesado)
   const colorConfigs = [
-    { r: 27,  g: 98,  b: 248, baseRadius: 210, breatheSpeed: 0.00028, driftSpeedX: 0.00009, driftSpeedY: 0.00011, spreadX: 0.12, spreadY: 0.07, phase: 0.0 }, // Azul Royal
-    { r: 0,   g: 204, b: 255, baseRadius: 190, breatheSpeed: 0.00031, driftSpeedX: 0.00010, driftSpeedY: 0.00008, spreadX: 0.13, spreadY: 0.08, phase: 1.3 }, // Ciano / Aqua
-    { r: 16,  g: 185, b: 129, baseRadius: 175, breatheSpeed: 0.00026, driftSpeedX: 0.00008, driftSpeedY: 0.00010, spreadX: 0.11, spreadY: 0.07, phase: 2.6 }, // Verde Esmeralda / Teal
-    { r: 124, g: 58,  b: 237, baseRadius: 195, breatheSpeed: 0.00024, driftSpeedX: 0.00009, driftSpeedY: 0.00009, spreadX: 0.13, spreadY: 0.08, phase: 3.9 }, // Violeta / Índigo
-    { r: 217, g: 70,  b: 239, baseRadius: 165, breatheSpeed: 0.00029, driftSpeedX: 0.00011, driftSpeedY: 0.00009, spreadX: 0.11, spreadY: 0.06, phase: 5.2 }  // Magenta / Lilás
+    { r: 27,  g: 98,  b: 248, baseRadius: 275, breatheSpeed: 0.00028, driftSpeedX: 0.00009, driftSpeedY: 0.00011, spreadX: 0.12, spreadY: 0.07, phase: 0.0 }, // Azul Royal
+    { r: 0,   g: 204, b: 255, baseRadius: 255, breatheSpeed: 0.00031, driftSpeedX: 0.00010, driftSpeedY: 0.00008, spreadX: 0.13, spreadY: 0.08, phase: 1.3 }, // Ciano / Aqua
+    { r: 16,  g: 185, b: 129, baseRadius: 235, breatheSpeed: 0.00026, driftSpeedX: 0.00008, driftSpeedY: 0.00010, spreadX: 0.11, spreadY: 0.07, phase: 2.6 }, // Verde Esmeralda / Teal
+    { r: 124, g: 58,  b: 237, baseRadius: 260, breatheSpeed: 0.00024, driftSpeedX: 0.00009, driftSpeedY: 0.00009, spreadX: 0.13, spreadY: 0.08, phase: 3.9 }, // Violeta / Índigo
+    { r: 217, g: 70,  b: 239, baseRadius: 225, breatheSpeed: 0.00029, driftSpeedX: 0.00011, driftSpeedY: 0.00009, spreadX: 0.11, spreadY: 0.06, phase: 5.2 }  // Magenta / Lilás
   ];
 
   const blobs = colorConfigs.map((cfg, i) => {
@@ -89,20 +91,20 @@
     };
   });
 
-  // Blobs sutis de continuidade na faixa do vídeo (para que o 1º container se estenda até lá pro final do vídeo sem corte)
+  // Blobs sutis de continuidade na faixa do vídeo (sem linha ou corte seco antes do vídeo)
   const lowerContinuationBlobs = [
-    { r: 27,  g: 98,  b: 248, baseRadius: 235, xRatio: 0.34, yRatio: 0.46, speed: 0.00011, phase: 0.8 },
-    { r: 0,   g: 204, b: 255, baseRadius: 215, xRatio: 0.66, yRatio: 0.54, speed: 0.00010, phase: 2.4 },
-    { r: 124, g: 58,  b: 237, baseRadius: 205, xRatio: 0.50, yRatio: 0.66, speed: 0.00009, phase: 4.1 }
+    { r: 27,  g: 98,  b: 248, baseRadius: 310, xRatio: 0.34, yRatio: 0.46, speed: 0.00011, phase: 0.8 },
+    { r: 0,   g: 204, b: 255, baseRadius: 285, xRatio: 0.66, yRatio: 0.54, speed: 0.00010, phase: 2.4 },
+    { r: 124, g: 58,  b: 237, baseRadius: 270, xRatio: 0.50, yRatio: 0.66, speed: 0.00009, phase: 4.1 }
   ];
 
   window.addEventListener('mousemove', (e) => {
-    const rect = canvas.getBoundingClientRect();
-    const relX = e.clientX - rect.left;
-    const relY = e.clientY - rect.top;
+    if (!isHeroVisible) return;
+    const scrollY = window.scrollY || window.pageYOffset || 0;
+    const relX = e.clientX;
+    const relY = e.clientY + scrollY;
 
-    // Interage na região superior/central sem puxar tudo para fora nem resetar
-    if (relY >= 0 && relY <= heroViewportH * 1.15 && relX >= 0 && relX <= rect.width) {
+    if (relY >= 0 && relY <= heroViewportH * 1.15 && relX >= 0 && relX <= width) {
       anchor.targetX = relX;
       anchor.targetY = Math.min(relY, heroViewportH * 0.85);
       anchor.isMoving = true;
@@ -119,27 +121,25 @@
     anchor.targetDispersion = 0.34;
   });
 
-  window.addEventListener('touchmove', (e) => {
-    if (e.touches.length > 0) {
-      const rect = canvas.getBoundingClientRect();
-      const relX = e.touches[0].clientX - rect.left;
-      const relY = e.touches[0].clientY - rect.top;
-      if (relY >= 0 && relY <= heroViewportH * 1.15 && relX >= 0 && relX <= rect.width) {
-        anchor.targetX = relX;
-        anchor.targetY = Math.min(relY, heroViewportH * 0.85);
-        anchor.isMoving = true;
-        anchor.lastMoveTime = performance.now();
-        anchor.targetDispersion = 0.16;
-      }
-    }
-  }, { passive: true });
+  function drawSoftBlob(x, y, rad, r, g, b, peakAlpha) {
+    const grad = ctx.createRadialGradient(x, y, 0, x, y, rad);
+    grad.addColorStop(0, `rgba(${r}, ${g}, ${b}, ${peakAlpha.toFixed(3)})`);
+    grad.addColorStop(0.35, `rgba(${r}, ${g}, ${b}, ${(peakAlpha * 0.62).toFixed(3)})`);
+    grad.addColorStop(0.7, `rgba(${r}, ${g}, ${b}, ${(peakAlpha * 0.22).toFixed(3)})`);
+    grad.addColorStop(1, `rgba(${r}, ${g}, ${b}, 0)`);
 
-  window.addEventListener('touchend', () => {
-    anchor.isMoving = false;
-    anchor.targetDispersion = 0.34;
-  });
+    ctx.fillStyle = grad;
+    ctx.beginPath();
+    ctx.arc(x, y, rad, 0, Math.PI * 2);
+    ctx.fill();
+  }
 
   function animate(time) {
+    if (!isHeroVisible) {
+      rafId = 0;
+      return;
+    }
+
     ctx.clearRect(0, 0, width, height);
 
     if (anchor.isMoving && time - anchor.lastMoveTime > 900) {
@@ -148,7 +148,6 @@
     }
 
     if (!anchor.isMoving) {
-      // Movimento orgânico bem lento na última posição conhecida (nunca volta para o centro!)
       anchor.targetX += Math.sin(time * 0.00018) * 0.16;
       anchor.targetY += Math.cos(time * 0.00015) * 0.14;
 
@@ -168,25 +167,20 @@
     const dispEase = anchor.isMoving ? 0.06 : 0.008;
     anchor.dispersion += (anchor.targetDispersion - anchor.dispersion) * dispEase;
 
-    // 1. Desenha os blobs sutis de extensão atrás do container do vídeo
-    lowerContinuationBlobs.forEach((b) => {
-      const bx = width * b.xRatio + Math.sin(time * b.speed + b.phase) * (width * 0.09);
-      const by = height * b.yRatio + Math.cos(time * b.speed * 0.9 + b.phase) * (heroViewportH * 0.08);
-      const rad = b.baseRadius * (1 + Math.sin(time * 0.00022 + b.phase) * 0.12);
+    const mobileScale = width <= 768 ? 0.68 : 1;
 
-      const grad = ctx.createRadialGradient(bx, by, rad * 0.05, bx, by, rad);
-      grad.addColorStop(0, `rgba(${b.r}, ${b.g}, ${b.b}, 0.34)`);
-      grad.addColorStop(0.55, `rgba(${b.r}, ${b.g}, ${b.b}, 0.16)`);
-      grad.addColorStop(1, `rgba(${b.r}, ${b.g}, ${b.b}, 0)`);
+    // 1. Blobs sutis de extensão atrás do vídeo
+    for (let i = 0; i < lowerContinuationBlobs.length; i++) {
+      const b = lowerContinuationBlobs[i];
+      const bx = width * b.xRatio + Math.sin(time * b.speed + b.phase) * (width * 0.08);
+      const by = height * b.yRatio + Math.cos(time * b.speed * 0.9 + b.phase) * (heroViewportH * 0.07);
+      const rad = b.baseRadius * mobileScale * (1 + Math.sin(time * 0.00022 + b.phase) * 0.1);
+      drawSoftBlob(bx, by, rad, b.r, b.g, b.b, 0.24);
+    }
 
-      ctx.fillStyle = grad;
-      ctx.beginPath();
-      ctx.arc(bx, by, rad, 0, Math.PI * 2);
-      ctx.fill();
-    });
-
-    // 2. Desenha o grupo principal interativo em degradê mais concentrado
-    blobs.forEach((blob, idx) => {
+    // 2. Blobs principais interativos
+    for (let idx = 0; idx < blobs.length; idx++) {
+      const blob = blobs[idx];
       const angle = time * blob.driftSpeedX + blob.phase + idx * 1.25;
       const secondaryAngle = time * blob.driftSpeedY - blob.phase;
 
@@ -208,71 +202,82 @@
       blob.y += (desiredY - blob.y) * blobFollow;
 
       const breatheWave = Math.sin(time * blob.breatheSpeed + blob.phase);
-      const currentRadius = blob.baseRadius * (1 + breatheWave * 0.12);
-      const alpha = 0.64 + breatheWave * 0.07;
+      const currentRadius = blob.baseRadius * mobileScale * (1 + breatheWave * 0.11);
+      const alpha = 0.46 + breatheWave * 0.05;
 
-      const grad = ctx.createRadialGradient(
-        blob.x,
-        blob.y,
-        currentRadius * 0.04,
-        blob.x,
-        blob.y,
-        currentRadius
-      );
+      drawSoftBlob(blob.x, blob.y, currentRadius, blob.r, blob.g, blob.b, alpha);
+    }
 
-      grad.addColorStop(0, `rgba(${blob.r}, ${blob.g}, ${blob.b}, ${alpha})`);
-      grad.addColorStop(0.52, `rgba(${blob.r}, ${blob.g}, ${blob.b}, ${alpha * 0.52})`);
-      grad.addColorStop(1, `rgba(${blob.r}, ${blob.g}, ${blob.b}, 0)`);
-
-      ctx.fillStyle = grad;
-      ctx.beginPath();
-      ctx.arc(blob.x, blob.y, currentRadius, 0, Math.PI * 2);
-      ctx.fill();
-    });
-
-    requestAnimationFrame(animate);
+    rafId = requestAnimationFrame(animate);
   }
 
-  requestAnimationFrame(animate);
+  // Pausa o canvas do 1º container automaticamente quando ele sai da tela!
+  if ('IntersectionObserver' in window && canvas.parentElement) {
+    const heroObs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          isHeroVisible = entry.isIntersecting;
+          if (isHeroVisible && !rafId) {
+            rafId = requestAnimationFrame(animate);
+          }
+        });
+      },
+      { rootMargin: '100px 0px' }
+    );
+    heroObs.observe(canvas.parentElement);
+  } else {
+    rafId = requestAnimationFrame(animate);
+  }
 })();
 
 /* ==========================================================================
    6º CONTAINER: CANVAS DE CORES AUTÔNOMO DENTRO DO CARD DO WHATSAPP/CONTATO
-   (Mesmo degradê colorido do 1º container, porém não interativo — apenas se movendo lá dentro)
+   (Só roda quando o card de contato está visível na tela!)
    ========================================================================== */
 (function () {
   const contactCanvas = document.getElementById('contact-breathing-canvas');
   if (!contactCanvas) return;
-  const ctx = contactCanvas.getContext('2d');
+  const ctx = contactCanvas.getContext('2d', { alpha: true });
 
   let width = 0;
   let height = 0;
-  let dpr = Math.min(window.devicePixelRatio || 1, 2);
+  let renderScale = 0.18;
+  let isContactVisible = false;
+  let contactRafId = 0;
 
   function resizeContactCanvas() {
-    const rect = contactCanvas.parentElement.getBoundingClientRect();
-    width = Math.max(300, rect.width);
-    height = Math.max(240, rect.height);
-    contactCanvas.width = width * dpr;
-    contactCanvas.height = height * dpr;
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const parent = contactCanvas.parentElement;
+    if (!parent) return;
+    width = Math.max(260, parent.offsetWidth);
+    height = Math.max(220, parent.offsetHeight);
+    renderScale = width <= 768 ? 0.14 : 0.18;
+    contactCanvas.width = Math.max(48, Math.round(width * renderScale));
+    contactCanvas.height = Math.max(48, Math.round(height * renderScale));
+    ctx.setTransform(renderScale, 0, 0, renderScale, 0, 0);
   }
 
-  window.addEventListener('resize', resizeContactCanvas);
+  window.addEventListener('resize', resizeContactCanvas, { passive: true });
   resizeContactCanvas();
 
   const autonomousBlobs = [
-    { r: 27,  g: 98,  b: 248, baseRadius: 195, xRatio: 0.22, yRatio: 0.32, speedX: 0.00024, speedY: 0.00019, ampX: 0.22, ampY: 0.24, phase: 0.0 }, // Azul Royal
-    { r: 0,   g: 204, b: 255, baseRadius: 180, xRatio: 0.76, yRatio: 0.28, speedX: 0.00021, speedY: 0.00025, ampX: 0.20, ampY: 0.22, phase: 1.4 }, // Ciano
-    { r: 16,  g: 185, b: 129, baseRadius: 165, xRatio: 0.48, yRatio: 0.72, speedX: 0.00019, speedY: 0.00022, ampX: 0.24, ampY: 0.20, phase: 2.8 }, // Verde Esmeralda
-    { r: 124, g: 58,  b: 237, baseRadius: 185, xRatio: 0.80, yRatio: 0.74, speedX: 0.00023, speedY: 0.00018, ampX: 0.21, ampY: 0.23, phase: 4.2 }, // Violeta
-    { r: 217, g: 70,  b: 239, baseRadius: 160, xRatio: 0.26, yRatio: 0.68, speedX: 0.00025, speedY: 0.00021, ampX: 0.19, ampY: 0.21, phase: 5.5 }  // Lilás / Magenta
+    { r: 27,  g: 98,  b: 248, baseRadius: 245, xRatio: 0.22, yRatio: 0.32, speedX: 0.00024, speedY: 0.00019, ampX: 0.22, ampY: 0.24, phase: 0.0 },
+    { r: 0,   g: 204, b: 255, baseRadius: 225, xRatio: 0.76, yRatio: 0.28, speedX: 0.00021, speedY: 0.00025, ampX: 0.20, ampY: 0.22, phase: 1.4 },
+    { r: 16,  g: 185, b: 129, baseRadius: 210, xRatio: 0.48, yRatio: 0.72, speedX: 0.00019, speedY: 0.00022, ampX: 0.24, ampY: 0.20, phase: 2.8 },
+    { r: 124, g: 58,  b: 237, baseRadius: 235, xRatio: 0.80, yRatio: 0.74, speedX: 0.00023, speedY: 0.00018, ampX: 0.21, ampY: 0.23, phase: 4.2 },
+    { r: 217, g: 70,  b: 239, baseRadius: 200, xRatio: 0.26, yRatio: 0.68, speedX: 0.00025, speedY: 0.00021, ampX: 0.19, ampY: 0.21, phase: 5.5 }
   ];
 
   function animateContact(time) {
-    ctx.clearRect(0, 0, width, height);
+    if (!isContactVisible) {
+      contactRafId = 0;
+      return;
+    }
 
-    autonomousBlobs.forEach((b) => {
+    ctx.clearRect(0, 0, width, height);
+    const mobileScale = width <= 600 ? 0.72 : 1;
+
+    for (let i = 0; i < autonomousBlobs.length; i++) {
+      const b = autonomousBlobs[i];
       const x =
         width * b.xRatio +
         Math.sin(time * b.speedX + b.phase) * (width * b.ampX) +
@@ -284,33 +289,46 @@
         Math.sin(time * b.speedX * 0.7 + b.phase) * (height * 0.06);
 
       const breathe = Math.sin(time * 0.0003 + b.phase);
-      const rad = b.baseRadius * (1 + breathe * 0.14);
-      const alpha = 0.52 + breathe * 0.06;
+      const rad = b.baseRadius * mobileScale * (1 + breathe * 0.12);
+      const alpha = 0.36 + breathe * 0.04;
 
-      const grad = ctx.createRadialGradient(x, y, rad * 0.05, x, y, rad);
-      grad.addColorStop(0, `rgba(${b.r}, ${b.g}, ${b.b}, ${alpha})`);
-      grad.addColorStop(0.55, `rgba(${b.r}, ${b.g}, ${b.b}, ${alpha * 0.5})`);
+      const grad = ctx.createRadialGradient(x, y, 0, x, y, rad);
+      grad.addColorStop(0, `rgba(${b.r}, ${b.g}, ${b.b}, ${alpha.toFixed(3)})`);
+      grad.addColorStop(0.4, `rgba(${b.r}, ${b.g}, ${b.b}, ${(alpha * 0.58).toFixed(3)})`);
+      grad.addColorStop(0.75, `rgba(${b.r}, ${b.g}, ${b.b}, ${(alpha * 0.2).toFixed(3)})`);
       grad.addColorStop(1, `rgba(${b.r}, ${b.g}, ${b.b}, 0)`);
 
       ctx.fillStyle = grad;
       ctx.beginPath();
       ctx.arc(x, y, rad, 0, Math.PI * 2);
       ctx.fill();
-    });
+    }
 
-    requestAnimationFrame(animateContact);
+    contactRafId = requestAnimationFrame(animateContact);
   }
 
-  requestAnimationFrame(animateContact);
+  if ('IntersectionObserver' in window && contactCanvas.parentElement) {
+    const contactObs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          isContactVisible = entry.isIntersecting;
+          if (isContactVisible && !contactRafId) {
+            resizeContactCanvas();
+            contactRafId = requestAnimationFrame(animateContact);
+          }
+        });
+      },
+      { rootMargin: '120px 0px' }
+    );
+    contactObs.observe(contactCanvas.parentElement);
+  } else {
+    isContactVisible = true;
+    contactRafId = requestAnimationFrame(animateContact);
+  }
 })();
 
 /* ==========================================================================
-   2º CONTAINER: TRANSIÇÃO GRADUAL DO VÍDEO DESDE O PRIMEIRO SCROLL
-   - No scrollY = 0, o vídeo já está visível em 60% na parte de baixo do 1º container.
-   - Conforme você faz o 1º scroll e o vídeo vai subindo até o centro da tela,
-     ele já vai crescendo gradualmente para, quando chegar no centro, já estar em 100%!
-   - Mais uma scrollada mantém 100% ali no meio.
-   - Depois ele vai voltando suavemente para o tamanho de origem (60%).
+   2º CONTAINER: TRANSIÇÃO GRADUAL DO VÍDEO (ZERO LAYOUT THRASHING + AUTO PAUSE)
    ========================================================================== */
 (function () {
   const track = document.getElementById('destaque');
@@ -318,29 +336,39 @@
   const videoEl = document.getElementById('showcase-video');
   if (!track || !videoCard) return;
 
+  // Pausa o vídeo automaticamente quando fora da tela para não gastar GPU/CPU à toa
   if (videoEl) {
     videoEl.muted = true;
     const tryPlay = () => {
       videoEl.play().catch(() => {});
     };
-    tryPlay();
-    window.addEventListener('scroll', tryPlay, { once: true, passive: true });
-    window.addEventListener('click', tryPlay, { once: true, passive: true });
+
+    if ('IntersectionObserver' in window) {
+      const videoObs = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              tryPlay();
+            } else {
+              videoEl.pause();
+            }
+          });
+        },
+        { rootMargin: '150px 0px' }
+      );
+      videoObs.observe(track);
+    } else {
+      tryPlay();
+    }
   }
 
-  let initialTrackTop = 0;
+  let trackOffsetTop = 0;
+  let trackHeight = 0;
+  let viewportH = window.innerHeight;
+  let isMobileView = window.innerWidth <= 768;
   let currentFactor = 0;
   let targetFactor = 0;
-
-  function measureTrackOrigin() {
-    const rect = track.getBoundingClientRect();
-    const scrollY = window.scrollY || window.pageYOffset || 0;
-    initialTrackTop = Math.max(120, rect.top + scrollY);
-  }
-
-  window.addEventListener('resize', measureTrackOrigin);
-  window.addEventListener('load', measureTrackOrigin);
-  measureTrackOrigin();
+  let videoRafId = 0;
 
   function clamp(val, min, max) {
     return Math.max(min, Math.min(max, val));
@@ -351,29 +379,34 @@
     return c * c * (3 - 2 * c);
   }
 
-  function computeTargetFactor() {
+  function measureTrackMetrics() {
     const rect = track.getBoundingClientRect();
-    const vh = window.innerHeight;
     const scrollY = window.scrollY || window.pageYOffset || 0;
+    trackOffsetTop = Math.max(80, rect.top + scrollY);
+    trackHeight = track.offsetHeight;
+    viewportH = window.innerHeight;
+    isMobileView = window.innerWidth <= 768;
+    updateTargetFromScroll();
+    applyVideoTransform(currentFactor);
+  }
 
-    if (rect.top > 0) {
-      // FASE 1 (1º Scroll): Enquanto o vídeo sobe da posição inicial até o centro da tela (rect.top === 0),
-      // ele cresce gradualmente de 0 (60%) até 1 (100% da tela)!
-      const growDist = Math.max(100, initialTrackTop);
-      const rawGrow = clamp(scrollY / growDist, 0, 1);
+  function updateTargetFromScroll() {
+    const scrollY = window.scrollY || window.pageYOffset || 0;
+    const distToTop = trackOffsetTop - scrollY;
+
+    if (distToTop > 0) {
+      // FASE 1 (1º Scroll): Sobe e cresce gradualmente até atingir o centro (distToTop === 0)
+      const rawGrow = clamp(scrollY / trackOffsetTop, 0, 1);
       targetFactor = smoothstep(rawGrow);
     } else {
-      // O vídeo já chegou no centro da tela (sticky top: 0)!
-      const pinnedScrolled = -rect.top;
-      const totalPinnedScroll = Math.max(1, track.offsetHeight - vh);
-
-      // FASE 2: Mais uma scrollada mantendo 100% no meio da tela (~48% do curso sticky)
+      // O vídeo já chegou no centro da tela
+      const pinnedScrolled = -distToTop;
+      const totalPinnedScroll = Math.max(1, trackHeight - viewportH);
       const holdLimit = totalPinnedScroll * 0.48;
 
       if (pinnedScrolled <= holdLimit) {
         targetFactor = 1;
       } else if (pinnedScrolled < totalPinnedScroll) {
-        // FASE 3: Volta suavemente para o tamanho de origem (60%)
         const shrinkSpan = Math.max(1, totalPinnedScroll - holdLimit);
         const rawShrink = clamp((pinnedScrolled - holdLimit) / shrinkSpan, 0, 1);
         targetFactor = 1 - smoothstep(rawShrink);
@@ -381,50 +414,73 @@
         targetFactor = 0;
       }
     }
+
+    if (!videoRafId && Math.abs(targetFactor - currentFactor) > 0.0005) {
+      videoRafId = requestAnimationFrame(tickVideo);
+    }
   }
 
-  function renderVideoLoop() {
-    computeTargetFactor();
-    currentFactor += (targetFactor - currentFactor) * 0.22;
+  function applyVideoTransform(factor) {
+    const minScale = isMobileView ? 0.88 : 0.60;
+    const maxRadius = isMobileView ? 22 : 32;
 
-    const isMobile = window.innerWidth <= 720;
-    const minScale = isMobile ? 0.86 : 0.60; // 60% de origem
-
-    const scale = minScale + (1 - minScale) * currentFactor;
-    const radius = 32 * (1 - currentFactor);
+    const scale = minScale + (1 - minScale) * factor;
+    const radius = maxRadius * (1 - factor);
 
     videoCard.style.transform = `scale3d(${scale.toFixed(4)}, ${scale.toFixed(4)}, 1)`;
     videoCard.style.borderRadius = `${radius.toFixed(1)}px`;
-
-    requestAnimationFrame(renderVideoLoop);
   }
 
-  requestAnimationFrame(renderVideoLoop);
+  function tickVideo() {
+    const diff = targetFactor - currentFactor;
+    if (Math.abs(diff) < 0.0008) {
+      currentFactor = targetFactor;
+      applyVideoTransform(currentFactor);
+      videoRafId = 0;
+      return;
+    }
+
+    currentFactor += diff * 0.24;
+    applyVideoTransform(currentFactor);
+    videoRafId = requestAnimationFrame(tickVideo);
+  }
+
+  window.addEventListener('scroll', updateTargetFromScroll, { passive: true });
+  window.addEventListener('resize', measureTrackMetrics, { passive: true });
+  window.addEventListener('load', measureTrackMetrics);
+  measureTrackMetrics();
 })();
 
 /* ==========================================================================
-   3º CONTAINER: TRABALHOS REALIZADOS (CARDS ESTILO APPLE + MODAL COM BLUR)
+   3º CONTAINER: TRABALHOS REALIZADOS (CARDS ESTILO APPLE + MODAL COM SUPORTE TOUCH)
    ========================================================================== */
 document.addEventListener('DOMContentLoaded', () => {
   const navbar = document.getElementById('navbar');
   const menuToggle = document.getElementById('menu-toggle');
   const navLinks = document.getElementById('nav-links');
 
+  let isScrolled = false;
   window.addEventListener('scroll', () => {
-    if (window.scrollY > 40) {
-      navbar.classList.add('scrolled');
-    } else {
-      navbar.classList.remove('scrolled');
+    const shouldBeScrolled = (window.scrollY || window.pageYOffset) > 36;
+    if (shouldBeScrolled !== isScrolled) {
+      isScrolled = shouldBeScrolled;
+      navbar.classList.toggle('scrolled', isScrolled);
     }
   }, { passive: true });
 
   if (menuToggle && navLinks) {
     menuToggle.addEventListener('click', () => {
-      navLinks.classList.toggle('open');
+      const isOpen = navLinks.classList.toggle('open');
+      menuToggle.classList.toggle('active', isOpen);
+      menuToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
     });
 
     navLinks.querySelectorAll('a').forEach((link) => {
-      link.addEventListener('click', () => navLinks.classList.remove('open'));
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('open');
+        menuToggle.classList.remove('active');
+        menuToggle.setAttribute('aria-expanded', 'false');
+      });
     });
   }
 
@@ -457,39 +513,39 @@ document.addEventListener('DOMContentLoaded', () => {
       photos: [
         'assets/foto-socios.jpg',
         'assets/foto-socios-2.jpg',
-        'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=1200&q=85',
-        'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=1200&q=85',
-        'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=1200&q=85'
+        'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=1000&q=80',
+        'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=1000&q=80',
+        'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=1000&q=80'
       ]
     },
     {
       category: 'Profissionais Trabalhando',
       title: 'Rotina Executiva & Equipes',
       photos: [
-        'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=85',
-        'https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=1200&q=85',
-        'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=1200&q=85',
-        'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=1200&q=85'
+        'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1000&q=80',
+        'https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=1000&q=80',
+        'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=1000&q=80',
+        'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=1000&q=80'
       ]
     },
     {
       category: 'Audiovisual',
       title: 'Storytelling de Marca',
       photos: [
-        'https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=1200&q=85',
-        'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=1200&q=85',
-        'https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&w=1200&q=85',
-        'https://images.unsplash.com/photo-1542038784456-1ea8e935640e?auto=format&fit=crop&w=1200&q=85'
+        'https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=1000&q=80',
+        'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=1000&q=80',
+        'https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&w=1000&q=80',
+        'https://images.unsplash.com/photo-1542038784456-1ea8e935640e?auto=format&fit=crop&w=1000&q=80'
       ]
     },
     {
       category: 'Profissionais Trabalhando',
       title: 'Bastidores & Autenticidade',
       photos: [
-        'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=1200&q=85',
-        'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1200&q=85',
-        'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=1200&q=85',
-        'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=85'
+        'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=1000&q=80',
+        'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1000&q=80',
+        'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=1000&q=80',
+        'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1000&q=80'
       ]
     },
     {
@@ -498,18 +554,18 @@ document.addEventListener('DOMContentLoaded', () => {
       photos: [
         'assets/foto-socios-2.jpg',
         'assets/foto-socios.jpg',
-        'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=1200&q=85',
-        'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=1200&q=85'
+        'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=1000&q=80',
+        'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=1000&q=80'
       ]
     },
     {
       category: 'Audiovisual & Set',
       title: 'Captação de Alta Performance',
       photos: [
-        'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=85',
-        'https://images.unsplash.com/photo-1542038784456-1ea8e935640e?auto=format&fit=crop&w=1200&q=85',
-        'https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=1200&q=85',
-        'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=1200&q=85'
+        'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1000&q=80',
+        'https://images.unsplash.com/photo-1542038784456-1ea8e935640e?auto=format&fit=crop&w=1000&q=80',
+        'https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=1000&q=80',
+        'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=1000&q=80'
       ]
     }
   ];
@@ -522,6 +578,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const modalCounter = document.getElementById('album-modal-counter');
   const modalMainImg = document.getElementById('album-main-img');
   const modalThumbs = document.getElementById('album-thumbs');
+  const albumViewer = document.getElementById('album-viewer');
   const prevBtn = document.getElementById('album-prev');
   const nextBtn = document.getElementById('album-next');
 
@@ -553,7 +610,7 @@ document.addEventListener('DOMContentLoaded', () => {
     album.photos.forEach((src, idx) => {
       const thumb = document.createElement('div');
       thumb.className = `album-thumb ${idx === 0 ? 'active' : ''}`;
-      thumb.innerHTML = `<img src="${src}" alt="Miniatura ${idx + 1}" />`;
+      thumb.innerHTML = `<img src="${src}" alt="Miniatura ${idx + 1}" loading="lazy" decoding="async" />`;
       thumb.addEventListener('click', () => {
         currentPhotoIndex = idx;
         renderAlbumPhoto();
@@ -606,6 +663,26 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Suporte a gesto de deslizar (Swipe) no celular dentro do modal de fotos
+  if (albumViewer) {
+    let touchStartX = 0;
+    albumViewer.addEventListener('touchstart', (e) => {
+      if (e.touches.length > 0) {
+        touchStartX = e.touches[0].clientX;
+      }
+    }, { passive: true });
+
+    albumViewer.addEventListener('touchend', (e) => {
+      if (e.changedTouches.length > 0) {
+        const deltaX = e.changedTouches[0].clientX - touchStartX;
+        if (Math.abs(deltaX) > 45) {
+          if (deltaX < 0 && nextBtn) nextBtn.click();
+          if (deltaX > 0 && prevBtn) prevBtn.click();
+        }
+      }
+    }, { passive: true });
+  }
+
   if (modalClose) modalClose.addEventListener('click', closeAlbum);
   if (modalBackdrop) modalBackdrop.addEventListener('click', closeAlbum);
 
@@ -616,18 +693,22 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.key === 'ArrowRight' && nextBtn) nextBtn.click();
   });
 
-  // Scroll Reveal
-  const reveals = document.querySelectorAll('.reveal');
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
-      });
-    },
-    { threshold: 0.12 }
-  );
-
-  reveals.forEach((el) => observer.observe(el));
+  // Scroll Reveal otimizado (para de observar após revelar)
+  const reveals = document.querySelectorAll('.reveal:not(.visible)');
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(
+      (entries, obs) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            obs.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+    reveals.forEach((el) => observer.observe(el));
+  } else {
+    reveals.forEach((el) => el.classList.add('visible'));
+  }
 });

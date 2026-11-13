@@ -2,9 +2,10 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>FORAM Eles. | Fotografia &amp; Audiovisual</title>
   <meta name="description" content="FORAM Eles — Marca de fotografia e audiovisual por Luiz e João Arthur. Qualidade, naturalidade e equipamentos profissionais para fotos corporativas e profissionais em ação." />
+  <meta name="theme-color" content="#ffffff" />
   <link rel="icon" href="assets/favicon.png" type="image/png" />
   <link rel="apple-touch-icon" href="assets/favicon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -18,7 +19,7 @@
   <header class="navbar" id="navbar">
     <div class="nav-container">
       <a href="#hero" class="brand-logo" aria-label="FORAM Eles - Início">
-        <img src="assets/logo-foram-eles-crop.png" alt="FORAM Eles." class="logo-img" />
+        <img src="assets/logo-foram-eles-crop.png" alt="FORAM Eles." class="logo-img" decoding="async" />
       </a>
 
       <nav class="nav-links" id="nav-links">
@@ -30,7 +31,7 @@
         <a href="#contato" class="nav-link nav-cta">Solicitar Orçamento</a>
       </nav>
 
-      <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menu">
+      <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menu" aria-expanded="false">
         <span></span>
         <span></span>
         <span></span>
@@ -45,7 +46,7 @@
         <canvas id="breathing-canvas"></canvas>
       </div>
 
-      <div class="hero-content reveal">
+      <div class="hero-content reveal visible">
         <div class="hero-badge">
           <span class="pulse-dot"></span>
           <span>Fotografia &amp; Audiovisual Corporativo</span>
@@ -53,7 +54,7 @@
 
         <h1 class="hero-title">
           A essência de quem faz acontecer.<br />
-          <img src="assets/logo-foram-eles-crop.png" alt="FORAM Eles." class="inline-logo-hero" />
+          <img src="assets/logo-foram-eles-crop.png" alt="FORAM Eles." class="inline-logo-hero" decoding="async" />
         </h1>
 
         <p class="hero-subtitle">
@@ -73,10 +74,7 @@
       </div>
     </section>
 
-    <!-- 2º CONTAINER: VÍDEO EXPANSIVO GRADUAL DESDE O PRIMEIRO SCROLL
-         - Já visível em 60% logo abaixo do 1º container (com o fundo de cores do 1º container continuando por trás)
-         - No primeiro scroll já sobe crescendo gradualmente para estar 100% ao chegar no centro
-         - Mais um scroll mantém 100% no meio e depois volta suavemente para o tamanho de origem -->
+    <!-- 2º CONTAINER: VÍDEO EXPANSIVO GRADUAL DESDE O PRIMEIRO SCROLL -->
     <section class="video-scroll-track" id="destaque">
       <div class="video-sticky-stage" id="video-sticky-stage">
         <div class="video-expand-card" id="video-expand-card">
@@ -88,7 +86,7 @@
             muted
             loop
             playsinline
-            preload="auto"
+            preload="metadata"
           ></video>
 
           <div class="video-gradient-overlay"></div>
@@ -97,7 +95,7 @@
             <div class="video-bar-left">
               <div class="video-brand-tag">
                 <span>Showreel Oficial •</span>
-                <img src="assets/logo-foram-eles-branca-crop.png" alt="FORAM Eles." class="inline-logo-video" />
+                <img src="assets/logo-foram-eles-branca-crop.png" alt="FORAM Eles." class="inline-logo-video" decoding="async" />
               </div>
               <h3>Produção Audiovisual &amp; Fotografia em Movimento</h3>
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor.</p>
@@ -112,7 +110,7 @@
       </div>
     </section>
 
-    <!-- 3º CONTAINER: TRABALHOS REALIZADOS (OS CARDS DE 2 COMMITS ATRÁS QUE VOCÊ GOSTOU!) -->
+    <!-- 3º CONTAINER: TRABALHOS REALIZADOS (CARDS ESTILO CARTAS APPLE) -->
     <section class="container-portfolio section-padding" id="portfolio">
       <div class="section-inner">
         <div class="portfolio-header reveal">
@@ -120,10 +118,10 @@
             <span class="section-tag">Trabalhos Realizados</span>
             <h2 class="section-title">
               Profissionais em ação,<br />
-              registrados por <img src="assets/logo-eles-crop.png" alt="Eles." class="inline-logo-title" />
+              registrados por <img src="assets/logo-eles-crop.png" alt="Eles." class="inline-logo-title" loading="lazy" decoding="async" />
             </h2>
             <p class="section-desc">
-              Passe o mouse para espiar as fotos de baixo e <strong>clique em qualquer álbum</strong> para abrir todas as fotos com fundo desfocado.
+              Passe o mouse ou toque para espiar as fotos de baixo e <strong>clique em qualquer álbum</strong> para abrir todas as fotos com fundo desfocado.
             </p>
           </div>
           <div class="portfolio-filters" role="tablist">
@@ -139,13 +137,13 @@
           <article class="apple-stack-item" data-category="corporativo" data-album="0" tabindex="0" role="button" aria-label="Abrir álbum Posicionamento e Naturalidade">
             <div class="apple-card-stack">
               <div class="stack-layer layer-left">
-                <img src="assets/foto-socios-2.jpg" alt="Retrato de Sócios" />
+                <img src="assets/foto-socios-2.jpg" alt="Retrato de Sócios" loading="lazy" decoding="async" />
               </div>
               <div class="stack-layer layer-right">
-                <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=700&q=80" alt="Retrato Corporativo" />
+                <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=600&q=75" alt="Retrato Corporativo" loading="lazy" decoding="async" />
               </div>
               <div class="stack-layer layer-main">
-                <img src="assets/foto-socios.jpg" alt="Retrato Corporativo Natural" />
+                <img src="assets/foto-socios.jpg" alt="Retrato Corporativo Natural" loading="lazy" decoding="async" />
                 <div class="card-main-overlay">
                   <span class="item-cat">Retratos Corporativos • 5 fotos</span>
                   <h3>Posicionamento &amp; Naturalidade</h3>
@@ -154,7 +152,7 @@
             </div>
             <div class="stack-meta">
               <h4>Posicionamento &amp; Naturalidade</h4>
-              <p>Clique para ver o álbum completo</p>
+              <p>Toque para ver o álbum completo</p>
             </div>
           </article>
 
@@ -162,13 +160,13 @@
           <article class="apple-stack-item" data-category="trabalhando" data-album="1" tabindex="0" role="button" aria-label="Abrir álbum Rotina Executiva e Equipes">
             <div class="apple-card-stack">
               <div class="stack-layer layer-left">
-                <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=700&q=80" alt="Foto secundária esquerda" />
+                <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=600&q=75" alt="Foto secundária esquerda" loading="lazy" decoding="async" />
               </div>
               <div class="stack-layer layer-right">
-                <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=700&q=80" alt="Foto secundária direita" />
+                <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=600&q=75" alt="Foto secundária direita" loading="lazy" decoding="async" />
               </div>
               <div class="stack-layer layer-main">
-                <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=900&q=85" alt="Profissionais em ação" />
+                <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=750&q=80" alt="Profissionais em ação" loading="lazy" decoding="async" />
                 <div class="card-main-overlay">
                   <span class="item-cat">Profissionais Trabalhando • 4 fotos</span>
                   <h3>Rotina Executiva &amp; Equipes</h3>
@@ -177,7 +175,7 @@
             </div>
             <div class="stack-meta">
               <h4>Rotina Executiva &amp; Equipes</h4>
-              <p>Clique para ver o álbum completo</p>
+              <p>Toque para ver o álbum completo</p>
             </div>
           </article>
 
@@ -185,13 +183,13 @@
           <article class="apple-stack-item" data-category="audiovisual" data-album="2" tabindex="0" role="button" aria-label="Abrir álbum Storytelling de Marca">
             <div class="apple-card-stack">
               <div class="stack-layer layer-left">
-                <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=700&q=80" alt="Foto secundária esquerda" />
+                <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=600&q=75" alt="Foto secundária esquerda" loading="lazy" decoding="async" />
               </div>
               <div class="stack-layer layer-right">
-                <img src="https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&w=700&q=80" alt="Foto secundária direita" />
+                <img src="https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&w=600&q=75" alt="Foto secundária direita" loading="lazy" decoding="async" />
               </div>
               <div class="stack-layer layer-main">
-                <img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=900&q=85" alt="Produção Audiovisual" />
+                <img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=750&q=80" alt="Produção Audiovisual" loading="lazy" decoding="async" />
                 <div class="card-main-overlay">
                   <span class="item-cat">Audiovisual • 4 fotos</span>
                   <h3>Storytelling de Marca</h3>
@@ -200,7 +198,7 @@
             </div>
             <div class="stack-meta">
               <h4>Storytelling de Marca</h4>
-              <p>Clique para ver o álbum completo</p>
+              <p>Toque para ver o álbum completo</p>
             </div>
           </article>
 
@@ -208,13 +206,13 @@
           <article class="apple-stack-item" data-category="trabalhando" data-album="3" tabindex="0" role="button" aria-label="Abrir álbum Bastidores e Autenticidade">
             <div class="apple-card-stack">
               <div class="stack-layer layer-left">
-                <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=700&q=80" alt="Foto secundária esquerda" />
+                <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=600&q=75" alt="Foto secundária esquerda" loading="lazy" decoding="async" />
               </div>
               <div class="stack-layer layer-right">
-                <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=700&q=80" alt="Foto secundária direita" />
+                <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=600&q=75" alt="Foto secundária direita" loading="lazy" decoding="async" />
               </div>
               <div class="stack-layer layer-main">
-                <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=900&q=85" alt="Ambiente de trabalho real" />
+                <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=750&q=80" alt="Ambiente de trabalho real" loading="lazy" decoding="async" />
                 <div class="card-main-overlay">
                   <span class="item-cat">Profissionais Trabalhando • 4 fotos</span>
                   <h3>Bastidores &amp; Autenticidade</h3>
@@ -223,7 +221,7 @@
             </div>
             <div class="stack-meta">
               <h4>Bastidores &amp; Autenticidade</h4>
-              <p>Clique para ver o álbum completo</p>
+              <p>Toque para ver o álbum completo</p>
             </div>
           </article>
 
@@ -231,13 +229,13 @@
           <article class="apple-stack-item" data-category="corporativo" data-album="4" tabindex="0" role="button" aria-label="Abrir álbum Direção Executiva">
             <div class="apple-card-stack">
               <div class="stack-layer layer-left">
-                <img src="assets/foto-socios.jpg" alt="Foto secundária esquerda" />
+                <img src="assets/foto-socios.jpg" alt="Foto secundária esquerda" loading="lazy" decoding="async" />
               </div>
               <div class="stack-layer layer-right">
-                <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=700&q=80" alt="Foto secundária direita" />
+                <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=600&q=75" alt="Foto secundária direita" loading="lazy" decoding="async" />
               </div>
               <div class="stack-layer layer-main">
-                <img src="assets/foto-socios-2.jpg" alt="Retrato de Liderança" />
+                <img src="assets/foto-socios-2.jpg" alt="Retrato de Liderança" loading="lazy" decoding="async" />
                 <div class="card-main-overlay">
                   <span class="item-cat">Retratos Corporativos • 4 fotos</span>
                   <h3>Direção Executiva</h3>
@@ -246,7 +244,7 @@
             </div>
             <div class="stack-meta">
               <h4>Direção Executiva</h4>
-              <p>Clique para ver o álbum completo</p>
+              <p>Toque para ver o álbum completo</p>
             </div>
           </article>
 
@@ -254,13 +252,13 @@
           <article class="apple-stack-item" data-category="audiovisual" data-album="5" tabindex="0" role="button" aria-label="Abrir álbum Captação de Alta Performance">
             <div class="apple-card-stack">
               <div class="stack-layer layer-left">
-                <img src="https://images.unsplash.com/photo-1542038784456-1ea8e935640e?auto=format&fit=crop&w=700&q=80" alt="Foto secundária esquerda" />
+                <img src="https://images.unsplash.com/photo-1542038784456-1ea8e935640e?auto=format&fit=crop&w=600&q=75" alt="Foto secundária esquerda" loading="lazy" decoding="async" />
               </div>
               <div class="stack-layer layer-right">
-                <img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=700&q=80" alt="Foto secundária direita" />
+                <img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=600&q=75" alt="Foto secundária direita" loading="lazy" decoding="async" />
               </div>
               <div class="stack-layer layer-main">
-                <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=900&q=85" alt="Set e Equipamentos" />
+                <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=750&q=80" alt="Set e Equipamentos" loading="lazy" decoding="async" />
                 <div class="card-main-overlay">
                   <span class="item-cat">Audiovisual &amp; Set • 4 fotos</span>
                   <h3>Captação de Alta Performance</h3>
@@ -269,7 +267,7 @@
             </div>
             <div class="stack-meta">
               <h4>Captação de Alta Performance</h4>
-              <p>Clique para ver o álbum completo</p>
+              <p>Toque para ver o álbum completo</p>
             </div>
           </article>
         </div>
@@ -285,15 +283,19 @@
               <img
                 src="assets/foto-socios.jpg"
                 alt="Retrato Corporativo de Sócios"
+                loading="lazy"
+                decoding="async"
               />
             </div>
             <div class="about-photo-secondary">
               <img
                 src="assets/foto-socios-2.jpg"
                 alt="Profissionais e Sócios"
+                loading="lazy"
+                decoding="async"
               />
               <div class="about-floating-tag">
-                <img src="assets/logo-foram-eles-crop.png" alt="FORAM Eles." class="floating-tag-logo" />
+                <img src="assets/logo-foram-eles-crop.png" alt="FORAM Eles." class="floating-tag-logo" loading="lazy" decoding="async" />
                 <span>Luiz &amp; João Arthur</span>
               </div>
             </div>
@@ -303,11 +305,11 @@
             <span class="section-tag">Nossa Origem</span>
             <h2 class="section-title">
               Nascida da vontade de crescer.<br />
-              <img src="assets/logo-foram-eles-crop.png" alt="FORAM Eles." class="inline-logo-title" />
+              <img src="assets/logo-foram-eles-crop.png" alt="FORAM Eles." class="inline-logo-title" loading="lazy" decoding="async" />
             </h2>
 
             <p class="about-paragraph highlight-p">
-              A <img src="assets/logo-foram-eles-crop.png" alt="FORAM Eles." class="inline-logo-text" /> é uma marca de fotografia e audiovisual nascida a partir da vontade genuína de crescer nesse meio, idealizada por <strong>Luiz</strong> — que se juntou ao <strong>João Arthur</strong> para transformar visão em excelência prática.
+              A <img src="assets/logo-foram-eles-crop.png" alt="FORAM Eles." class="inline-logo-text" loading="lazy" decoding="async" /> é uma marca de fotografia e audiovisual nascida a partir da vontade genuína de crescer nesse meio, idealizada por <strong>Luiz</strong> — que se juntou ao <strong>João Arthur</strong> para transformar visão em excelência prática.
             </p>
 
             <p class="about-paragraph">
@@ -345,7 +347,7 @@
         <div class="features-header reveal">
           <span class="section-tag">Diferenciais</span>
           <h2 class="section-title">
-            Por que escolher <img src="assets/logo-eles-crop.png" alt="Eles." class="inline-logo-title" />?
+            Por que escolher <img src="assets/logo-eles-crop.png" alt="Eles." class="inline-logo-title" loading="lazy" decoding="async" />?
           </h2>
           <p class="section-desc">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
@@ -388,8 +390,7 @@
       </div>
     </section>
 
-    <!-- 6º CONTAINER: CONTATO / CHAMAR NO WHATSAPP
-         (Container limitado ~70% da tela com o mesmo efeito das cores desfocadas se movendo sozinhas lá dentro!) -->
+    <!-- 6º CONTAINER: CONTATO / CHAMAR NO WHATSAPP -->
     <section class="container-contact section-padding" id="contato">
       <div class="section-inner">
         <div class="contact-card reveal">
@@ -402,7 +403,7 @@
             <span class="section-tag">Vamos Produzir Juntos?</span>
             <h2 class="section-title">
               Quem fez essa imagem?<br />
-              <img src="assets/logo-foram-eles-crop.png" alt="FORAM Eles." class="inline-logo-contact" />
+              <img src="assets/logo-foram-eles-crop.png" alt="FORAM Eles." class="inline-logo-contact" loading="lazy" decoding="async" />
             </h2>
             <p class="section-desc">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Entre em contato com Luiz e João Arthur para agendar seu ensaio corporativo ou produção audiovisual.
@@ -457,10 +458,10 @@
         <span class="album-modal-counter" id="album-modal-counter">1 / 4</span>
       </div>
 
-      <div class="album-viewer">
+      <div class="album-viewer" id="album-viewer">
         <button class="album-nav-btn prev" id="album-prev" aria-label="Foto anterior">&#10094;</button>
         <div class="album-main-img-wrap">
-          <img src="" alt="Foto do álbum" id="album-main-img" class="album-main-img" />
+          <img src="" alt="Foto do álbum" id="album-main-img" class="album-main-img" decoding="async" />
         </div>
         <button class="album-nav-btn next" id="album-next" aria-label="Próxima foto">&#10095;</button>
       </div>
@@ -472,15 +473,15 @@
   <footer class="footer">
     <div class="section-inner footer-inner">
       <div class="footer-brand">
-        <img src="assets/logo-eles-crop.png" alt="Eles." class="footer-logo" />
+        <img src="assets/logo-eles-crop.png" alt="Eles." class="footer-logo" loading="lazy" decoding="async" />
         <span>Fotografia &amp; Audiovisual por Luiz &amp; João Arthur.</span>
       </div>
       <div class="footer-copy">
-        &copy; <span id="year">2026</span> <img src="assets/logo-foram-eles-crop.png" alt="FORAM Eles." class="inline-logo-footer" /> Todos os direitos reservados.
+        &copy; <span id="year">2026</span> <img src="assets/logo-foram-eles-crop.png" alt="FORAM Eles." class="inline-logo-footer" loading="lazy" decoding="async" /> Todos os direitos reservados.
       </div>
     </div>
   </footer>
 
-  <script src="script.js"></script>
+  <script src="script.js" defer></script>
 </body>
 </html>
