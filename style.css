@@ -1,30 +1,30 @@
 :root {
-  /* Paleta Limpa inspirada em antigravity.google: Branco + Cinza Escuro + Azul FORAM Eles */
+  /* Site Branco Limpo estilo antigravity.google + Botões e Destaques em Azul + Textos em Cinza Escuro */
   --bg-white: #ffffff;
-  --bg-soft: #f7f9fc;
-  --bg-subtle: #eef2f7;
+  --bg-soft: #f6f9fc;
+  --bg-subtle: #edf2f9;
 
-  --slate-900: #111622;
-  --slate-800: #1d2433;
-  --slate-700: #2d3748;
-  --slate-500: #5e6b82;
-  --slate-300: #d8e0ec;
+  --slate-800: #1e2636;
+  --slate-700: #2f3b52;
+  --slate-500: #5a677d;
+  --slate-300: #d5dfed;
 
   --blue-primary: #1b62f8;
-  --blue-hover: #0f4fd6;
-  --blue-light: #60a5fa;
+  --blue-hover: #0e4cd3;
+  --blue-light: #4785ff;
   --blue-tint: rgba(27, 98, 248, 0.08);
+  --blue-border: rgba(27, 98, 248, 0.22);
 
-  --border-subtle: rgba(17, 22, 34, 0.08);
-  --border-strong: rgba(17, 22, 34, 0.15);
+  --border-subtle: rgba(30, 38, 54, 0.08);
+  --border-strong: rgba(30, 38, 54, 0.14);
 
   --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-display: 'Syne', sans-serif;
   --radius-xl: 28px;
   --radius-lg: 22px;
   --radius-md: 16px;
-  --apple-spring: 0.55s cubic-bezier(0.22, 1, 0.36, 1);
-  --transition: 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  --apple-spring: 0.72s cubic-bezier(0.22, 1, 0.36, 1);
+  --transition: 0.45s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 * {
@@ -36,19 +36,19 @@
 html {
   scroll-behavior: smooth;
   background-color: var(--bg-white);
-  color: var(--slate-900);
+  color: var(--slate-800);
   font-family: var(--font-sans);
 }
 
 body {
   background-color: var(--bg-white);
-  color: var(--slate-900);
+  color: var(--slate-800);
   overflow-x: hidden;
   line-height: 1.6;
 }
 
 /* ==========================================================================
-   HEADER / NAVBAR (Branco translúcido limpo estilo Antigravity)
+   HEADER / NAVBAR (Branco translúcido limpo + Botão Azul)
    ========================================================================== */
 .navbar {
   position: fixed;
@@ -57,7 +57,7 @@ body {
   width: 100%;
   z-index: 100;
   padding: 1.05rem 0;
-  background: rgba(255, 255, 255, 0.72);
+  background: rgba(255, 255, 255, 0.78);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
   border-bottom: 1px solid transparent;
@@ -65,10 +65,10 @@ body {
 }
 
 .navbar.scrolled {
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.92);
   border-bottom: 1px solid var(--border-subtle);
   padding: 0.8rem 0;
-  box-shadow: 0 4px 24px rgba(17, 22, 34, 0.04);
+  box-shadow: 0 4px 24px rgba(30, 38, 54, 0.05);
 }
 
 .nav-container {
@@ -104,26 +104,28 @@ body {
   text-decoration: none;
   font-size: 0.92rem;
   font-weight: 500;
-  transition: color 0.25s ease;
+  transition: color 0.3s ease;
 }
 
 .nav-link:hover,
 .nav-link.active {
-  color: var(--slate-900);
+  color: var(--blue-primary);
 }
 
 .nav-cta {
-  padding: 0.58rem 1.25rem;
+  padding: 0.6rem 1.3rem;
   border-radius: 999px;
-  background: var(--slate-900);
+  background: var(--blue-primary);
   color: #ffffff !important;
   font-weight: 600;
+  box-shadow: 0 8px 20px -4px rgba(27, 98, 248, 0.38);
   transition: var(--transition);
 }
 
 .nav-cta:hover {
-  background: var(--blue-primary);
+  background: var(--blue-hover);
   transform: translateY(-1px);
+  box-shadow: 0 12px 26px -4px rgba(27, 98, 248, 0.5);
 }
 
 .menu-toggle {
@@ -138,20 +140,22 @@ body {
 .menu-toggle span {
   width: 24px;
   height: 2px;
-  background: var(--slate-900);
+  background: var(--slate-800);
   border-radius: 2px;
 }
 
 /* ==========================================================================
-   1º CONTAINER: BRANCO COM DESFOQUE COLORIDO LENTO E INTERATIVO
+   1º CONTAINER: BRANCO COM DESFOQUE COLORIDO BEM LENTO E INTERATIVO
    ========================================================================== */
 .container-hero {
   position: relative;
-  min-height: 76vh;
+  /* Altura calibrada para que o vídeo do 2º container (em 60% da tela)
+     já apareça na parte inferior enquanto o usuário está no 1º container */
+  min-height: 62vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 8.5rem 1.75rem 3.5rem;
+  padding: 7.2rem 1.75rem 1.8rem;
   overflow: visible;
   background: var(--bg-white);
 }
@@ -159,7 +163,7 @@ body {
 .hero-canvas-wrapper {
   position: absolute;
   inset: 0;
-  bottom: -18vh;
+  bottom: -24vh;
   z-index: 0;
   overflow: hidden;
   pointer-events: none;
@@ -170,8 +174,8 @@ body {
   width: 100%;
   height: 100%;
   display: block;
-  filter: blur(68px) saturate(135%);
-  transform: scale(1.05);
+  filter: blur(74px) saturate(140%);
+  transform: scale(1.06);
 }
 
 .hero-content {
@@ -190,14 +194,14 @@ body {
   gap: 0.6rem;
   padding: 0.45rem 1.1rem;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.82);
-  border: 1px solid var(--border-strong);
+  background: rgba(255, 255, 255, 0.86);
+  border: 1px solid var(--blue-border);
   backdrop-filter: blur(12px);
   font-size: 0.82rem;
   font-weight: 600;
-  color: var(--slate-800);
-  margin-bottom: 1.6rem;
-  box-shadow: 0 4px 16px rgba(17, 22, 34, 0.04);
+  color: var(--blue-primary);
+  margin-bottom: 1.35rem;
+  box-shadow: 0 4px 16px rgba(27, 98, 248, 0.06);
 }
 
 .pulse-dot {
@@ -206,7 +210,7 @@ body {
   border-radius: 50%;
   background: var(--blue-primary);
   box-shadow: 0 0 10px rgba(27, 98, 248, 0.6);
-  animation: pulseDot 3s infinite ease-in-out;
+  animation: pulseDot 3.6s infinite ease-in-out;
 }
 
 @keyframes pulseDot {
@@ -216,16 +220,16 @@ body {
 
 .hero-title {
   font-family: var(--font-display);
-  font-size: clamp(2.4rem, 5.2vw, 4.35rem);
-  line-height: 1.07;
+  font-size: clamp(2.25rem, 4.9vw, 4.1rem);
+  line-height: 1.08;
   letter-spacing: -0.03em;
   font-weight: 800;
-  color: var(--slate-900);
-  margin-bottom: 1.35rem;
+  color: var(--slate-800);
+  margin-bottom: 1.15rem;
 }
 
 .brand-accent {
-  color: var(--slate-900);
+  color: var(--slate-800);
 }
 
 .blue-dot {
@@ -233,10 +237,10 @@ body {
 }
 
 .hero-subtitle {
-  font-size: clamp(1rem, 1.3vw, 1.16rem);
+  font-size: clamp(0.98rem, 1.25vw, 1.14rem);
   color: var(--slate-500);
   max-width: 650px;
-  margin-bottom: 2.2rem;
+  margin-bottom: 1.9rem;
 }
 
 .hero-actions {
@@ -251,7 +255,7 @@ body {
   align-items: center;
   justify-content: center;
   gap: 0.6rem;
-  padding: 0.9rem 1.75rem;
+  padding: 0.9rem 1.8rem;
   border-radius: 999px;
   font-weight: 600;
   font-size: 0.94rem;
@@ -262,38 +266,27 @@ body {
 }
 
 .btn-primary {
-  background: var(--slate-900);
+  background: var(--blue-primary);
   color: #ffffff;
-  box-shadow: 0 10px 24px -6px rgba(17, 22, 34, 0.3);
+  box-shadow: 0 12px 26px -6px rgba(27, 98, 248, 0.42);
 }
 
 .btn-primary:hover {
-  background: var(--blue-primary);
+  background: var(--blue-hover);
   transform: translateY(-2px);
-  box-shadow: 0 14px 30px -6px rgba(27, 98, 248, 0.45);
+  box-shadow: 0 16px 32px -6px rgba(27, 98, 248, 0.55);
 }
 
 .btn-secondary {
-  background: rgba(255, 255, 255, 0.85);
-  color: var(--slate-900);
-  border: 1px solid var(--border-strong);
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--blue-primary);
+  border: 1.5px solid var(--blue-border);
   backdrop-filter: blur(10px);
 }
 
 .btn-secondary:hover {
-  background: #ffffff;
-  border-color: var(--slate-900);
-  transform: translateY(-2px);
-}
-
-.btn-secondary-dark {
-  background: rgba(255, 255, 255, 0.1);
-  color: #ffffff;
-  border: 1px solid rgba(255, 255, 255, 0.25);
-}
-
-.btn-secondary-dark:hover {
-  background: rgba(255, 255, 255, 0.18);
+  background: var(--blue-tint);
+  border-color: var(--blue-primary);
   transform: translateY(-2px);
 }
 
@@ -302,12 +295,12 @@ body {
    ========================================================================== */
 .video-scroll-track {
   position: relative;
-  /* 450vh garante:
+  /* 460vh garante:
      - Entrada crescendo de 60% até 100%
-     - 200vh (2 scrolls inteiros) travado em 100% da tela
-     - Saída reduzindo de 100% de volta antes de continuar descendo */
-  height: 450vh;
-  margin-top: -4vh;
+     - 200vh (2 scrolls inteiros) permanecendo em 100% da tela
+     - Saída reduzindo suavemente antes de continuar descendo */
+  height: 460vh;
+  margin-top: 0;
   z-index: 5;
 }
 
@@ -325,11 +318,12 @@ body {
 .video-expand-card {
   position: relative;
   width: 60vw;
-  height: 62vh;
+  height: 60vh;
   border-radius: 28px;
   overflow: hidden;
-  background: var(--slate-900);
-  box-shadow: 0 28px 70px rgba(17, 22, 34, 0.22);
+  background: var(--slate-800);
+  box-shadow: 0 26px 65px rgba(27, 98, 248, 0.16), 0 12px 32px rgba(30, 38, 54, 0.14);
+  border: 1px solid rgba(27, 98, 248, 0.18);
   will-change: width, height, border-radius;
 }
 
@@ -345,8 +339,8 @@ body {
   inset: 0;
   background: linear-gradient(
     to top,
-    rgba(17, 22, 34, 0.85) 0%,
-    rgba(17, 22, 34, 0.18) 45%,
+    rgba(24, 32, 48, 0.78) 0%,
+    rgba(24, 32, 48, 0.12) 45%,
     transparent 100%
   );
   pointer-events: none;
@@ -371,7 +365,7 @@ body {
   font-size: 0.76rem;
   text-transform: uppercase;
   letter-spacing: 0.12em;
-  color: var(--blue-light);
+  color: #8bb4ff;
   font-weight: 700;
   margin-bottom: 0.35rem;
 }
@@ -385,7 +379,7 @@ body {
 
 .video-bar-left p {
   font-size: 0.92rem;
-  color: rgba(255, 255, 255, 0.78);
+  color: rgba(255, 255, 255, 0.85);
 }
 
 .video-bar-pills {
@@ -399,13 +393,13 @@ body {
   border-radius: 999px;
   font-size: 0.78rem;
   font-weight: 600;
-  background: rgba(255, 255, 255, 0.14);
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(27, 98, 248, 0.35);
+  border: 1px solid rgba(139, 180, 255, 0.45);
   backdrop-filter: blur(10px);
 }
 
 /* ==========================================================================
-   SEÇÕES GERAIS (Branco, Cinza Escuro & Azul)
+   SEÇÕES GERAIS (Branco, Azul & Cinza Escuro)
    ========================================================================== */
 .section-padding {
   padding: 6.5rem 1.75rem;
@@ -430,7 +424,7 @@ body {
   font-family: var(--font-display);
   font-size: clamp(1.9rem, 3.5vw, 2.95rem);
   line-height: 1.14;
-  color: var(--slate-900);
+  color: var(--slate-800);
   margin-bottom: 0.9rem;
 }
 
@@ -463,9 +457,9 @@ body {
 }
 
 .filter-btn {
-  padding: 0.58rem 1.2rem;
+  padding: 0.58rem 1.25rem;
   border-radius: 999px;
-  border: 1px solid var(--border-strong);
+  border: 1px solid var(--blue-border);
   background: var(--bg-white);
   color: var(--slate-700);
   font-family: var(--font-sans);
@@ -478,18 +472,20 @@ body {
 .filter-btn:hover {
   border-color: var(--blue-primary);
   color: var(--blue-primary);
+  background: var(--blue-tint);
 }
 
 .filter-btn.active {
-  background: var(--slate-900);
+  background: var(--blue-primary);
   color: #ffffff;
-  border-color: var(--slate-900);
+  border-color: var(--blue-primary);
+  box-shadow: 0 8px 20px -4px rgba(27, 98, 248, 0.38);
 }
 
 .portfolio-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 3.2rem 2.6rem;
+  gap: 3.4rem 2.8rem;
 }
 
 .apple-stack-item {
@@ -502,8 +498,8 @@ body {
 /* Container da pilha de cartas estilo Apple */
 .apple-card-stack {
   position: relative;
-  width: 86%;
-  aspect-ratio: 1 / 1.05;
+  width: 84%;
+  aspect-ratio: 1 / 1.04;
   margin: 0 auto 1.4rem;
   perspective: 1000px;
 }
@@ -513,10 +509,10 @@ body {
   inset: 0;
   border-radius: var(--radius-lg);
   overflow: hidden;
-  background: var(--slate-800);
-  border: 3px solid #ffffff;
-  box-shadow: 0 12px 28px rgba(17, 22, 34, 0.12);
-  transition: transform var(--apple-spring), box-shadow var(--apple-spring), opacity var(--apple-spring);
+  background: var(--bg-soft);
+  border: 3.5px solid #ffffff;
+  box-shadow: 0 12px 28px rgba(30, 38, 54, 0.11);
+  transition: transform var(--apple-spring), box-shadow var(--apple-spring), opacity var(--apple-spring), filter var(--apple-spring);
   will-change: transform;
 }
 
@@ -530,48 +526,48 @@ body {
 /* Em repouso: vê-se de leve a lateral das fotos que estão por baixo (bem suave igual Apple) */
 .stack-layer.layer-left {
   z-index: 1;
-  transform: translateX(-15px) translateY(6px) rotate(-3.5deg) scale(0.92);
-  opacity: 0.88;
-  filter: brightness(0.92);
+  transform: translateX(-18px) translateY(6px) rotate(-4deg) scale(0.92);
+  opacity: 0.9;
+  filter: brightness(0.95);
 }
 
 .stack-layer.layer-right {
   z-index: 2;
-  transform: translateX(15px) translateY(6px) rotate(3.5deg) scale(0.92);
+  transform: translateX(18px) translateY(6px) rotate(4deg) scale(0.92);
   opacity: 0.92;
-  filter: brightness(0.94);
+  filter: brightness(0.96);
 }
 
 .stack-layer.layer-main {
   z-index: 3;
   transform: translateY(0) scale(1);
-  box-shadow: 0 18px 40px rgba(17, 22, 34, 0.16);
+  box-shadow: 0 18px 40px rgba(30, 38, 54, 0.15);
 }
 
-/* No Hover: as cartas de baixo abrem mais nas laterais com física suave da Apple */
+/* No Hover: as cartas de baixo aparecem um pouco mais nas laterais com suavidade Apple */
 .apple-stack-item:hover .stack-layer.layer-left {
-  transform: translateX(-38px) translateY(-2px) rotate(-8.5deg) scale(0.95);
+  transform: translateX(-42px) translateY(-2px) rotate(-8.5deg) scale(0.95);
   opacity: 1;
   filter: brightness(1);
-  box-shadow: 0 18px 36px rgba(17, 22, 34, 0.18);
+  box-shadow: 0 18px 36px rgba(27, 98, 248, 0.16);
 }
 
 .apple-stack-item:hover .stack-layer.layer-right {
-  transform: translateX(38px) translateY(-2px) rotate(8.5deg) scale(0.95);
+  transform: translateX(42px) translateY(-2px) rotate(8.5deg) scale(0.95);
   opacity: 1;
   filter: brightness(1);
-  box-shadow: 0 18px 36px rgba(17, 22, 34, 0.18);
+  box-shadow: 0 18px 36px rgba(27, 98, 248, 0.16);
 }
 
 .apple-stack-item:hover .stack-layer.layer-main {
-  transform: translateY(-8px) scale(1.02);
-  box-shadow: 0 26px 52px rgba(17, 22, 34, 0.24);
+  transform: translateY(-7px) scale(1.015);
+  box-shadow: 0 24px 48px rgba(27, 98, 248, 0.2);
 }
 
 .card-main-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(17, 22, 34, 0.86) 0%, rgba(17, 22, 34, 0.1) 55%, transparent 100%);
+  background: linear-gradient(to top, rgba(24, 32, 48, 0.84) 0%, rgba(24, 32, 48, 0.08) 55%, transparent 100%);
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -583,7 +579,7 @@ body {
   font-size: 0.72rem;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: var(--blue-light);
+  color: #8bb4ff;
   font-weight: 700;
   margin-bottom: 0.2rem;
 }
@@ -602,7 +598,7 @@ body {
 .stack-meta h4 {
   font-family: var(--font-display);
   font-size: 1.1rem;
-  color: var(--slate-900);
+  color: var(--slate-800);
   margin-bottom: 0.2rem;
 }
 
@@ -612,7 +608,7 @@ body {
 }
 
 /* ==========================================================================
-   4º CONTAINER: SOBRE NÓS (Branco Suave Acetinado + Cinza Escuro & Azul)
+   4º CONTAINER: SOBRE NÓS (Branco Suave + Azul e Cinza Escuro)
    ========================================================================== */
 .container-about {
   background: var(--bg-soft);
@@ -636,7 +632,7 @@ body {
   border-radius: var(--radius-lg);
   overflow: hidden;
   border: 1px solid var(--border-subtle);
-  box-shadow: 0 20px 45px rgba(17, 22, 34, 0.1);
+  box-shadow: 0 20px 45px rgba(30, 38, 54, 0.1);
 }
 
 .about-photo-main img {
@@ -652,7 +648,7 @@ body {
   border-radius: var(--radius-md);
   overflow: hidden;
   border: 5px solid var(--bg-soft);
-  box-shadow: 0 20px 45px rgba(17, 22, 34, 0.16);
+  box-shadow: 0 20px 45px rgba(30, 38, 54, 0.14);
   position: relative;
 }
 
@@ -667,22 +663,25 @@ body {
   position: absolute;
   bottom: 14px;
   left: 14px;
-  background: rgba(17, 22, 34, 0.9);
+  background: rgba(255, 255, 255, 0.94);
   backdrop-filter: blur(12px);
   padding: 0.6rem 1rem;
   border-radius: 12px;
+  border: 1px solid var(--blue-border);
   display: flex;
   flex-direction: column;
+  box-shadow: 0 8px 24px rgba(30, 38, 54, 0.12);
 }
 
 .about-floating-tag strong {
   font-size: 0.9rem;
-  color: #ffffff;
+  color: var(--slate-800);
 }
 
 .about-floating-tag span {
   font-size: 0.76rem;
-  color: var(--blue-light);
+  color: var(--blue-primary);
+  font-weight: 600;
 }
 
 .about-paragraph {
@@ -692,7 +691,7 @@ body {
 }
 
 .about-paragraph strong {
-  color: var(--slate-900);
+  color: var(--slate-800);
 }
 
 .highlight-p {
@@ -720,8 +719,8 @@ body {
   padding: 0.75rem 1.15rem;
   border-radius: 14px;
   background: var(--bg-white);
-  border: 1px solid var(--border-subtle);
-  box-shadow: 0 6px 20px rgba(17, 22, 34, 0.04);
+  border: 1px solid var(--blue-border);
+  box-shadow: 0 6px 20px rgba(27, 98, 248, 0.05);
 }
 
 .founder-avatar {
@@ -739,7 +738,7 @@ body {
 
 .founder-chip h4 {
   font-size: 0.98rem;
-  color: var(--slate-900);
+  color: var(--slate-800);
   margin-bottom: 0.1rem;
 }
 
@@ -749,7 +748,7 @@ body {
 }
 
 /* ==========================================================================
-   5º CONTAINER: DIFERENCIAIS (Fundo Branco Limpo + Cards Sutis)
+   5º CONTAINER: DIFERENCIAIS (Fundo Branco Limpo + Azul)
    ========================================================================== */
 .container-features {
   background: var(--bg-white);
@@ -780,7 +779,7 @@ body {
 .feature-box:hover {
   background: var(--bg-white);
   border-color: var(--blue-primary);
-  box-shadow: 0 16px 36px rgba(17, 22, 34, 0.07);
+  box-shadow: 0 16px 36px rgba(27, 98, 248, 0.09);
   transform: translateY(-5px);
 }
 
@@ -788,20 +787,21 @@ body {
   width: 44px;
   height: 44px;
   border-radius: 12px;
-  background: var(--blue-tint);
-  color: var(--blue-primary);
+  background: var(--blue-primary);
+  color: #ffffff;
   font-family: var(--font-display);
   font-weight: 700;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 1.25rem;
+  box-shadow: 0 6px 16px rgba(27, 98, 248, 0.3);
 }
 
 .feature-box h3 {
   font-family: var(--font-display);
   font-size: 1.18rem;
-  color: var(--slate-900);
+  color: var(--slate-800);
   margin-bottom: 0.65rem;
 }
 
@@ -811,38 +811,27 @@ body {
 }
 
 /* ==========================================================================
-   6º CONTAINER: CONTATO (Card em Cinza Escuro & Azul sobre fundo claro)
+   6º CONTAINER: CONTATO (Card Branco Limpo com Destaques e Botões em Azul)
    ========================================================================== */
 .container-contact {
   background: var(--bg-soft);
 }
 
 .contact-card {
-  background: var(--slate-800);
-  color: #ffffff;
+  background: var(--bg-white);
+  color: var(--slate-800);
+  border: 1.5px solid var(--blue-border);
   border-radius: var(--radius-xl);
   padding: 3.5rem;
   display: grid;
   grid-template-columns: 1.1fr 1fr;
   gap: 3rem;
   align-items: center;
-  box-shadow: 0 24px 60px rgba(17, 22, 34, 0.14);
-}
-
-.contact-card .section-tag {
-  color: var(--blue-light);
-}
-
-.contact-card .section-title {
-  color: #ffffff;
+  box-shadow: 0 24px 60px rgba(27, 98, 248, 0.08);
 }
 
 .contact-brand {
-  color: var(--blue-light);
-}
-
-.contact-card .section-desc {
-  color: rgba(255, 255, 255, 0.76);
+  color: var(--blue-primary);
 }
 
 .contact-buttons {
@@ -850,14 +839,6 @@ body {
   flex-wrap: wrap;
   gap: 1rem;
   margin-top: 2rem;
-}
-
-.contact-card .btn-primary {
-  background: var(--blue-primary);
-}
-
-.contact-card .btn-primary:hover {
-  background: var(--blue-hover);
 }
 
 .contact-form {
@@ -874,33 +855,34 @@ body {
 
 .form-group label {
   font-size: 0.84rem;
-  color: rgba(255, 255, 255, 0.78);
-  font-weight: 500;
+  color: var(--slate-700);
+  font-weight: 600;
 }
 
 .form-group input,
 .form-group select,
 .form-group textarea {
-  background: rgba(255, 255, 255, 0.07);
-  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: var(--bg-soft);
+  border: 1px solid var(--border-strong);
   border-radius: 12px;
   padding: 0.85rem 1rem;
-  color: #ffffff;
+  color: var(--slate-800);
   font-family: var(--font-sans);
   font-size: 0.95rem;
   outline: none;
-  transition: border-color 0.25s ease;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
 .form-group select option {
-  background: var(--slate-800);
-  color: #ffffff;
+  background: var(--bg-white);
+  color: var(--slate-800);
 }
 
 .form-group input:focus,
 .form-group select:focus,
 .form-group textarea:focus {
-  border-color: var(--blue-light);
+  border-color: var(--blue-primary);
+  box-shadow: 0 0 0 3px rgba(27, 98, 248, 0.12);
 }
 
 .btn-full {
@@ -939,8 +921,8 @@ body {
 /* Reveal Animations */
 .reveal {
   opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateY(20px);
+  transition: opacity 0.85s ease, transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .reveal.visible {

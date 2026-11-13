@@ -12,7 +12,7 @@
 </head>
 <body>
 
-  <!-- Header / Navbar (Fundo Branco Limpo estilo Antigravity + Logo Preta com Ponto Azul) -->
+  <!-- Header / Navbar (Fundo Branco Limpo estilo Antigravity + Botão Azul) -->
   <header class="navbar" id="navbar">
     <div class="nav-container">
       <a href="#hero" class="brand-logo" aria-label="FORAM Eles - Início">
@@ -37,7 +37,7 @@
   </header>
 
   <main>
-    <!-- 1º CONTAINER: BRANCO ESTILO ANTIGRAVITY + DESFOQUE COLORIDO LENTO INTERATIVO -->
+    <!-- 1º CONTAINER: BRANCO ESTILO ANTIGRAVITY + DESFOQUE COLORIDO BEM LENTO E INTERATIVO -->
     <section class="container-hero" id="hero">
       <div class="hero-canvas-wrapper">
         <canvas id="breathing-canvas"></canvas>
@@ -72,26 +72,22 @@
     </section>
 
     <!-- 2º CONTAINER: VÍDEO EXPANSIVO NO SCROLL
-         - Começa em 60% da tela já visível a partir do 1º container
-         - Cresce até 100% da tela conforme rola para baixo
-         - Permanece em 100% da tela durante 2 scrolls completos (200vh)
-         - Depois reduz suavemente e continua descendo a página -->
+         - Já aparece ocupando 60% da largura da tela quando você está no 1º container
+         - Cresce suavemente até 100% da tela conforme rola para baixo
+         - Continua ocupando 100% da tela por 2 scrolls completos (200vh)
+         - Só depois vai reduzindo e descendo a tela -->
     <section class="video-scroll-track" id="destaque">
       <div class="video-sticky-stage">
         <div class="video-expand-card" id="video-expand-card">
-          <!-- Quando você mandar o vídeo, salvaremos como assets/video.mp4 -->
           <video
             id="showcase-video"
             class="showcase-video"
+            src="assets/video-foram-eles.mp4"
             autoplay
             muted
             loop
             playsinline
-            poster="https://images.unsplash.com/photo-1542038784456-1ea8e935640e?auto=format&fit=crop&w=1800&q=85"
-          >
-            <source src="assets/video.mp4" type="video/mp4" />
-            <source src="https://assets.mixkit.co/videos/preview/mixkit-photographer-taking-photos-of-a-model-in-a-studio-34488-large.mp4" type="video/mp4" />
-          </video>
+          ></video>
 
           <div class="video-gradient-overlay"></div>
 
@@ -102,8 +98,8 @@
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor.</p>
             </div>
             <div class="video-bar-pills">
-              <span class="video-pill">4K Cinema</span>
-              <span class="video-pill">Luz Natural &amp; Pro</span>
+              <span class="video-pill">Qualidade Pro</span>
+              <span class="video-pill">Naturalidade</span>
               <span class="video-pill">Luiz &amp; João Arthur</span>
             </div>
           </div>
@@ -119,7 +115,7 @@
             <span class="section-tag">Trabalhos Realizados</span>
             <h2 class="section-title">Profissionais em ação,<br />marcas com presença.</h2>
             <p class="section-desc">
-              Passe o mouse sobre cada álbum para espiar as fotos da sessão. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              Passe o mouse sobre cada álbum para ver as fotos que estão por baixo. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
             </p>
           </div>
           <div class="portfolio-filters" role="tablist">
@@ -158,13 +154,13 @@
           <article class="apple-stack-item" data-category="corporativo">
             <div class="apple-card-stack">
               <div class="stack-layer layer-left">
-                <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=700&q=80" alt="Foto secundária esquerda" />
+                <img src="assets/foto-socios-2.jpg" alt="Retrato de Sócios — FORAM Eles" />
               </div>
               <div class="stack-layer layer-right">
-                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=700&q=80" alt="Foto secundária direita" />
+                <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=700&q=80" alt="Foto secundária direita" />
               </div>
               <div class="stack-layer layer-main">
-                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=900&q=85" alt="Retrato Corporativo Natural" />
+                <img src="assets/foto-socios.jpg" alt="Retrato Corporativo Natural — FORAM Eles" />
                 <div class="card-main-overlay">
                   <span class="item-cat">Retratos Corporativos</span>
                   <h3>Posicionamento &amp; Naturalidade</h3>
@@ -279,14 +275,14 @@
           <div class="about-visuals reveal">
             <div class="about-photo-main">
               <img
-                src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=1000&q=80"
-                alt="Equipamentos profissionais FORAM Eles"
+                src="assets/foto-socios.jpg"
+                alt="Retrato Corporativo de Sócios — FORAM Eles"
               />
             </div>
             <div class="about-photo-secondary">
               <img
-                src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=800&q=80"
-                alt="Profissionais trabalhando em ambiente corporativo"
+                src="assets/foto-socios-2.jpg"
+                alt="Profissionais e Sócios — FORAM Eles"
               />
               <div class="about-floating-tag">
                 <strong>FORAM Eles.</strong>
@@ -379,7 +375,7 @@
       </div>
     </section>
 
-    <!-- 6º CONTAINER: CONTATO / CTA -->
+    <!-- 6º CONTAINER: CONTATO / CTA (Branco, Azul e Cinza Escuro) -->
     <section class="container-contact section-padding" id="contato">
       <div class="section-inner">
         <div class="contact-card reveal">
@@ -394,7 +390,7 @@
               <a href="https://wa.me/" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
                 Chamar no WhatsApp
               </a>
-              <a href="https://instagram.com/" target="_blank" rel="noopener noreferrer" class="btn btn-secondary-dark">
+              <a href="https://instagram.com/" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
                 Ver Instagram
               </a>
             </div>
