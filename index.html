@@ -1,463 +1,262 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FORAM Eles. | Fotografia & Audiovisual</title>
-  <meta name="description" content="FORAM Eles — Marca de fotografia e audiovisual por Luiz e João Arthur. Qualidade, naturalidade e equipamentos profissionais para fotos corporativas e profissionais em ação." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="FORAM Eles — Marca de fotografia e audiovisual por Luiz e João Arthur. Qualidade, naturalidade e equipamentos profissionais em fotos corporativas e profissionais trabalhando.">
+  <title>FORAM Eles. — Fotografia &amp; Audiovisual</title>
+  <link rel="icon" href="assets/favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="assets/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Fonte seguindo o padrão da logo: Sans geométrica limpa (FORAM) + Serif editorial de alto contraste (Eles.) -->
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,600;0,6..96,700;1,6..96,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-  <!-- Header / Navbar com Desfoque (Blur) Suave -->
-  <header class="navbar" id="navbar">
-    <div class="nav-container">
-      <a href="#hero" class="brand-logo" aria-label="FORAM Eles - Início">
-        <img src="assets/logo-preta.png" alt="FORAM Eles." class="logo-img" />
-      </a>
-
-      <nav class="nav-links" id="nav-links">
-        <a href="#hero" class="nav-link active">Início</a>
-        <a href="#destaque" class="nav-link">Showreel</a>
-        <a href="#portfolio" class="nav-link">Trabalhos</a>
-        <a href="#sobre" class="nav-link">Quem Somos</a>
-        <a href="#diferenciais" class="nav-link">Estrutura</a>
-        <a href="#contato" class="nav-link nav-cta">Solicitar Orçamento</a>
-      </nav>
-
-      <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menu">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-    </div>
+  <header class="site-header">
+    <a class="brand brand-logo" href="#inicio" aria-label="Página inicial de FORAM Eles">
+      <img src="assets/logo-preta.png" alt="FORAM Eles." width="1200" height="320">
+    </a>
+    <nav aria-label="Navegação principal">
+      <a href="#destaque">Showreel</a>
+      <a href="#sobre">Sobre</a>
+      <a href="#trabalhos">Trabalhos</a>
+      <a class="nav-cta" href="#contato">Contato</a>
+    </nav>
   </header>
 
   <main>
-    <!-- 1º CONTAINER: BRANCO ESTILO ANTIGRAVITY + DESFOQUE COLORIDO VIVO E FLUIDO -->
-    <section class="container-hero" id="hero">
-      <div class="hero-canvas-wrapper">
+    <!-- 1º CONTAINER: Fundo Branco + Desfoque Colorido em Degradê Fluido e Interativo -->
+    <section class="hero" id="inicio">
+      <div class="hero-canvas-wrapper" aria-hidden="true">
         <canvas id="breathing-canvas"></canvas>
       </div>
 
-      <div class="hero-content reveal">
-        <div class="hero-badge">
-          <span class="pulse-dot"></span>
-          <span>Fotografia &amp; Audiovisual Corporativo</span>
-        </div>
-
-        <h1 class="hero-title">
-          A essência de quem faz acontecer.<br />
-          <span class="brand-accent">FORAM Eles<span class="blue-dot">.</span></span>
-        </h1>
-
-        <p class="hero-subtitle">
+      <div class="hero-content">
+        <p class="eyebrow">Fotografia &amp; Audiovisual Corporativo</p>
+        <h1>A essência de quem<br>faz acontecer. <em class="serif-brand">Eles<span class="blue-dot">.</span></em></h1>
+        <p class="hero-copy">
           Qualidade, naturalidade e direção autêntica em fotos corporativas e profissionais trabalhando.
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        </p>
+        <div class="hero-buttons">
+          <a class="button button-light" href="#trabalhos">Ver os trabalhos <span>›</span></a>
+          <a class="button button-outline" href="#sobre">Conheça a dupla</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2º CONTAINER: Vídeo Cinematográfico Controlado pela Rolagem (Baseado em Foi o Luiz) -->
+    <section class="cinema-scroll" id="destaque" aria-label="Filme de apresentação FORAM Eles">
+      <div class="hero-stage" id="hero-stage">
+        <video
+          id="showcase-video"
+          class="hero-media"
+          src="assets/video-foram-eles.mp4?v=4"
+          autoplay
+          muted
+          loop
+          playsinline
+          preload="auto"
+          aria-label="Showreel FORAM Eles"
+        ></video>
+        <div class="hero-shade"></div>
+        <div class="stage-caption">
+          <span class="stage-tag">FORAM Eles. • Showreel</span>
+          <p class="stage-sub">Fotografia corporativa &amp; audiovisual em movimento</p>
+        </div>
+        <p class="scroll-note">Mais abaixo, nossa história ↓</p>
+      </div>
+    </section>
+
+    <!-- 3º CONTAINER: Sobre a Marca (Luiz & João Arthur + Lorem Ipsum) -->
+    <section class="intro" id="sobre">
+      <p class="section-label">Nossa Origem</p>
+      <div>
+        <h2>Nascida da vontade de crescer.<br><em class="serif-brand">FORAM Eles<span class="blue-dot">.</span></em></h2>
+        <p>
+          A <strong>FORAM Eles</strong> é uma marca de fotografia e audiovisual nascida a partir da vontade de crescer nesse meio, por <strong>Luiz</strong> — que se juntou ao <strong>João Arthur</strong> e, juntos, investiram em equipamentos profissionais de alta qualidade. Entregamos muita qualidade, naturalidade e presença em fotos corporativas e registros de profissionais trabalhando.
+        </p>
+        <p class="intro-lorem">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
         </p>
 
-        <div class="hero-actions">
-          <a href="#portfolio" class="btn btn-primary">
-            Ver Trabalhos Realizados
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M5 12h14M12 5l7 7-7 7"/>
-            </svg>
-          </a>
-          <a href="#sobre" class="btn btn-secondary">Conheça a Dupla</a>
+        <div class="socios-showcase">
+          <figure class="socio-card">
+            <img src="assets/foto-socios.jpg" alt="Retrato corporativo — FORAM Eles" loading="lazy">
+          </figure>
+          <figure class="socio-card">
+            <img src="assets/foto-socios-2.jpg" alt="Profissionais em ambiente corporativo — FORAM Eles" loading="lazy">
+          </figure>
         </div>
       </div>
     </section>
 
-    <!-- 2º CONTAINER: VÍDEO EXPANSIVO NO SCROLL (O VÍDEO QUE VOCÊ ENVIOU)
-         - Começa em 60% da tela já visível a partir do 1º container
-         - Cresce rápido até 100% da tela logo no início do scroll
-         - Permanece em 100% da tela por 2 scrolls
-         - Depois reduz suavemente e segue descendo a tela -->
-    <section class="video-scroll-track" id="destaque">
-      <div class="video-sticky-stage">
-        <div class="video-expand-card" id="video-expand-card">
-          <video
-            id="showcase-video"
-            class="showcase-video"
-            src="assets/video-foram-eles.mp4?v=3"
-            autoplay
-            muted
-            loop
-            playsinline
-            preload="auto"
-          ></video>
+    <!-- 4º CONTAINER: Trabalhos Realizados (Capas Empilhadas Estilo Apple igual Foi o Luiz) -->
+    <section class="portfolio" id="trabalhos">
+      <div class="section-head">
+        <div>
+          <p class="section-label">Trabalhos Realizados</p>
+          <h2>Alguns projetos<br>que <em class="serif-brand">Eles</em> registraram.</h2>
+        </div>
+        <p>Passe o mouse sobre os álbuns e clique para abrir todas as fotos com fundo desfocado.</p>
+      </div>
 
-          <div class="video-gradient-overlay"></div>
-
-          <div class="video-floating-bar">
-            <div class="video-bar-left">
-              <span class="video-tag">Showreel Oficial • FORAM Eles.</span>
-              <h3>Produção Audiovisual &amp; Fotografia em Movimento</h3>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor.</p>
-            </div>
-            <div class="video-bar-pills">
-              <span class="video-pill">Qualidade Pro</span>
-              <span class="video-pill">Naturalidade</span>
-              <span class="video-pill">Luiz &amp; João Arthur</span>
-            </div>
+      <div class="albums">
+        <a class="album-card" href="#album-corporativo" aria-label="Abrir álbum Retratos Corporativos">
+          <div class="card-stack">
+            <img class="stack-back stack-three" src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=900&q=80" alt="" loading="lazy" decoding="async">
+            <img class="stack-back stack-two" src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=900&q=80" alt="" loading="lazy" decoding="async">
+            <img class="stack-back stack-one" src="assets/foto-socios-2.jpg" alt="" loading="lazy" decoding="async">
+            <img class="stack-cover" src="assets/foto-socios.jpg" alt="Retratos Corporativos — FORAM Eles" loading="lazy" decoding="async">
           </div>
-        </div>
+          <div class="album-meta">
+            <span>Posicionamento, naturalidade e presença</span>
+            <h3>Retratos corporativos</h3>
+          </div>
+        </a>
+
+        <a class="album-card" href="#album-trabalhando" aria-label="Abrir álbum Profissionais Trabalhando">
+          <div class="card-stack">
+            <img class="stack-back stack-three" src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=900&q=80" alt="" loading="lazy" decoding="async">
+            <img class="stack-back stack-two" src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=900&q=80" alt="" loading="lazy" decoding="async">
+            <img class="stack-back stack-one" src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=900&q=80" alt="" loading="lazy" decoding="async">
+            <img class="stack-cover" src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=900&q=85" alt="Profissionais trabalhando em ação" loading="lazy" decoding="async">
+          </div>
+          <div class="album-meta">
+            <span>Rotina real, ação e espontaneidade</span>
+            <h3>Profissionais trabalhando</h3>
+          </div>
+        </a>
+
+        <a class="album-card" href="#album-audiovisual" aria-label="Abrir álbum Produção Audiovisual">
+          <div class="card-stack">
+            <img class="stack-back stack-three" src="https://images.unsplash.com/photo-1542038784456-1ea8e935640e?auto=format&fit=crop&w=900&q=80" alt="" loading="lazy" decoding="async">
+            <img class="stack-back stack-two" src="https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&w=900&q=80" alt="" loading="lazy" decoding="async">
+            <img class="stack-back stack-one" src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=900&q=80" alt="" loading="lazy" decoding="async">
+            <img class="stack-cover" src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=900&q=85" alt="Produção Audiovisual e Equipamentos" loading="lazy" decoding="async">
+          </div>
+          <div class="album-meta">
+            <span>Equipamentos de ponta e direção</span>
+            <h3>Produção audiovisual</h3>
+          </div>
+        </a>
+
+        <a class="album-card" href="#album-lideranca" aria-label="Abrir álbum Sócios e Liderança">
+          <div class="card-stack">
+            <img class="stack-back stack-three" src="https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=900&q=80" alt="" loading="lazy" decoding="async">
+            <img class="stack-back stack-two" src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=900&q=80" alt="" loading="lazy" decoding="async">
+            <img class="stack-back stack-one" src="assets/foto-socios.jpg" alt="" loading="lazy" decoding="async">
+            <img class="stack-cover" src="assets/foto-socios-2.jpg" alt="Sócios e Liderança — FORAM Eles" loading="lazy" decoding="async">
+          </div>
+          <div class="album-meta">
+            <span>Autoridade, arquitetura e identidade</span>
+            <h3>Sócios &amp; liderança</h3>
+          </div>
+        </a>
       </div>
     </section>
 
-    <!-- 3º CONTAINER: TRABALHOS REALIZADOS (CARDS ESTILO APPLE + CLIQUE ABRE ÁLBUM COM FUNDO DESFOCADO) -->
-    <section class="container-portfolio section-padding" id="portfolio">
-      <div class="section-inner">
-        <div class="portfolio-header reveal">
+    <!-- ÁLBUNS ABERTOS COM FUNDO DESFOCADO (EXATAMENTE NO PADRÃO DE FOI O LUIZ) -->
+    <section class="album-view" id="album-corporativo" aria-label="Álbum Retratos Corporativos">
+      <a class="album-backdrop" href="#fechar-album" aria-label="Fechar álbum"></a>
+      <a class="album-close" href="#fechar-album" aria-label="Fechar álbum">×</a>
+      <div class="album-panel">
+        <header>
           <div>
-            <span class="section-tag">Trabalhos Realizados</span>
-            <h2 class="section-title">Profissionais em ação,<br />marcas com presença.</h2>
-            <p class="section-desc">
-              Passe o mouse para espiar as fotos de baixo e <strong>clique em qualquer álbum</strong> para abrir todas as fotos com fundo desfocado.
-            </p>
+            <span>Posicionamento, naturalidade e presença</span>
+            <h2>Retratos corporativos</h2>
           </div>
-          <div class="portfolio-filters" role="tablist">
-            <button class="filter-btn active" data-filter="all">Todos</button>
-            <button class="filter-btn" data-filter="corporativo">Retratos Corporativos</button>
-            <button class="filter-btn" data-filter="trabalhando">Profissionais Trabalhando</button>
-            <button class="filter-btn" data-filter="audiovisual">Audiovisual</button>
-          </div>
-        </div>
-
-        <div class="portfolio-grid reveal" id="portfolio-grid">
-          <!-- Card Stack 1 -->
-          <article class="apple-stack-item" data-category="corporativo" data-album="0" tabindex="0" role="button" aria-label="Abrir álbum Posicionamento e Naturalidade">
-            <div class="apple-card-stack">
-              <div class="stack-layer layer-left">
-                <img src="assets/foto-socios-2.jpg" alt="Retrato de Sócios — FORAM Eles" />
-              </div>
-              <div class="stack-layer layer-right">
-                <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=700&q=80" alt="Retrato Corporativo" />
-              </div>
-              <div class="stack-layer layer-main">
-                <img src="assets/foto-socios.jpg" alt="Retrato Corporativo Natural — FORAM Eles" />
-                <div class="card-main-overlay">
-                  <span class="item-cat">Retratos Corporativos • 5 fotos</span>
-                  <h3>Posicionamento &amp; Naturalidade</h3>
-                </div>
-              </div>
-            </div>
-            <div class="stack-meta">
-              <h4>Posicionamento &amp; Naturalidade</h4>
-              <p>Clique para ver o álbum completo</p>
-            </div>
-          </article>
-
-          <!-- Card Stack 2 -->
-          <article class="apple-stack-item" data-category="trabalhando" data-album="1" tabindex="0" role="button" aria-label="Abrir álbum Rotina Executiva e Equipes">
-            <div class="apple-card-stack">
-              <div class="stack-layer layer-left">
-                <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=700&q=80" alt="Foto secundária esquerda" />
-              </div>
-              <div class="stack-layer layer-right">
-                <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=700&q=80" alt="Foto secundária direita" />
-              </div>
-              <div class="stack-layer layer-main">
-                <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=900&q=85" alt="Profissionais em ação" />
-                <div class="card-main-overlay">
-                  <span class="item-cat">Profissionais Trabalhando • 4 fotos</span>
-                  <h3>Rotina Executiva &amp; Equipes</h3>
-                </div>
-              </div>
-            </div>
-            <div class="stack-meta">
-              <h4>Rotina Executiva &amp; Equipes</h4>
-              <p>Clique para ver o álbum completo</p>
-            </div>
-          </article>
-
-          <!-- Card Stack 3 -->
-          <article class="apple-stack-item" data-category="audiovisual" data-album="2" tabindex="0" role="button" aria-label="Abrir álbum Storytelling de Marca">
-            <div class="apple-card-stack">
-              <div class="stack-layer layer-left">
-                <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=700&q=80" alt="Foto secundária esquerda" />
-              </div>
-              <div class="stack-layer layer-right">
-                <img src="https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&w=700&q=80" alt="Foto secundária direita" />
-              </div>
-              <div class="stack-layer layer-main">
-                <img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=900&q=85" alt="Produção Audiovisual" />
-                <div class="card-main-overlay">
-                  <span class="item-cat">Audiovisual • 4 fotos</span>
-                  <h3>Storytelling de Marca</h3>
-                </div>
-              </div>
-            </div>
-            <div class="stack-meta">
-              <h4>Storytelling de Marca</h4>
-              <p>Clique para ver o álbum completo</p>
-            </div>
-          </article>
-
-          <!-- Card Stack 4 -->
-          <article class="apple-stack-item" data-category="trabalhando" data-album="3" tabindex="0" role="button" aria-label="Abrir álbum Bastidores e Autenticidade">
-            <div class="apple-card-stack">
-              <div class="stack-layer layer-left">
-                <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=700&q=80" alt="Foto secundária esquerda" />
-              </div>
-              <div class="stack-layer layer-right">
-                <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=700&q=80" alt="Foto secundária direita" />
-              </div>
-              <div class="stack-layer layer-main">
-                <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=900&q=85" alt="Ambiente de trabalho real" />
-                <div class="card-main-overlay">
-                  <span class="item-cat">Profissionais Trabalhando • 4 fotos</span>
-                  <h3>Bastidores &amp; Autenticidade</h3>
-                </div>
-              </div>
-            </div>
-            <div class="stack-meta">
-              <h4>Bastidores &amp; Autenticidade</h4>
-              <p>Clique para ver o álbum completo</p>
-            </div>
-          </article>
-
-          <!-- Card Stack 5 -->
-          <article class="apple-stack-item" data-category="corporativo" data-album="4" tabindex="0" role="button" aria-label="Abrir álbum Direção Executiva">
-            <div class="apple-card-stack">
-              <div class="stack-layer layer-left">
-                <img src="assets/foto-socios.jpg" alt="Foto secundária esquerda" />
-              </div>
-              <div class="stack-layer layer-right">
-                <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=700&q=80" alt="Foto secundária direita" />
-              </div>
-              <div class="stack-layer layer-main">
-                <img src="assets/foto-socios-2.jpg" alt="Retrato de Liderança" />
-                <div class="card-main-overlay">
-                  <span class="item-cat">Retratos Corporativos • 4 fotos</span>
-                  <h3>Direção Executiva</h3>
-                </div>
-              </div>
-            </div>
-            <div class="stack-meta">
-              <h4>Direção Executiva</h4>
-              <p>Clique para ver o álbum completo</p>
-            </div>
-          </article>
-
-          <!-- Card Stack 6 -->
-          <article class="apple-stack-item" data-category="audiovisual" data-album="5" tabindex="0" role="button" aria-label="Abrir álbum Captação de Alta Performance">
-            <div class="apple-card-stack">
-              <div class="stack-layer layer-left">
-                <img src="https://images.unsplash.com/photo-1542038784456-1ea8e935640e?auto=format&fit=crop&w=700&q=80" alt="Foto secundária esquerda" />
-              </div>
-              <div class="stack-layer layer-right">
-                <img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=700&q=80" alt="Foto secundária direita" />
-              </div>
-              <div class="stack-layer layer-main">
-                <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=900&q=85" alt="Set e Equipamentos" />
-                <div class="card-main-overlay">
-                  <span class="item-cat">Audiovisual &amp; Set • 4 fotos</span>
-                  <h3>Captação de Alta Performance</h3>
-                </div>
-              </div>
-            </div>
-            <div class="stack-meta">
-              <h4>Captação de Alta Performance</h4>
-              <p>Clique para ver o álbum completo</p>
-            </div>
-          </article>
+        </header>
+        <div class="album-grid">
+          <img src="assets/foto-socios.jpg" alt="Retrato corporativo principal" loading="lazy" decoding="async">
+          <img src="assets/foto-socios-2.jpg" alt="Dupla de sócios em ambiente corporativo" loading="lazy" decoding="async">
+          <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=1200&q=85" alt="Retrato executivo feminino" loading="lazy" decoding="async">
+          <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=1200&q=85" alt="Retrato executivo masculino" loading="lazy" decoding="async">
         </div>
       </div>
     </section>
 
-    <!-- 4º CONTAINER: SOBRE NÓS (A HISTÓRIA DE LUIZ & JOÃO ARTHUR) -->
-    <section class="container-about section-padding" id="sobre">
-      <div class="section-inner">
-        <div class="about-grid">
-          <div class="about-visuals reveal">
-            <div class="about-photo-main">
-              <img
-                src="assets/foto-socios.jpg"
-                alt="Retrato Corporativo de Sócios — FORAM Eles"
-              />
-            </div>
-            <div class="about-photo-secondary">
-              <img
-                src="assets/foto-socios-2.jpg"
-                alt="Profissionais e Sócios — FORAM Eles"
-              />
-              <div class="about-floating-tag">
-                <strong>FORAM Eles.</strong>
-                <span>Luiz &amp; João Arthur</span>
-              </div>
-            </div>
+    <section class="album-view" id="album-trabalhando" aria-label="Álbum Profissionais Trabalhando">
+      <a class="album-backdrop" href="#fechar-album" aria-label="Fechar álbum"></a>
+      <a class="album-close" href="#fechar-album" aria-label="Fechar álbum">×</a>
+      <div class="album-panel">
+        <header>
+          <div>
+            <span>Rotina real, ação e espontaneidade</span>
+            <h2>Profissionais trabalhando</h2>
           </div>
-
-          <div class="about-text reveal">
-            <span class="section-tag">Nossa Origem</span>
-            <h2 class="section-title">Nascida da vontade de crescer e elevar o padrão visual.</h2>
-
-            <p class="about-paragraph highlight-p">
-              A <strong>FORAM Eles</strong> é uma marca de fotografia e audiovisual nascida a partir da vontade genuína de crescer nesse meio, idealizada por <strong>Luiz</strong> — que se juntou ao <strong>João Arthur</strong> para transformar visão em excelência prática.
-            </p>
-
-            <p class="about-paragraph">
-              Juntos, investiram em equipamentos profissionais de alta ponta para entregar muita qualidade, naturalidade e autenticidade, especialmente em <strong>fotos corporativas</strong> e registros de <strong>profissionais trabalhando</strong> em seu elemento real.
-            </p>
-
-            <p class="about-paragraph lorem-block">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-            </p>
-
-            <div class="founders-row">
-              <div class="founder-chip">
-                <div class="founder-avatar">L</div>
-                <div>
-                  <h4>Luiz</h4>
-                  <span>Co-fundador • Fotografia &amp; Audiovisual</span>
-                </div>
-              </div>
-              <div class="founder-chip">
-                <div class="founder-avatar">JA</div>
-                <div>
-                  <h4>João Arthur</h4>
-                  <span>Co-fundador • Fotografia &amp; Audiovisual</span>
-                </div>
-              </div>
-            </div>
-          </div>
+        </header>
+        <div class="album-grid">
+          <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=85" alt="Equipe trabalhando em conjunto" loading="lazy" decoding="async">
+          <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=1200&q=85" alt="Reunião estratégica" loading="lazy" decoding="async">
+          <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=1200&q=85" alt="Atendimento corporativo" loading="lazy" decoding="async">
+          <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=1200&q=85" alt="Apresentação de negócios" loading="lazy" decoding="async">
         </div>
       </div>
     </section>
 
-    <!-- 5º CONTAINER: DIFERENCIAIS & EQUIPAMENTOS -->
-    <section class="container-features section-padding" id="diferenciais">
-      <div class="section-inner">
-        <div class="features-header reveal">
-          <span class="section-tag">Por que FORAM Eles?</span>
-          <h2 class="section-title">Investimento sério para resultados que se destacam.</h2>
-          <p class="section-desc">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-          </p>
-        </div>
-
-        <div class="features-grid reveal">
-          <div class="feature-box">
-            <div class="feature-icon">01</div>
-            <h3>Equipamentos de Ponta</h3>
-            <p>
-              Investimento contínuo em câmeras, lentes claras e iluminação profissional para garantir nitidez e textura impecáveis. Lorem ipsum dolor sit amet.
-            </p>
+    <section class="album-view" id="album-audiovisual" aria-label="Álbum Produção Audiovisual">
+      <a class="album-backdrop" href="#fechar-album" aria-label="Fechar álbum"></a>
+      <a class="album-close" href="#fechar-album" aria-label="Fechar álbum">×</a>
+      <div class="album-panel">
+        <header>
+          <div>
+            <span>Equipamentos de ponta e direção</span>
+            <h2>Produção audiovisual</h2>
           </div>
-
-          <div class="feature-box">
-            <div class="feature-icon">02</div>
-            <h3>Naturalidade no Registro</h3>
-            <p>
-              Nada de poses engessadas. Capturamos profissionais trabalhando de verdade, transmitindo confiança e espontaneidade. Ut enim ad minim veniam.
-            </p>
-          </div>
-
-          <div class="feature-box">
-            <div class="feature-icon">03</div>
-            <h3>Olhar em Dupla</h3>
-            <p>
-              Com Luiz e João Arthur atuando juntos, cada projeto ganha múltiplos ângulos, agilidade no set e atenção completa aos detalhes.
-            </p>
-          </div>
-
-          <div class="feature-box">
-            <div class="feature-icon">04</div>
-            <h3>Pós-Produção Refinada</h3>
-            <p>
-              Color grading fiel e tratamento natural que valorizam a identidade da sua marca. Excepteur sint occaecat cupidatat non proident.
-            </p>
-          </div>
+        </header>
+        <div class="album-grid">
+          <img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=1200&q=85" alt="Set de gravação audiovisual" loading="lazy" decoding="async">
+          <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=1200&q=85" alt="Câmera profissional" loading="lazy" decoding="async">
+          <img src="https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&w=1200&q=85" alt="Edição e pós-produção" loading="lazy" decoding="async">
+          <img src="https://images.unsplash.com/photo-1542038784456-1ea8e935640e?auto=format&fit=crop&w=1200&q=85" alt="Bastidores de captação" loading="lazy" decoding="async">
         </div>
       </div>
     </section>
 
-    <!-- 6º CONTAINER: CONTATO / CTA -->
-    <section class="container-contact section-padding" id="contato">
-      <div class="section-inner">
-        <div class="contact-card reveal">
-          <div class="contact-copy">
-            <span class="section-tag">Vamos Produzir Juntos?</span>
-            <h2 class="section-title">Quem fez essa imagem?<br /><span class="contact-brand">FORAM Eles.</span></h2>
-            <p class="section-desc">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Entre em contato com Luiz e João Arthur para agendar seu ensaio corporativo ou produção audiovisual.
-            </p>
-
-            <div class="contact-buttons">
-              <a href="https://wa.me/" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
-                Chamar no WhatsApp
-              </a>
-              <a href="https://instagram.com/" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
-                Ver Instagram
-              </a>
-            </div>
+    <section class="album-view" id="album-lideranca" aria-label="Álbum Sócios e Liderança">
+      <a class="album-backdrop" href="#fechar-album" aria-label="Fechar álbum"></a>
+      <a class="album-close" href="#fechar-album" aria-label="Fechar álbum">×</a>
+      <div class="album-panel">
+        <header>
+          <div>
+            <span>Autoridade, arquitetura e identidade</span>
+            <h2>Sócios &amp; liderança</h2>
           </div>
-
-          <form class="contact-form" onsubmit="event.preventDefault(); alert('Mensagem de demonstração enviada!');">
-            <div class="form-group">
-              <label for="nome">Seu Nome / Empresa</label>
-              <input type="text" id="nome" placeholder="Ex.: João Silva • Empresa X" required />
-            </div>
-            <div class="form-group">
-              <label for="servico">Tipo de Projeto</label>
-              <select id="servico">
-                <option value="corporativo">Fotos Corporativas / Retratos</option>
-                <option value="trabalhando">Profissionais Trabalhando (Rotina)</option>
-                <option value="audiovisual">Produção Audiovisual</option>
-                <option value="completo">Pacote Completo (Foto + Vídeo)</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="mensagem">Detalhes (Lorem Ipsum)</label>
-              <textarea id="mensagem" rows="3" placeholder="Conte um pouco sobre o que você precisa..."></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary btn-full">Enviar Solicitação</button>
-          </form>
+        </header>
+        <div class="album-grid">
+          <img src="assets/foto-socios-2.jpg" alt="Sócios em retrato editorial" loading="lazy" decoding="async">
+          <img src="assets/foto-socios.jpg" alt="Sócios em ambiente contemporâneo" loading="lazy" decoding="async">
+          <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=1200&q=85" alt="Retrato de liderança" loading="lazy" decoding="async">
+          <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=1200&q=85" alt="Retrato corporativo natural" loading="lazy" decoding="async">
         </div>
+      </div>
+    </section>
+
+    <!-- 5º CONTAINER: Frase Manifesto -->
+    <section class="quote">
+      <p>Qualidade técnica e naturalidade para marcas e profissionais que querem ser lembrados — <em class="serif-brand">FORAM Eles<span class="blue-dot">.</span></em></p>
+      <span>Luiz &amp; João Arthur · Fotografia e Audiovisual</span>
+    </section>
+
+    <!-- 6º CONTAINER: Contato -->
+    <section class="contact" id="contato">
+      <p class="section-label">Vamos produzir juntos?</p>
+      <h2>Quem fez essa imagem?<br><em class="serif-brand">FORAM Eles<span class="blue-dot">.</span></em></h2>
+      <div class="contact-actions">
+        <a class="button button-light" href="https://wa.me/" target="_blank" rel="noopener">Chamar no WhatsApp <span>↗</span></a>
+        <a class="button button-outline" href="https://instagram.com/" target="_blank" rel="noopener">Ver Instagram <span>↗</span></a>
       </div>
     </section>
   </main>
 
-  <!-- MODAL DE ÁLBUM COM FUNDO DESFOCADO (ABRE AO CLICAR NOS CARDS DE FOTOS) -->
-  <div class="album-modal" id="album-modal" aria-hidden="true" role="dialog" aria-modal="true">
-    <div class="album-modal-backdrop" id="album-modal-backdrop"></div>
-    <div class="album-modal-content">
-      <button class="album-modal-close" id="album-modal-close" aria-label="Fechar álbum">&times;</button>
-
-      <div class="album-modal-header">
-        <div>
-          <span class="album-modal-cat" id="album-modal-cat">Categoria</span>
-          <h3 class="album-modal-title" id="album-modal-title">Título do Álbum</h3>
-        </div>
-        <span class="album-modal-counter" id="album-modal-counter">1 / 4</span>
-      </div>
-
-      <div class="album-viewer">
-        <button class="album-nav-btn prev" id="album-prev" aria-label="Foto anterior">&#10094;</button>
-        <div class="album-main-img-wrap">
-          <img src="" alt="Foto do álbum" id="album-main-img" class="album-main-img" />
-        </div>
-        <button class="album-nav-btn next" id="album-next" aria-label="Próxima foto">&#10095;</button>
-      </div>
-
-      <div class="album-thumbs" id="album-thumbs"></div>
-    </div>
-  </div>
-
-  <footer class="footer">
-    <div class="section-inner footer-inner">
-      <div class="footer-brand">
-        <img src="assets/logo-eles-preta.png" alt="Eles." class="footer-logo" />
-        <span>Fotografia &amp; Audiovisual por Luiz &amp; João Arthur.</span>
-      </div>
-      <div class="footer-copy">
-        &copy; <span id="year">2026</span> FORAM Eles. Todos os direitos reservados.
-      </div>
-    </div>
+  <footer>
+    <a class="brand brand-logo footer-logo" href="#inicio" aria-label="Voltar ao início">
+      <img src="assets/logo-preta.png" alt="FORAM Eles." width="1200" height="320">
+    </a>
+    <p>© 2026 FORAM Eles. — Por Luiz &amp; João Arthur</p>
   </footer>
 
   <script src="script.js"></script>
