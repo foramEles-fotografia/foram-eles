@@ -222,7 +222,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 14rem 1.75rem 6.5rem;
+  padding: 12.6rem 1.75rem 5.4rem;
   overflow: visible;
   background: transparent;
   z-index: 1;
@@ -302,14 +302,14 @@ body {
 }
 
 .hero-logo-wrap {
-  margin: 2.3rem 0 2.3rem;
+  margin: 3.5rem 0 3.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .hero-main-logo {
-  height: clamp(52px, 5.2vw, 68px);
+  height: clamp(54px, 5.4vw, 70px);
   width: auto;
   object-fit: contain;
   filter: drop-shadow(0 4px 16px rgba(0, 0, 0, 0.05));
