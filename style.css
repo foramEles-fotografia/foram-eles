@@ -23,8 +23,8 @@
   --radius-xl: 28px;
   --radius-lg: 22px;
   --radius-md: 16px;
-  --apple-spring: 0.72s cubic-bezier(0.22, 1, 0.36, 1);
-  --transition: 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  --apple-spring: 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+  --transition: 0.38s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 * {
@@ -45,10 +45,11 @@ body {
   color: var(--slate-800);
   overflow-x: hidden;
   line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
 }
 
 /* ==========================================================================
-   HEADER / NAVBAR (Branco translúcido limpo + Botão Azul)
+   HEADER / NAVBAR COM LEVE BLUR (DESFOCADO) SEMPRE ATIVO
    ========================================================================== */
 .navbar {
   position: fixed;
@@ -56,19 +57,21 @@ body {
   left: 0;
   width: 100%;
   z-index: 100;
-  padding: 1.05rem 0;
-  background: rgba(255, 255, 255, 0.78);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-  border-bottom: 1px solid transparent;
+  padding: 0.95rem 0;
+  background: rgba(255, 255, 255, 0.56);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid rgba(30, 38, 54, 0.06);
   transition: var(--transition);
 }
 
 .navbar.scrolled {
-  background: rgba(255, 255, 255, 0.92);
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(24px) saturate(190%);
+  -webkit-backdrop-filter: blur(24px) saturate(190%);
   border-bottom: 1px solid var(--border-subtle);
-  padding: 0.8rem 0;
-  box-shadow: 0 4px 24px rgba(30, 38, 54, 0.05);
+  padding: 0.75rem 0;
+  box-shadow: 0 8px 30px rgba(30, 38, 54, 0.05);
 }
 
 .nav-container {
@@ -100,11 +103,11 @@ body {
 }
 
 .nav-link {
-  color: var(--slate-500);
+  color: var(--slate-700);
   text-decoration: none;
   font-size: 0.92rem;
   font-weight: 500;
-  transition: color 0.3s ease;
+  transition: color 0.25s ease;
 }
 
 .nav-link:hover,
@@ -145,17 +148,15 @@ body {
 }
 
 /* ==========================================================================
-   1º CONTAINER: BRANCO COM DESFOQUE COLORIDO BEM LENTO E INTERATIVO
+   1º CONTAINER: BRANCO COM DESFOQUE COLORIDO VIVO, LENTO E FLUIDO
    ========================================================================== */
 .container-hero {
   position: relative;
-  /* Altura calibrada para que o vídeo do 2º container (em 60% da tela)
-     já apareça na parte inferior enquanto o usuário está no 1º container */
-  min-height: 62vh;
+  min-height: 60vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 7.2rem 1.75rem 1.8rem;
+  padding: 7rem 1.75rem 1.2rem;
   overflow: visible;
   background: var(--bg-white);
 }
@@ -163,7 +164,7 @@ body {
 .hero-canvas-wrapper {
   position: absolute;
   inset: 0;
-  bottom: -24vh;
+  bottom: -28vh;
   z-index: 0;
   overflow: hidden;
   pointer-events: none;
@@ -174,8 +175,9 @@ body {
   width: 100%;
   height: 100%;
   display: block;
-  filter: blur(74px) saturate(140%);
-  transform: scale(1.06);
+  /* Cores bem vivas e desfocadas sobre o fundo branco */
+  filter: blur(54px) saturate(190%);
+  transform: scale(1.04);
 }
 
 .hero-content {
@@ -194,14 +196,14 @@ body {
   gap: 0.6rem;
   padding: 0.45rem 1.1rem;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.86);
+  background: rgba(255, 255, 255, 0.82);
   border: 1px solid var(--blue-border);
   backdrop-filter: blur(12px);
   font-size: 0.82rem;
   font-weight: 600;
   color: var(--blue-primary);
-  margin-bottom: 1.35rem;
-  box-shadow: 0 4px 16px rgba(27, 98, 248, 0.06);
+  margin-bottom: 1.25rem;
+  box-shadow: 0 4px 16px rgba(27, 98, 248, 0.08);
 }
 
 .pulse-dot {
@@ -210,7 +212,7 @@ body {
   border-radius: 50%;
   background: var(--blue-primary);
   box-shadow: 0 0 10px rgba(27, 98, 248, 0.6);
-  animation: pulseDot 3.6s infinite ease-in-out;
+  animation: pulseDot 3.2s infinite ease-in-out;
 }
 
 @keyframes pulseDot {
@@ -220,12 +222,12 @@ body {
 
 .hero-title {
   font-family: var(--font-display);
-  font-size: clamp(2.25rem, 4.9vw, 4.1rem);
+  font-size: clamp(2.25rem, 4.8vw, 4rem);
   line-height: 1.08;
   letter-spacing: -0.03em;
   font-weight: 800;
   color: var(--slate-800);
-  margin-bottom: 1.15rem;
+  margin-bottom: 1.1rem;
 }
 
 .brand-accent {
@@ -237,10 +239,10 @@ body {
 }
 
 .hero-subtitle {
-  font-size: clamp(0.98rem, 1.25vw, 1.14rem);
-  color: var(--slate-500);
+  font-size: clamp(0.98rem, 1.22vw, 1.12rem);
+  color: var(--slate-700);
   max-width: 650px;
-  margin-bottom: 1.9rem;
+  margin-bottom: 1.8rem;
 }
 
 .hero-actions {
@@ -268,17 +270,17 @@ body {
 .btn-primary {
   background: var(--blue-primary);
   color: #ffffff;
-  box-shadow: 0 12px 26px -6px rgba(27, 98, 248, 0.42);
+  box-shadow: 0 12px 26px -6px rgba(27, 98, 248, 0.45);
 }
 
 .btn-primary:hover {
   background: var(--blue-hover);
   transform: translateY(-2px);
-  box-shadow: 0 16px 32px -6px rgba(27, 98, 248, 0.55);
+  box-shadow: 0 16px 32px -6px rgba(27, 98, 248, 0.58);
 }
 
 .btn-secondary {
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.88);
   color: var(--blue-primary);
   border: 1.5px solid var(--blue-border);
   backdrop-filter: blur(10px);
@@ -291,16 +293,13 @@ body {
 }
 
 /* ==========================================================================
-   2º CONTAINER: VÍDEO EXPANSIVO COM SCROLL LOCK (60% -> 100% por 2 scrolls -> reduz)
+   2º CONTAINER: VÍDEO EXPANSIVO COM GPU TRANSFORM (MUITO MAIS RÁPIDO E FLUIDO)
    ========================================================================== */
 .video-scroll-track {
   position: relative;
-  /* 460vh garante:
-     - Entrada crescendo de 60% até 100%
-     - 200vh (2 scrolls inteiros) permanecendo em 100% da tela
-     - Saída reduzindo suavemente antes de continuar descendo */
-  height: 460vh;
-  margin-top: 0;
+  /* 320vh: cresce rápido para 100%, segura por 2 scrolls e reduz sem demorar demais */
+  height: 320vh;
+  margin-top: -2vh;
   z-index: 5;
 }
 
@@ -317,14 +316,15 @@ body {
 
 .video-expand-card {
   position: relative;
-  width: 60vw;
-  height: 60vh;
-  border-radius: 28px;
+  width: 100vw;
+  height: 100vh;
+  border-radius: 36px;
   overflow: hidden;
   background: var(--slate-800);
-  box-shadow: 0 26px 65px rgba(27, 98, 248, 0.16), 0 12px 32px rgba(30, 38, 54, 0.14);
-  border: 1px solid rgba(27, 98, 248, 0.18);
-  will-change: width, height, border-radius;
+  box-shadow: 0 28px 70px rgba(27, 98, 248, 0.18), 0 12px 32px rgba(30, 38, 54, 0.14);
+  transform: scale3d(0.6, 0.6, 1);
+  transform-origin: center top;
+  will-change: transform, border-radius;
 }
 
 .showcase-video {
@@ -393,8 +393,8 @@ body {
   border-radius: 999px;
   font-size: 0.78rem;
   font-weight: 600;
-  background: rgba(27, 98, 248, 0.35);
-  border: 1px solid rgba(139, 180, 255, 0.45);
+  background: rgba(27, 98, 248, 0.38);
+  border: 1px solid rgba(139, 180, 255, 0.48);
   backdrop-filter: blur(10px);
 }
 
@@ -493,6 +493,7 @@ body {
   flex-direction: column;
   align-items: center;
   cursor: pointer;
+  outline: none;
 }
 
 /* Container da pilha de cartas estilo Apple */
@@ -526,41 +527,41 @@ body {
 /* Em repouso: vê-se de leve a lateral das fotos que estão por baixo (bem suave igual Apple) */
 .stack-layer.layer-left {
   z-index: 1;
-  transform: translateX(-18px) translateY(6px) rotate(-4deg) scale(0.92);
+  transform: translate3d(-18px, 6px, 0) rotate(-4deg) scale(0.92);
   opacity: 0.9;
   filter: brightness(0.95);
 }
 
 .stack-layer.layer-right {
   z-index: 2;
-  transform: translateX(18px) translateY(6px) rotate(4deg) scale(0.92);
+  transform: translate3d(18px, 6px, 0) rotate(4deg) scale(0.92);
   opacity: 0.92;
   filter: brightness(0.96);
 }
 
 .stack-layer.layer-main {
   z-index: 3;
-  transform: translateY(0) scale(1);
+  transform: translate3d(0, 0, 0) scale(1);
   box-shadow: 0 18px 40px rgba(30, 38, 54, 0.15);
 }
 
 /* No Hover: as cartas de baixo aparecem um pouco mais nas laterais com suavidade Apple */
 .apple-stack-item:hover .stack-layer.layer-left {
-  transform: translateX(-42px) translateY(-2px) rotate(-8.5deg) scale(0.95);
+  transform: translate3d(-44px, -2px, 0) rotate(-8.5deg) scale(0.95);
   opacity: 1;
   filter: brightness(1);
   box-shadow: 0 18px 36px rgba(27, 98, 248, 0.16);
 }
 
 .apple-stack-item:hover .stack-layer.layer-right {
-  transform: translateX(42px) translateY(-2px) rotate(8.5deg) scale(0.95);
+  transform: translate3d(44px, -2px, 0) rotate(8.5deg) scale(0.95);
   opacity: 1;
   filter: brightness(1);
   box-shadow: 0 18px 36px rgba(27, 98, 248, 0.16);
 }
 
 .apple-stack-item:hover .stack-layer.layer-main {
-  transform: translateY(-7px) scale(1.015);
+  transform: translate3d(0, -7px, 0) scale(1.015);
   box-shadow: 0 24px 48px rgba(27, 98, 248, 0.2);
 }
 
@@ -603,8 +604,208 @@ body {
 }
 
 .stack-meta p {
+  font-size: 0.85rem;
+  color: var(--blue-primary);
+  font-weight: 600;
+}
+
+/* ==========================================================================
+   MODAL DE ÁLBUM COM FUNDO DESFOCADO (BLURRED BACKDROP LIGHTBOX)
+   ========================================================================== */
+.album-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 250;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease;
+}
+
+.album-modal.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.album-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(18, 24, 38, 0.62);
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+}
+
+.album-modal-content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 980px;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: var(--radius-xl);
+  padding: 2rem;
+  box-shadow: 0 32px 90px rgba(15, 20, 32, 0.35);
+  transform: scale(0.94) translateY(12px);
+  transition: transform 0.42s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.album-modal.open .album-modal-content {
+  transform: scale(1) translateY(0);
+}
+
+.album-modal-close {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.4rem;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--border-strong);
+  background: #ffffff;
+  color: var(--slate-800);
+  font-size: 1.6rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+}
+
+.album-modal-close:hover {
+  background: var(--blue-primary);
+  color: #ffffff;
+  border-color: var(--blue-primary);
+}
+
+.album-modal-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding-right: 3.2rem;
+  margin-bottom: 1.25rem;
+}
+
+.album-modal-cat {
+  display: block;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--blue-primary);
+  font-weight: 700;
+}
+
+.album-modal-title {
+  font-family: var(--font-display);
+  font-size: 1.55rem;
+  color: var(--slate-800);
+}
+
+.album-modal-counter {
   font-size: 0.88rem;
-  color: var(--slate-500);
+  font-weight: 700;
+  color: var(--blue-primary);
+  background: var(--blue-tint);
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+}
+
+.album-viewer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--slate-800);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  aspect-ratio: 16 / 10;
+  max-height: 58vh;
+  margin-bottom: 1.2rem;
+}
+
+.album-main-img-wrap {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.album-main-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  transition: opacity 0.25s ease;
+}
+
+.album-nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--blue-primary);
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  transition: var(--transition);
+}
+
+.album-nav-btn:hover {
+  background: var(--blue-primary);
+  color: #ffffff;
+}
+
+.album-nav-btn.prev {
+  left: 1rem;
+}
+
+.album-nav-btn.next {
+  right: 1rem;
+}
+
+.album-thumbs {
+  display: flex;
+  gap: 0.75rem;
+  overflow-x: auto;
+  padding-bottom: 0.25rem;
+}
+
+.album-thumb {
+  width: 86px;
+  height: 64px;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 2.5px solid transparent;
+  cursor: pointer;
+  flex-shrink: 0;
+  opacity: 0.6;
+  transition: var(--transition);
+}
+
+.album-thumb.active,
+.album-thumb:hover {
+  opacity: 1;
+  border-color: var(--blue-primary);
+  transform: translateY(-2px);
+}
+
+.album-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 /* ==========================================================================
@@ -921,8 +1122,8 @@ body {
 /* Reveal Animations */
 .reveal {
   opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.85s ease, transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateY(18px);
+  transition: opacity 0.65s ease, transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .reveal.visible {
@@ -956,8 +1157,9 @@ body {
     top: 100%;
     left: 0;
     right: 0;
-    background: rgba(255, 255, 255, 0.98);
-    backdrop-filter: blur(18px);
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(22px);
+    -webkit-backdrop-filter: blur(22px);
     flex-direction: column;
     padding: 1.5rem;
     border-bottom: 1px solid var(--border-subtle);
@@ -977,8 +1179,7 @@ body {
     padding: 2rem 1.5rem;
   }
 
-  .video-expand-card {
-    width: 86vw;
-    height: 54vh;
+  .album-modal-content {
+    padding: 1.25rem;
   }
 }

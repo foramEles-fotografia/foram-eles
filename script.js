@@ -1,16 +1,16 @@
 /**
  * FORAM Eles — Script Principal
- * 1. Efeito do 1º Container (Fundo Branco estilo Antigravity):
- *    - Desfoque colorido MUITO lento, suave e orgânico.
- *    - Acompanha o mouse bem devagarzinho.
+ * 1. Efeito do 1º Container (Cores Vivas Desfocadas sobre Fundo Branco):
+ *    - Cores bem visíveis e vibrantes.
+ *    - Acompanha o mouse sem atraso exagerado (resposta fluida e imediata).
  *    - Quando o mouse para ou sai do container (ex: vai nas abas do navegador),
- *      permanece exatamente na última posição e vai se dispersando/movendo bem devagar,
- *      sem NUNCA resetar para o centro.
- * 2. Efeito do 2º Container (Vídeo Expansivo no Scroll):
- *    - Já começa ocupando 60% da largura da tela quando você está no 1º container.
- *    - Cresce até 100% da tela conforme rola para baixo.
- *    - Continua ocupando 100% da tela durante 2 scrolls completos (200vh).
- *    - Só depois vai reduzindo e descendo a tela.
+ *      NÃO reseta para o centro: permanece na última posição e continua se movendo
+ *      e se dispersando bem devagarzinho.
+ * 2. Efeito do 2º Container (Vídeo Expansivo GPU-Accelerated):
+ *    - Começa em 60% da tela já no 1º container.
+ *    - Cresce rápido até 100% da tela logo no início do scroll.
+ *    - Permanece em 100% por 2 scrolls e depois reduz suavemente.
+ * 3. Modal de Álbum com Fundo Desfocado ao clicar nos cards estilo Apple.
  */
 
 (function () {
@@ -23,7 +23,7 @@
   let dpr = Math.min(window.devicePixelRatio || 1, 2);
   let initialized = false;
 
-  // Âncora persistente: guarda a última posição do mouse e NUNCA reseta para o centro!
+  // Âncora persistente: nunca reseta para o centro quando o mouse sai!
   const anchor = {
     x: 0,
     y: 0,
@@ -31,9 +31,8 @@
     targetY: 0,
     isMoving: false,
     lastMoveTime: 0,
-    // Dispersão suave: 0.42 quando acompanha o mouse em movimento; 0.72 quando pausado/fora
-    dispersion: 0.68,
-    targetDispersion: 0.68
+    dispersion: 0.62,
+    targetDispersion: 0.62
   };
 
   function resize() {
@@ -49,9 +48,9 @@
 
     if (!initialized) {
       anchor.x = width * 0.5;
-      anchor.y = height * 0.45;
+      anchor.y = height * 0.44;
       anchor.targetX = width * 0.5;
-      anchor.targetY = height * 0.45;
+      anchor.targetY = height * 0.44;
       initialized = true;
     } else {
       anchor.x = (anchor.x / prevWidth) * width;
@@ -64,13 +63,13 @@
   window.addEventListener('resize', resize);
   resize();
 
-  // Velocidades ultra reduzidas para um movimento calmo, lento e contemplativo
+  // Paleta de cores VIVAS e intensas sobre o fundo branco
   const colorConfigs = [
-    { r: 27,  g: 98,  b: 248, baseRadius: 310, breatheSpeed: 0.00022, driftSpeedX: 0.00008, driftSpeedY: 0.00009, spreadX: 0.26, spreadY: 0.22, phase: 0.0 }, // Azul Royal FORAM Eles
-    { r: 139, g: 92,  b: 246, baseRadius: 280, breatheSpeed: 0.00018, driftSpeedX: 0.00007, driftSpeedY: 0.00008, spreadX: 0.30, spreadY: 0.24, phase: 1.6 }, // Violeta suave
-    { r: 14,  g: 185, b: 240, baseRadius: 260, breatheSpeed: 0.00025, driftSpeedX: 0.00009, driftSpeedY: 0.00007, spreadX: 0.24, spreadY: 0.20, phase: 3.1 }, // Ciano luminoso
-    { r: 255, g: 105, b: 85,  baseRadius: 245, breatheSpeed: 0.00020, driftSpeedX: 0.00008, driftSpeedY: 0.00009, spreadX: 0.28, spreadY: 0.23, phase: 4.5 }, // Coral vivo
-    { r: 250, g: 190, b: 50,  baseRadius: 215, breatheSpeed: 0.00024, driftSpeedX: 0.00010, driftSpeedY: 0.00008, spreadX: 0.21, spreadY: 0.19, phase: 5.7 }  // Âmbar quente
+    { r: 27,  g: 98,  b: 248, baseRadius: 340, breatheSpeed: 0.00028, driftSpeedX: 0.00009, driftSpeedY: 0.00011, spreadX: 0.25, spreadY: 0.22, phase: 0.0 }, // Azul Royal FORAM Eles
+    { r: 124, g: 58,  b: 237, baseRadius: 310, breatheSpeed: 0.00022, driftSpeedX: 0.00008, driftSpeedY: 0.00009, spreadX: 0.28, spreadY: 0.24, phase: 1.5 }, // Violeta Vivo
+    { r: 0,   g: 195, b: 255, baseRadius: 290, breatheSpeed: 0.00030, driftSpeedX: 0.00010, driftSpeedY: 0.00008, spreadX: 0.24, spreadY: 0.20, phase: 3.0 }, // Ciano Intenso
+    { r: 255, g: 77,  b: 109, baseRadius: 275, breatheSpeed: 0.00025, driftSpeedX: 0.00009, driftSpeedY: 0.00010, spreadX: 0.27, spreadY: 0.23, phase: 4.4 }, // Coral / Rosa Vivo
+    { r: 255, g: 176, b: 25,  baseRadius: 245, breatheSpeed: 0.00029, driftSpeedX: 0.00011, driftSpeedY: 0.00009, spreadX: 0.21, spreadY: 0.19, phase: 5.6 }  // Âmbar Dourado
   ];
 
   const blobs = colorConfigs.map((cfg, i) => {
@@ -82,9 +81,6 @@
     };
   });
 
-  // Atualiza a posição apenas quando o mouse se move dentro da área do 1º container.
-  // Se o mouse sair (para as abas do navegador ou para fora da janela), targetX e targetY
-  // continuam exatamente onde o mouse foi visto pela última vez!
   window.addEventListener('mousemove', (e) => {
     const rect = canvas.getBoundingClientRect();
     const relX = e.clientX - rect.left;
@@ -95,16 +91,16 @@
       anchor.targetY = relY;
       anchor.isMoving = true;
       anchor.lastMoveTime = performance.now();
-      anchor.targetDispersion = 0.40;
+      // Quando o mouse se move, agrupa suavemente perto do cursor
+      anchor.targetDispersion = 0.28;
     } else {
-      // Fora do container: não altera targetX/targetY (fica na última posição) e dispersa devagar
+      // Saiu do container: mantém a última posição e dispersa devagar
       anchor.isMoving = false;
       anchor.targetDispersion = 0.72;
     }
-  });
+  }, { passive: true });
 
   document.addEventListener('mouseleave', () => {
-    // Saiu da janela: permanece na última posição e dispersa bem devagarzinho
     anchor.isMoving = false;
     anchor.targetDispersion = 0.72;
   });
@@ -119,7 +115,7 @@
         anchor.targetY = relY;
         anchor.isMoving = true;
         anchor.lastMoveTime = performance.now();
-        anchor.targetDispersion = 0.40;
+        anchor.targetDispersion = 0.28;
       }
     }
   }, { passive: true });
@@ -132,21 +128,24 @@
   function animate(time) {
     ctx.clearRect(0, 0, width, height);
 
-    // Se o cursor está parado há mais de 800ms, trata exatamente como pausado:
-    // permanece onde está e começa a dispersar muito lentamente
-    if (anchor.isMoving && time - anchor.lastMoveTime > 800) {
+    // Se o mouse parou por mais de 450ms, entra em modo pausado e dispersa devagarzinho
+    if (anchor.isMoving && time - anchor.lastMoveTime > 450) {
       anchor.isMoving = false;
       anchor.targetDispersion = 0.72;
     }
 
-    // Inércia muito lenta e sedosa (0.008 para posição, 0.0018 para dispersão)
-    anchor.x += (anchor.targetX - anchor.x) * 0.008;
-    anchor.y += (anchor.targetY - anchor.y) * 0.008;
-    anchor.dispersion += (anchor.targetDispersion - anchor.dispersion) * 0.0018;
+    // Sem delay pesado quando o mouse mexe (0.12), e bem calmo quando parado (0.015)
+    const followSpeed = anchor.isMoving ? 0.12 : 0.018;
+    anchor.x += (anchor.targetX - anchor.x) * followSpeed;
+    anchor.y += (anchor.targetY - anchor.y) * followSpeed;
+
+    // Quando agrupa no mouse é ágil (0.06), quando dispersa parado é bem lento (0.0025)
+    const dispersionSpeed = anchor.isMoving ? 0.06 : 0.0025;
+    anchor.dispersion += (anchor.targetDispersion - anchor.dispersion) * dispersionSpeed;
 
     blobs.forEach((blob, i) => {
-      const maxOffsetX = Math.min(width, 1050) * blob.spreadX * anchor.dispersion;
-      const maxOffsetY = Math.min(height, 750) * blob.spreadY * anchor.dispersion;
+      const maxOffsetX = Math.min(width, 1080) * blob.spreadX * anchor.dispersion;
+      const maxOffsetY = Math.min(height, 760) * blob.spreadY * anchor.dispersion;
 
       const organicOffsetX =
         Math.cos(time * blob.driftSpeedX + blob.phase) * maxOffsetX +
@@ -159,25 +158,26 @@
       const desiredX = anchor.x + organicOffsetX;
       const desiredY = anchor.y + organicOffsetY;
 
-      // Cada mancha de cor segue seu ponto orbital bem devagarzinho
-      blob.x += (desiredX - blob.x) * 0.007;
-      blob.y += (desiredY - blob.y) * 0.007;
+      const blobFollow = anchor.isMoving ? 0.09 : 0.015;
+      blob.x += (desiredX - blob.x) * blobFollow;
+      blob.y += (desiredY - blob.y) * blobFollow;
 
       const breatheWave = Math.sin(time * blob.breatheSpeed + blob.phase);
-      const currentRadius = blob.baseRadius * (1 + breatheWave * 0.14);
-      const alpha = 0.35 + breatheWave * 0.06;
+      const currentRadius = blob.baseRadius * (1 + breatheWave * 0.15);
+      // Opacidade bem mais viva para destacar no fundo branco!
+      const alpha = 0.76 + breatheWave * 0.09;
 
       const grad = ctx.createRadialGradient(
         blob.x,
         blob.y,
-        currentRadius * 0.05,
+        currentRadius * 0.04,
         blob.x,
         blob.y,
         currentRadius
       );
 
       grad.addColorStop(0, `rgba(${blob.r}, ${blob.g}, ${blob.b}, ${alpha})`);
-      grad.addColorStop(0.55, `rgba(${blob.r}, ${blob.g}, ${blob.b}, ${alpha * 0.45})`);
+      grad.addColorStop(0.5, `rgba(${blob.r}, ${blob.g}, ${blob.b}, ${alpha * 0.55})`);
       grad.addColorStop(1, `rgba(${blob.r}, ${blob.g}, ${blob.b}, 0)`);
 
       ctx.fillStyle = grad;
@@ -193,16 +193,27 @@
 })();
 
 /**
- * 2º CONTAINER: Coreografia de Scroll do Vídeo com Interpolação Suave
- * - Começa ocupando 60% da tela enquanto o usuário está no 1º container
- * - Cresce até 100% da tela conforme rola para baixo
- * - Permanece em 100% da tela por 2 scrolls completos (200vh)
- * - Depois reduz suavemente para 60% e continua descendo a tela
+ * 2º CONTAINER: Vídeo Expansivo com GPU Transform (Scale3D) e Crescimento Rápido
+ * - Começa em 60% da tela já visível no 1º container
+ * - Cresce rápido até 100% da tela logo no começo do scroll
+ * - Fica travado em 100% por 2 scrolls e depois reduz suavemente
  */
 (function () {
   const track = document.getElementById('destaque');
   const videoCard = document.getElementById('video-expand-card');
+  const videoEl = document.getElementById('showcase-video');
   if (!track || !videoCard) return;
+
+  // Garante reprodução automática contínua do vídeo enviado
+  if (videoEl) {
+    videoEl.muted = true;
+    const tryPlay = () => {
+      videoEl.play().catch(() => {});
+    };
+    tryPlay();
+    window.addEventListener('scroll', tryPlay, { once: true, passive: true });
+    window.addEventListener('click', tryPlay, { once: true, passive: true });
+  }
 
   let currentFactor = 0;
   let targetFactor = 0;
@@ -217,14 +228,14 @@
     const totalScrollable = track.offsetHeight - vh;
     const scrolled = -rect.top;
 
-    // Cresce de 60% para 100% conforme o usuário rola do 1º container para o 2º
-    const growStart = -vh * 0.25;
-    const growEnd = vh * 0.70;
+    // Cresce rápido de 60% até 100% logo que você começa a rolar para baixo!
+    const growStart = -vh * 0.38;
+    const growEnd = vh * 0.12;
 
-    // Fica travado em 100% da tela por exatos 2 scrolls completos (2.0 * vh)
-    const holdEnd = growEnd + vh * 2.0;
+    // Permanece em 100% da tela durante 2 scrolls (1.55 * vh)
+    const holdEnd = growEnd + vh * 1.55;
 
-    // Depois dos 2 scrolls em 100%, reduz de volta para 60% antes de descer
+    // Reduz suavemente de volta para 60% no final
     const shrinkEnd = totalScrollable;
 
     if (scrolled <= growStart) {
@@ -245,19 +256,15 @@
 
   function renderVideoLoop() {
     computeTargetFactor();
-    // Suaviza a transição do tamanho do vídeo para nunca parecer brusco no scroll
-    currentFactor += (targetFactor - currentFactor) * 0.12;
+    currentFactor += (targetFactor - currentFactor) * 0.16;
 
     const isMobile = window.innerWidth <= 720;
-    const minW = isMobile ? 86 : 60; // 60% da tela no 1º container
-    const minH = isMobile ? 54 : 60;
+    const minScale = isMobile ? 0.86 : 0.60; // 60% da tela no 1º container
 
-    const w = minW + (100 - minW) * currentFactor;
-    const h = minH + (100 - minH) * currentFactor;
-    const radius = 28 * (1 - currentFactor);
+    const scale = minScale + (1 - minScale) * currentFactor;
+    const radius = 32 * (1 - currentFactor);
 
-    videoCard.style.width = `${w.toFixed(2)}vw`;
-    videoCard.style.height = `${h.toFixed(2)}vh`;
+    videoCard.style.transform = `scale3d(${scale.toFixed(4)}, ${scale.toFixed(4)}, 1)`;
     videoCard.style.borderRadius = `${radius.toFixed(1)}px`;
 
     requestAnimationFrame(renderVideoLoop);
@@ -266,7 +273,9 @@
   requestAnimationFrame(renderVideoLoop);
 })();
 
-// Interações de UI: Navbar, Menu Mobile, Filtro de Portfólio e Scroll Reveal
+/**
+ * 3º CONTAINER: Modal de Álbum com Fundo Desfocado (abre ao clicar nos cards estilo Apple)
+ */
 document.addEventListener('DOMContentLoaded', () => {
   const navbar = document.getElementById('navbar');
   const menuToggle = document.getElementById('menu-toggle');
@@ -278,7 +287,7 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
       navbar.classList.remove('scrolled');
     }
-  });
+  }, { passive: true });
 
   if (menuToggle && navLinks) {
     menuToggle.addEventListener('click', () => {
@@ -290,7 +299,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Filtro de Portfólio (Cartas estilo Apple)
+  // Filtro de Portfólio
   const filterBtns = document.querySelectorAll('.filter-btn');
   const portfolioItems = document.querySelectorAll('.apple-stack-item');
 
@@ -309,6 +318,173 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       });
     });
+  });
+
+  // Dados dos Álbuns (Fotos de cada card)
+  const albumsData = [
+    {
+      category: 'Retratos Corporativos',
+      title: 'Posicionamento & Naturalidade',
+      photos: [
+        'assets/foto-socios.jpg',
+        'assets/foto-socios-2.jpg',
+        'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=1200&q=85',
+        'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=1200&q=85',
+        'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=1200&q=85'
+      ]
+    },
+    {
+      category: 'Profissionais Trabalhando',
+      title: 'Rotina Executiva & Equipes',
+      photos: [
+        'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=85',
+        'https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=1200&q=85',
+        'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=1200&q=85',
+        'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=1200&q=85'
+      ]
+    },
+    {
+      category: 'Audiovisual',
+      title: 'Storytelling de Marca',
+      photos: [
+        'https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=1200&q=85',
+        'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=1200&q=85',
+        'https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&w=1200&q=85',
+        'https://images.unsplash.com/photo-1542038784456-1ea8e935640e?auto=format&fit=crop&w=1200&q=85'
+      ]
+    },
+    {
+      category: 'Profissionais Trabalhando',
+      title: 'Bastidores & Autenticidade',
+      photos: [
+        'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=1200&q=85',
+        'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1200&q=85',
+        'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=1200&q=85',
+        'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=85'
+      ]
+    },
+    {
+      category: 'Retratos Corporativos',
+      title: 'Direção Executiva',
+      photos: [
+        'assets/foto-socios-2.jpg',
+        'assets/foto-socios.jpg',
+        'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=1200&q=85',
+        'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=1200&q=85'
+      ]
+    },
+    {
+      category: 'Audiovisual & Set',
+      title: 'Captação de Alta Performance',
+      photos: [
+        'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=85',
+        'https://images.unsplash.com/photo-1542038784456-1ea8e935640e?auto=format&fit=crop&w=1200&q=85',
+        'https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=1200&q=85',
+        'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=1200&q=85'
+      ]
+    }
+  ];
+
+  const modal = document.getElementById('album-modal');
+  const modalBackdrop = document.getElementById('album-modal-backdrop');
+  const modalClose = document.getElementById('album-modal-close');
+  const modalCat = document.getElementById('album-modal-cat');
+  const modalTitle = document.getElementById('album-modal-title');
+  const modalCounter = document.getElementById('album-modal-counter');
+  const modalMainImg = document.getElementById('album-main-img');
+  const modalThumbs = document.getElementById('album-thumbs');
+  const prevBtn = document.getElementById('album-prev');
+  const nextBtn = document.getElementById('album-next');
+
+  let currentAlbumIndex = 0;
+  let currentPhotoIndex = 0;
+
+  function renderAlbumPhoto() {
+    const album = albumsData[currentAlbumIndex];
+    if (!album) return;
+
+    modalCat.textContent = album.category;
+    modalTitle.textContent = album.title;
+    modalCounter.textContent = `${currentPhotoIndex + 1} / ${album.photos.length}`;
+    modalMainImg.src = album.photos[currentPhotoIndex];
+
+    const thumbEls = modalThumbs.querySelectorAll('.album-thumb');
+    thumbEls.forEach((t, idx) => {
+      t.classList.toggle('active', idx === currentPhotoIndex);
+    });
+  }
+
+  function openAlbum(albumIdx) {
+    const album = albumsData[albumIdx];
+    if (!album) return;
+    currentAlbumIndex = albumIdx;
+    currentPhotoIndex = 0;
+
+    modalThumbs.innerHTML = '';
+    album.photos.forEach((src, idx) => {
+      const thumb = document.createElement('div');
+      thumb.className = `album-thumb ${idx === 0 ? 'active' : ''}`;
+      thumb.innerHTML = `<img src="${src}" alt="Miniatura ${idx + 1}" />`;
+      thumb.addEventListener('click', () => {
+        currentPhotoIndex = idx;
+        renderAlbumPhoto();
+      });
+      modalThumbs.appendChild(thumb);
+    });
+
+    renderAlbumPhoto();
+    modal.classList.add('open');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeAlbum() {
+    modal.classList.remove('open');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  portfolioItems.forEach((item) => {
+    item.addEventListener('click', () => {
+      const idx = parseInt(item.getAttribute('data-album') || '0', 10);
+      openAlbum(idx);
+    });
+
+    item.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        const idx = parseInt(item.getAttribute('data-album') || '0', 10);
+        openAlbum(idx);
+      }
+    });
+  });
+
+  if (prevBtn) {
+    prevBtn.addEventListener('click', () => {
+      const album = albumsData[currentAlbumIndex];
+      if (!album) return;
+      currentPhotoIndex = (currentPhotoIndex - 1 + album.photos.length) % album.photos.length;
+      renderAlbumPhoto();
+    });
+  }
+
+  if (nextBtn) {
+    nextBtn.addEventListener('click', () => {
+      const album = albumsData[currentAlbumIndex];
+      if (!album) return;
+      currentPhotoIndex = (currentPhotoIndex + 1) % album.photos.length;
+      renderAlbumPhoto();
+    });
+  }
+
+  if (modalClose) modalClose.addEventListener('click', closeAlbum);
+  if (modalBackdrop) modalBackdrop.addEventListener('click', closeAlbum);
+
+  window.addEventListener('keydown', (e) => {
+    if (!modal.classList.contains('open')) return;
+    if (e.key === 'Escape') closeAlbum();
+    if (e.key === 'ArrowLeft' && prevBtn) prevBtn.click();
+    if (e.key === 'ArrowRight' && nextBtn) nextBtn.click();
   });
 
   // Scroll Reveal

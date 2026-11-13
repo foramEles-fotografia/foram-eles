@@ -12,7 +12,7 @@
 </head>
 <body>
 
-  <!-- Header / Navbar (Fundo Branco Limpo estilo Antigravity + Botão Azul) -->
+  <!-- Header / Navbar com Desfoque (Blur) Suave -->
   <header class="navbar" id="navbar">
     <div class="nav-container">
       <a href="#hero" class="brand-logo" aria-label="FORAM Eles - Início">
@@ -37,7 +37,7 @@
   </header>
 
   <main>
-    <!-- 1º CONTAINER: BRANCO ESTILO ANTIGRAVITY + DESFOQUE COLORIDO BEM LENTO E INTERATIVO -->
+    <!-- 1º CONTAINER: BRANCO ESTILO ANTIGRAVITY + DESFOQUE COLORIDO VIVO E FLUIDO -->
     <section class="container-hero" id="hero">
       <div class="hero-canvas-wrapper">
         <canvas id="breathing-canvas"></canvas>
@@ -71,29 +71,30 @@
       </div>
     </section>
 
-    <!-- 2º CONTAINER: VÍDEO EXPANSIVO NO SCROLL
-         - Já aparece ocupando 60% da largura da tela quando você está no 1º container
-         - Cresce suavemente até 100% da tela conforme rola para baixo
-         - Continua ocupando 100% da tela por 2 scrolls completos (200vh)
-         - Só depois vai reduzindo e descendo a tela -->
+    <!-- 2º CONTAINER: VÍDEO EXPANSIVO NO SCROLL (O VÍDEO QUE VOCÊ ENVIOU)
+         - Começa em 60% da tela já visível a partir do 1º container
+         - Cresce rápido até 100% da tela logo no início do scroll
+         - Permanece em 100% da tela por 2 scrolls
+         - Depois reduz suavemente e segue descendo a tela -->
     <section class="video-scroll-track" id="destaque">
       <div class="video-sticky-stage">
         <div class="video-expand-card" id="video-expand-card">
           <video
             id="showcase-video"
             class="showcase-video"
-            src="assets/video-foram-eles.mp4"
+            src="assets/video-foram-eles.mp4?v=3"
             autoplay
             muted
             loop
             playsinline
+            preload="auto"
           ></video>
 
           <div class="video-gradient-overlay"></div>
 
           <div class="video-floating-bar">
             <div class="video-bar-left">
-              <span class="video-tag">Showreel • FORAM Eles.</span>
+              <span class="video-tag">Showreel Oficial • FORAM Eles.</span>
               <h3>Produção Audiovisual &amp; Fotografia em Movimento</h3>
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor.</p>
             </div>
@@ -107,7 +108,7 @@
       </div>
     </section>
 
-    <!-- 3º CONTAINER: TRABALHOS REALIZADOS (CARDS ESTILO APPLE COM FOTOS POR BAIXO NAS LATERAIS) -->
+    <!-- 3º CONTAINER: TRABALHOS REALIZADOS (CARDS ESTILO APPLE + CLIQUE ABRE ÁLBUM COM FUNDO DESFOCADO) -->
     <section class="container-portfolio section-padding" id="portfolio">
       <div class="section-inner">
         <div class="portfolio-header reveal">
@@ -115,7 +116,7 @@
             <span class="section-tag">Trabalhos Realizados</span>
             <h2 class="section-title">Profissionais em ação,<br />marcas com presença.</h2>
             <p class="section-desc">
-              Passe o mouse sobre cada álbum para ver as fotos que estão por baixo. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              Passe o mouse para espiar as fotos de baixo e <strong>clique em qualquer álbum</strong> para abrir todas as fotos com fundo desfocado.
             </p>
           </div>
           <div class="portfolio-filters" role="tablist">
@@ -128,7 +129,30 @@
 
         <div class="portfolio-grid reveal" id="portfolio-grid">
           <!-- Card Stack 1 -->
-          <article class="apple-stack-item" data-category="trabalhando">
+          <article class="apple-stack-item" data-category="corporativo" data-album="0" tabindex="0" role="button" aria-label="Abrir álbum Posicionamento e Naturalidade">
+            <div class="apple-card-stack">
+              <div class="stack-layer layer-left">
+                <img src="assets/foto-socios-2.jpg" alt="Retrato de Sócios — FORAM Eles" />
+              </div>
+              <div class="stack-layer layer-right">
+                <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=700&q=80" alt="Retrato Corporativo" />
+              </div>
+              <div class="stack-layer layer-main">
+                <img src="assets/foto-socios.jpg" alt="Retrato Corporativo Natural — FORAM Eles" />
+                <div class="card-main-overlay">
+                  <span class="item-cat">Retratos Corporativos • 5 fotos</span>
+                  <h3>Posicionamento &amp; Naturalidade</h3>
+                </div>
+              </div>
+            </div>
+            <div class="stack-meta">
+              <h4>Posicionamento &amp; Naturalidade</h4>
+              <p>Clique para ver o álbum completo</p>
+            </div>
+          </article>
+
+          <!-- Card Stack 2 -->
+          <article class="apple-stack-item" data-category="trabalhando" data-album="1" tabindex="0" role="button" aria-label="Abrir álbum Rotina Executiva e Equipes">
             <div class="apple-card-stack">
               <div class="stack-layer layer-left">
                 <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=700&q=80" alt="Foto secundária esquerda" />
@@ -139,42 +163,19 @@
               <div class="stack-layer layer-main">
                 <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=900&q=85" alt="Profissionais em ação" />
                 <div class="card-main-overlay">
-                  <span class="item-cat">Profissionais Trabalhando</span>
+                  <span class="item-cat">Profissionais Trabalhando • 4 fotos</span>
                   <h3>Rotina Executiva &amp; Equipes</h3>
                 </div>
               </div>
             </div>
             <div class="stack-meta">
               <h4>Rotina Executiva &amp; Equipes</h4>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            </div>
-          </article>
-
-          <!-- Card Stack 2 -->
-          <article class="apple-stack-item" data-category="corporativo">
-            <div class="apple-card-stack">
-              <div class="stack-layer layer-left">
-                <img src="assets/foto-socios-2.jpg" alt="Retrato de Sócios — FORAM Eles" />
-              </div>
-              <div class="stack-layer layer-right">
-                <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=700&q=80" alt="Foto secundária direita" />
-              </div>
-              <div class="stack-layer layer-main">
-                <img src="assets/foto-socios.jpg" alt="Retrato Corporativo Natural — FORAM Eles" />
-                <div class="card-main-overlay">
-                  <span class="item-cat">Retratos Corporativos</span>
-                  <h3>Posicionamento &amp; Naturalidade</h3>
-                </div>
-              </div>
-            </div>
-            <div class="stack-meta">
-              <h4>Posicionamento &amp; Naturalidade</h4>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+              <p>Clique para ver o álbum completo</p>
             </div>
           </article>
 
           <!-- Card Stack 3 -->
-          <article class="apple-stack-item" data-category="audiovisual">
+          <article class="apple-stack-item" data-category="audiovisual" data-album="2" tabindex="0" role="button" aria-label="Abrir álbum Storytelling de Marca">
             <div class="apple-card-stack">
               <div class="stack-layer layer-left">
                 <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=700&q=80" alt="Foto secundária esquerda" />
@@ -185,19 +186,19 @@
               <div class="stack-layer layer-main">
                 <img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=900&q=85" alt="Produção Audiovisual" />
                 <div class="card-main-overlay">
-                  <span class="item-cat">Audiovisual</span>
+                  <span class="item-cat">Audiovisual • 4 fotos</span>
                   <h3>Storytelling de Marca</h3>
                 </div>
               </div>
             </div>
             <div class="stack-meta">
               <h4>Storytelling de Marca</h4>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+              <p>Clique para ver o álbum completo</p>
             </div>
           </article>
 
           <!-- Card Stack 4 -->
-          <article class="apple-stack-item" data-category="trabalhando">
+          <article class="apple-stack-item" data-category="trabalhando" data-album="3" tabindex="0" role="button" aria-label="Abrir álbum Bastidores e Autenticidade">
             <div class="apple-card-stack">
               <div class="stack-layer layer-left">
                 <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=700&q=80" alt="Foto secundária esquerda" />
@@ -208,42 +209,42 @@
               <div class="stack-layer layer-main">
                 <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=900&q=85" alt="Ambiente de trabalho real" />
                 <div class="card-main-overlay">
-                  <span class="item-cat">Profissionais Trabalhando</span>
+                  <span class="item-cat">Profissionais Trabalhando • 4 fotos</span>
                   <h3>Bastidores &amp; Autenticidade</h3>
                 </div>
               </div>
             </div>
             <div class="stack-meta">
               <h4>Bastidores &amp; Autenticidade</h4>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+              <p>Clique para ver o álbum completo</p>
             </div>
           </article>
 
           <!-- Card Stack 5 -->
-          <article class="apple-stack-item" data-category="corporativo">
+          <article class="apple-stack-item" data-category="corporativo" data-album="4" tabindex="0" role="button" aria-label="Abrir álbum Direção Executiva">
             <div class="apple-card-stack">
               <div class="stack-layer layer-left">
-                <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=700&q=80" alt="Foto secundária esquerda" />
+                <img src="assets/foto-socios.jpg" alt="Foto secundária esquerda" />
               </div>
               <div class="stack-layer layer-right">
                 <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=700&q=80" alt="Foto secundária direita" />
               </div>
               <div class="stack-layer layer-main">
-                <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=900&q=85" alt="Retrato de Liderança" />
+                <img src="assets/foto-socios-2.jpg" alt="Retrato de Liderança" />
                 <div class="card-main-overlay">
-                  <span class="item-cat">Retratos Corporativos</span>
+                  <span class="item-cat">Retratos Corporativos • 4 fotos</span>
                   <h3>Direção Executiva</h3>
                 </div>
               </div>
             </div>
             <div class="stack-meta">
               <h4>Direção Executiva</h4>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+              <p>Clique para ver o álbum completo</p>
             </div>
           </article>
 
           <!-- Card Stack 6 -->
-          <article class="apple-stack-item" data-category="audiovisual">
+          <article class="apple-stack-item" data-category="audiovisual" data-album="5" tabindex="0" role="button" aria-label="Abrir álbum Captação de Alta Performance">
             <div class="apple-card-stack">
               <div class="stack-layer layer-left">
                 <img src="https://images.unsplash.com/photo-1542038784456-1ea8e935640e?auto=format&fit=crop&w=700&q=80" alt="Foto secundária esquerda" />
@@ -254,14 +255,14 @@
               <div class="stack-layer layer-main">
                 <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=900&q=85" alt="Set e Equipamentos" />
                 <div class="card-main-overlay">
-                  <span class="item-cat">Audiovisual &amp; Set</span>
+                  <span class="item-cat">Audiovisual &amp; Set • 4 fotos</span>
                   <h3>Captação de Alta Performance</h3>
                 </div>
               </div>
             </div>
             <div class="stack-meta">
               <h4>Captação de Alta Performance</h4>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+              <p>Clique para ver o álbum completo</p>
             </div>
           </article>
         </div>
@@ -375,7 +376,7 @@
       </div>
     </section>
 
-    <!-- 6º CONTAINER: CONTATO / CTA (Branco, Azul e Cinza Escuro) -->
+    <!-- 6º CONTAINER: CONTATO / CTA -->
     <section class="container-contact section-padding" id="contato">
       <div class="section-inner">
         <div class="contact-card reveal">
@@ -420,6 +421,32 @@
       </div>
     </section>
   </main>
+
+  <!-- MODAL DE ÁLBUM COM FUNDO DESFOCADO (ABRE AO CLICAR NOS CARDS DE FOTOS) -->
+  <div class="album-modal" id="album-modal" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="album-modal-backdrop" id="album-modal-backdrop"></div>
+    <div class="album-modal-content">
+      <button class="album-modal-close" id="album-modal-close" aria-label="Fechar álbum">&times;</button>
+
+      <div class="album-modal-header">
+        <div>
+          <span class="album-modal-cat" id="album-modal-cat">Categoria</span>
+          <h3 class="album-modal-title" id="album-modal-title">Título do Álbum</h3>
+        </div>
+        <span class="album-modal-counter" id="album-modal-counter">1 / 4</span>
+      </div>
+
+      <div class="album-viewer">
+        <button class="album-nav-btn prev" id="album-prev" aria-label="Foto anterior">&#10094;</button>
+        <div class="album-main-img-wrap">
+          <img src="" alt="Foto do álbum" id="album-main-img" class="album-main-img" />
+        </div>
+        <button class="album-nav-btn next" id="album-next" aria-label="Próxima foto">&#10095;</button>
+      </div>
+
+      <div class="album-thumbs" id="album-thumbs"></div>
+    </div>
+  </div>
 
   <footer class="footer">
     <div class="section-inner footer-inner">
