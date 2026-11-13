@@ -702,4 +702,74 @@ document.addEventListener('DOMContentLoaded', () => {
   } else {
     reveals.forEach((el) => el.classList.add('visible'));
   }
+
+  // Inicializa o CookieConsent v3 (LGPD)
+  initCookieConsent();
 });
+
+/* ==========================================================================
+   AVISO DE COOKIES (LGPD) — CookieConsent v3 (orestbida/cookieconsent)
+   ========================================================================== */
+function initCookieConsent() {
+  if (typeof CookieConsent === 'undefined') return;
+
+  CookieConsent.run({
+    guiOptions: {
+      consentModal: {
+        layout: 'box',
+        position: 'bottom right',
+        equalWeightButtons: true,
+        flipButtons: false
+      },
+      preferencesModal: {
+        layout: 'box',
+        position: 'right',
+        equalWeightButtons: true,
+        flipButtons: false
+      }
+    },
+    categories: {
+      necessary: {
+        readOnly: true
+      },
+      analytics: {}
+    },
+    language: {
+      default: 'pt',
+      translations: {
+        pt: {
+          consentModal: {
+            title: 'Privacidade & Cookies',
+            description: 'Utilizamos cookies essenciais para o funcionamento seguro do site e cookies analíticos para mensurar e aprimorar a experiência de navegação, em conformidade com a LGPD.',
+            acceptAllBtn: 'Aceitar todos',
+            acceptNecessaryBtn: 'Apenas necessários',
+            showPreferencesBtn: 'Preferências'
+          },
+          preferencesModal: {
+            title: 'Preferências de Cookies',
+            acceptAllBtn: 'Aceitar todos',
+            acceptNecessaryBtn: 'Rejeitar opcionais',
+            savePreferencesBtn: 'Salvar preferências',
+            closeIconLabel: 'Fechar',
+            sections: [
+              {
+                title: 'Transparência e Privacidade (LGPD)',
+                description: 'Valorizamos a sua privacidade e fornecemos controle total sobre os dados e cookies armazenados durante sua visita.'
+              },
+              {
+                title: 'Cookies Estritamente Necessários <span class="pm__badge">Sempre Ativo</span>',
+                description: 'Essenciais para a segurança, carregamento rápido de mídias e navegação estável. Não podem ser desativados.',
+                linkedCategory: 'necessary'
+              },
+              {
+                title: 'Cookies de Análise e Métricas',
+                description: 'Ajudam nossa equipe a entender métricas agregadas de visitas e navegação para constante melhoria da plataforma.',
+                linkedCategory: 'analytics'
+              }
+            ]
+          }
+        }
+      }
+    }
+  });
+}
