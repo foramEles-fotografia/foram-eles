@@ -57,11 +57,11 @@ body {
    LOGOS OFICIAIS INLINE (SEMPRE QUE CITAR "FORAM Eles." OU "Eles.")
    ========================================================================== */
 .inline-logo-hero {
-  height: 1.04em;
+  height: 1.12em;
   width: auto;
   display: inline-block;
   vertical-align: -0.14em;
-  margin-top: 0.16rem;
+  margin-top: 0.45rem;
   object-fit: contain;
 }
 
@@ -1227,40 +1227,48 @@ body {
     text-align: center;
   }
 
-  /* 1º Container delicado, arejado e elegante no celular (espaço generoso do menu) */
+  /* 1º Container generoso, arejado e elegante no celular */
   .container-hero {
-    min-height: 92vh;
-    min-height: 92svh;
-    padding: 9.5rem 1.25rem 4rem;
+    min-height: 94vh;
+    min-height: 94svh;
+    padding: 9.2rem clamp(1.4rem, 5.5vw, 2.2rem) 4rem;
   }
 
   .hero-canvas-wrapper {
     height: 195vh;
   }
 
-  .hero-badge {
-    font-size: 0.72rem;
-    padding: 0.34rem 0.85rem;
-    margin-bottom: 0.95rem;
-    gap: 0.45rem;
+  .hero-content {
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 0 0.35rem;
   }
 
   .hero-title {
-    font-size: clamp(1.68rem, 7vw, 2.25rem);
-    line-height: 1.16;
-    margin-bottom: 0.8rem;
+    font-size: clamp(1.88rem, 7.8vw, 2.45rem);
+    line-height: 1.18;
+    letter-spacing: -0.03em;
+    margin-top: 0;
+    margin-bottom: 1.75rem;
   }
 
   .inline-logo-hero {
-    height: 0.98em;
-    margin-top: 0.14rem;
+    height: clamp(38px, 10.5vw, 48px);
+    width: auto;
+    display: inline-block;
+    vertical-align: middle;
+    margin-top: 0.95rem;
+    margin-bottom: 0.15rem;
+    object-fit: contain;
   }
 
   .hero-subtitle {
-    font-size: 0.9rem;
-    line-height: 1.54;
-    margin-bottom: 0.4rem;
-    padding: 0 0.2rem;
+    font-size: clamp(1.02rem, 4.2vw, 1.14rem);
+    line-height: 1.62;
+    color: var(--slate-700);
+    margin-bottom: 0;
+    padding: 0 0.35rem;
+    max-width: 440px;
   }
 
   .contact-buttons .btn:hover {
