@@ -13,10 +13,14 @@
  */
 
 /* ==========================================================================
-   1º CONTAINER: CANVAS DE CORES ULTRA-LEVE
-   - Desktop: segue o mouse; quando o mouse para ou sai da tela, as cores ficam na última
-     posição e passam a girar/vaguear devagar (nunca resetam).
-   - Celular: sem interação; as cores andam e giram sozinhas.
+   1º CONTAINER: CANVAS DE CORES VIBRANTES E VELUDO (1:1 NATIVO, ZERO PIXELADO)
+   - Resolução 1:1 nativa da tela com interpolação de alta precisão (sem quadriculado).
+   - Mix rico de cores: roxo vibrante, laranja pôr do sol, azul royal da marca,
+     ciano neon, magenta quente e âmbar dourado.
+   - Bordas com desfoque amplo e gradientes radiais suaves multi-stop.
+   - Desktop: segue o mouse suavemente; quando o mouse para ou sai da tela,
+     as cores ganham movimento dinâmico contínuo e orgânico (nunca congelam).
+   - Celular: sem interferência de toque; as cores vagueiam e giram com elegância.
    ========================================================================== */
 (function () {
   const canvas = document.getElementById('breathing-canvas');
@@ -29,12 +33,11 @@
   let width = 0;
   let height = 0;
   let viewH = window.innerHeight;
-  let renderScale = 0.2;
   let initialized = false;
   let isHeroVisible = true;
   let rafId = 0;
 
-  // Âncora persistente: nunca volta para o centro
+  // Âncora persistente: rastreia o mouse e vagueia dinamicamente quando parado
   const anchor = {
     x: 0,
     y: 0,
@@ -42,7 +45,7 @@
     targetY: 0,
     isMoving: false,
     lastMoveTime: 0,
-    idleBlend: 1 // 0 = mouse ativo, 1 = vagueando sozinho
+    idleBlend: 1 // 0 = mouse em movimento rápido, 1 = vagueando dinamicamente
   };
 
   function resize() {
@@ -56,14 +59,14 @@
     height = parent.offsetHeight || window.innerHeight * 2;
     viewH = window.innerHeight;
 
-    renderScale = isMobile ? 0.14 : 0.2;
-    canvas.width = Math.max(64, Math.round(width * renderScale));
-    canvas.height = Math.max(64, Math.round(height * renderScale));
-    ctx.setTransform(renderScale, 0, 0, renderScale, 0, 0);
+    // Resolução 1:1 direta: elimina 100% de quadriculados, serrilhados ou aspecto pixelado
+    canvas.width = Math.round(width);
+    canvas.height = Math.round(height);
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
 
     if (!initialized) {
       anchor.x = anchor.targetX = width * 0.5;
-      anchor.y = anchor.targetY = viewH * 0.36;
+      anchor.y = anchor.targetY = viewH * 0.38;
       initialized = true;
     } else {
       anchor.x = (anchor.x / prevW) * width;
@@ -73,7 +76,7 @@
     }
   }
 
-  // Ignora o "resize" causado pela barra de endereço do celular (só redimensiona se a largura mudar)
+  // Redimensionamento inteligente sem quebrar no scroll mobile
   window.addEventListener('resize', () => {
     const parent = canvas.parentElement;
     if (parent && parent.offsetWidth === width && Math.abs(window.innerHeight - viewH) < 160) return;
@@ -81,31 +84,36 @@
   }, { passive: true });
   resize();
 
-  // Cada cor tem seu próprio ângulo em volta da âncora, assim nenhuma cor engole as outras
+  // Mix de cores vibrantes com roxo, laranja, azul royal, ciano elétrico, magenta e âmbar
+  // Bolinhas maiores com órbitas elípticas e velocidades distintas para movimento vivo
   const palette = [
-    { r: 27,  g: 98,  b: 248, radius: 250, angle: 0.0,  orbit: 1.0,  speed: 0.00042, breathe: 0.00028 }, // Azul
-    { r: 0,   g: 212, b: 255, radius: 235, angle: 1.26, orbit: 1.15, speed: -0.00036, breathe: 0.00031 }, // Ciano
-    { r: 20,  g: 205, b: 140, radius: 225, angle: 2.51, orbit: 0.95, speed: 0.00033, breathe: 0.00026 }, // Verde água
-    { r: 150, g: 70,  b: 255, radius: 245, angle: 3.77, orbit: 1.2,  speed: -0.00039, breathe: 0.00024 }, // Violeta
-    { r: 255, g: 90,  b: 200, radius: 215, angle: 5.03, orbit: 1.05, speed: 0.0003,  breathe: 0.00029 }  // Rosa
+    { r: 138, g: 43,  b: 226, radius: 380, angle: 0.00, orbitX: 1.15, orbitY: 0.95, speed:  0.00052, breathe: 0.00030, alpha: 0.72 }, // Roxo / Violeta vibrante
+    { r: 255, g: 108, b: 20,  radius: 410, angle: 0.95, orbitX: 1.28, orbitY: 1.10, speed: -0.00046, breathe: 0.00034, alpha: 0.68 }, // Laranja pôr-do-sol
+    { r: 27,  g: 98,  b: 248, radius: 440, angle: 1.95, orbitX: 0.95, orbitY: 1.05, speed:  0.00040, breathe: 0.00026, alpha: 0.70 }, // Azul Royal da marca
+    { r: 0,   g: 216, b: 255, radius: 360, angle: 2.95, orbitX: 1.22, orbitY: 0.88, speed: -0.00044, breathe: 0.00032, alpha: 0.65 }, // Ciano elétrico
+    { r: 242, g: 42,  b: 142, radius: 370, angle: 3.90, orbitX: 1.05, orbitY: 1.22, speed:  0.00048, breathe: 0.00028, alpha: 0.66 }, // Rosa / Magenta vivo
+    { r: 255, g: 168, b: 24,  radius: 350, angle: 4.85, orbitX: 1.18, orbitY: 0.92, speed: -0.00040, breathe: 0.00031, alpha: 0.62 }, // Âmbar solar
+    { r: 112, g: 38,  b: 238, radius: 390, angle: 5.65, orbitX: 0.92, orbitY: 1.18, speed:  0.00044, breathe: 0.00027, alpha: 0.68 }  // Violeta profundo
   ];
 
   const blobs = palette.map((p) => ({ ...p, x: 0, y: 0, ready: false }));
 
-  // Manchas suaves por trás do vídeo (sem corte seco entre o 1º container e o vídeo)
+  // Manchas suaves que se estendem por trás do vídeo para conexão perfeita
   const lowerBlobs = [
-    { r: 27,  g: 98,  b: 248, radius: 300, xr: 0.30, yr: 0.46, speed: 0.00011, phase: 0.8 },
-    { r: 0,   g: 212, b: 255, radius: 280, xr: 0.68, yr: 0.54, speed: 0.0001,  phase: 2.4 },
-    { r: 150, g: 70,  b: 255, radius: 265, xr: 0.50, yr: 0.66, speed: 0.00009, phase: 4.1 }
+    { r: 138, g: 43,  b: 226, radius: 480, xr: 0.28, yr: 0.44, speed: 0.00018, phase: 0.8,  alpha: 0.36 }, // Roxo
+    { r: 255, g: 110, b: 20,  radius: 460, xr: 0.72, yr: 0.48, speed: 0.00015, phase: 2.1,  alpha: 0.34 }, // Laranja
+    { r: 27,  g: 98,  b: 248, radius: 500, xr: 0.48, yr: 0.58, speed: 0.00014, phase: 3.6,  alpha: 0.38 }, // Azul Royal
+    { r: 0,   g: 215, b: 255, radius: 430, xr: 0.22, yr: 0.68, speed: 0.00016, phase: 4.9,  alpha: 0.32 }, // Ciano
+    { r: 242, g: 42,  b: 142, radius: 450, xr: 0.76, yr: 0.72, speed: 0.00017, phase: 1.2,  alpha: 0.34 }  // Magenta
   ];
 
   function pointerMove(x, y) {
     if (isMobile || !isHeroVisible) return;
     const scrollY = window.scrollY || window.pageYOffset || 0;
     const absY = y + scrollY;
-    if (absY >= 0 && absY <= viewH * 1.15 && x >= 0 && x <= width) {
+    if (absY >= 0 && absY <= viewH * 1.25 && x >= 0 && x <= width) {
       anchor.targetX = x;
-      anchor.targetY = Math.min(absY, viewH * 0.85);
+      anchor.targetY = Math.min(absY, viewH * 0.95);
       anchor.isMoving = true;
       anchor.lastMoveTime = performance.now();
     } else {
@@ -116,12 +124,15 @@
   window.addEventListener('mousemove', (e) => pointerMove(e.clientX, e.clientY), { passive: true });
   document.addEventListener('mouseleave', () => { anchor.isMoving = false; });
 
+  // Gradiente radial com decaimento suave em 5 paradas (zero arestas secas ou pixeladas)
   function drawSoftBlob(x, y, rad, r, g, b, alpha) {
+    if (rad <= 0 || alpha <= 0) return;
     const grad = ctx.createRadialGradient(x, y, 0, x, y, rad);
-    grad.addColorStop(0, `rgba(${r}, ${g}, ${b}, ${alpha.toFixed(3)})`);
-    grad.addColorStop(0.4, `rgba(${r}, ${g}, ${b}, ${(alpha * 0.6).toFixed(3)})`);
-    grad.addColorStop(0.75, `rgba(${r}, ${g}, ${b}, ${(alpha * 0.2).toFixed(3)})`);
-    grad.addColorStop(1, `rgba(${r}, ${g}, ${b}, 0)`);
+    grad.addColorStop(0.00, `rgba(${r}, ${g}, ${b}, ${alpha.toFixed(3)})`);
+    grad.addColorStop(0.25, `rgba(${r}, ${g}, ${b}, ${(alpha * 0.72).toFixed(3)})`);
+    grad.addColorStop(0.55, `rgba(${r}, ${g}, ${b}, ${(alpha * 0.36).toFixed(3)})`);
+    grad.addColorStop(0.80, `rgba(${r}, ${g}, ${b}, ${(alpha * 0.10).toFixed(3)})`);
+    grad.addColorStop(1.00, `rgba(${r}, ${g}, ${b}, 0)`);
     ctx.fillStyle = grad;
     ctx.beginPath();
     ctx.arc(x, y, rad, 0, Math.PI * 2);
@@ -136,70 +147,73 @@
 
     ctx.clearRect(0, 0, width, height);
 
-    // Mouse parado por ~0,8s => passa a vaguear sozinho
-    if (anchor.isMoving && time - anchor.lastMoveTime > 800) {
+    // Quando o mouse para por ~0.5s, transiciona suavemente para o modo dinâmico autônomo
+    if (anchor.isMoving && time - anchor.lastMoveTime > 500) {
       anchor.isMoving = false;
     }
 
-    // No celular está sempre vagueando; no desktop só quando o mouse não está ativo
     const wantIdle = isMobile || !anchor.isMoving ? 1 : 0;
-    anchor.idleBlend += (wantIdle - anchor.idleBlend) * (wantIdle ? 0.012 : 0.08);
+    anchor.idleBlend += (wantIdle - anchor.idleBlend) * (wantIdle ? 0.03 : 0.12);
 
     if (isMobile) {
-      // Caminho lento e orgânico pela parte de cima da tela
-      anchor.targetX = width * (0.5 + 0.2 * Math.sin(time * 0.00021));
-      anchor.targetY = viewH * (0.38 + 0.13 * Math.cos(time * 0.00017));
+      // Movimento dinâmico e gracioso no celular (sem precisar de toque)
+      anchor.targetX = width * (0.50 + 0.22 * Math.sin(time * 0.00034));
+      anchor.targetY = viewH * (0.40 + 0.16 * Math.cos(time * 0.00028));
     }
 
-    const follow = isMobile ? 0.03 : anchor.isMoving ? 0.14 : 0.03;
+    // Segue o mouse rapidamente quando em movimento (0.13), ou flutua suavemente quando parado (0.045)
+    const follow = isMobile ? 0.045 : (anchor.isMoving ? 0.13 : 0.045);
     anchor.x += (anchor.targetX - anchor.x) * follow;
     anchor.y += (anchor.targetY - anchor.y) * follow;
 
-    // Vagueio a partir da última posição (cresce devagar, então não "salta")
-    const wanderX = Math.sin(time * 0.00034) * width * 0.1 * anchor.idleBlend;
-    const wanderY = Math.cos(time * 0.00028) * viewH * 0.09 * anchor.idleBlend;
+    // Vagueio dinâmico rico quando o cursor está parado: as cores continuam dançando e passeando
+    const wanderX = (Math.sin(time * 0.00050) * 0.15 + Math.cos(time * 0.00029) * 0.08) * width * anchor.idleBlend;
+    const wanderY = (Math.cos(time * 0.00044) * 0.13 + Math.sin(time * 0.00058) * 0.06) * viewH * anchor.idleBlend;
     const centerX = anchor.x + wanderX;
-    const centerY = Math.min(Math.max(anchor.y + wanderY, viewH * 0.14), viewH * 0.88);
+    const centerY = Math.min(Math.max(anchor.y + wanderY, viewH * 0.12), viewH * 0.95);
 
-    // Raio da órbita: junto no mouse ativo, aberto quando está livre
-    const orbitBase = (isMobile ? 0.17 : 0.14) * width * (0.5 + 0.5 * anchor.idleBlend) + 40;
-    const sizeScale = isMobile ? 0.7 : 1;
+    // Raio da órbita das bolinhas: concentrado no cursor ativo e dançante quando solto
+    const orbitBase = (isMobile ? 0.18 : 0.15) * width * (0.65 + 0.45 * anchor.idleBlend) + 50;
+    const sizeScale = isMobile ? 0.72 : 1.0;
 
-    // Faixa por trás do vídeo
+    // Manchas inferiores de transição com o vídeo
     for (let i = 0; i < lowerBlobs.length; i++) {
       const b = lowerBlobs[i];
-      const bx = width * b.xr + Math.sin(time * b.speed + b.phase) * width * 0.08;
-      const by = height * b.yr + Math.cos(time * b.speed * 0.9 + b.phase) * viewH * 0.07;
-      const rad = b.radius * sizeScale * (1 + Math.sin(time * 0.00022 + b.phase) * 0.1);
-      drawSoftBlob(bx, by, rad, b.r, b.g, b.b, 0.22);
+      const bx = width * b.xr + Math.sin(time * b.speed + b.phase) * width * 0.09;
+      const by = height * b.yr + Math.cos(time * b.speed * 0.85 + b.phase) * viewH * 0.08;
+      const wave = Math.sin(time * 0.00028 + b.phase);
+      const rad = b.radius * sizeScale * (1 + wave * 0.12);
+      drawSoftBlob(bx, by, rad, b.r, b.g, b.b, b.alpha + wave * 0.04);
     }
 
-    // Cores principais: giram em volta do centro, cada uma no seu ritmo
+    // Cores principais: giram em órbitas contínuas e tecem um degradê vivo de roxo, laranja, azul e ciano
     for (let i = 0; i < blobs.length; i++) {
       const blob = blobs[i];
       const ang = blob.angle + time * blob.speed;
-      const orbit = orbitBase * blob.orbit * (1 + 0.18 * Math.sin(time * 0.00021 + i));
-      const desiredX = centerX + Math.cos(ang) * orbit;
-      const desiredY = centerY + Math.sin(ang * 0.9) * orbit * 0.62;
+      const orbitX = orbitBase * blob.orbitX * (1 + 0.22 * Math.sin(time * 0.00032 + i * 0.9));
+      const orbitY = orbitBase * blob.orbitY * (1 + 0.18 * Math.cos(time * 0.00028 + i * 1.1));
+      const desiredX = centerX + Math.cos(ang) * orbitX;
+      const desiredY = centerY + Math.sin(ang * 0.92) * orbitY * 0.68;
 
       if (!blob.ready) {
         blob.x = desiredX;
         blob.y = desiredY;
         blob.ready = true;
       }
-      const blobFollow = anchor.isMoving ? 0.1 : 0.05;
+
+      const blobFollow = anchor.isMoving ? 0.12 : 0.06;
       blob.x += (desiredX - blob.x) * blobFollow;
       blob.y += (desiredY - blob.y) * blobFollow;
 
-      const wave = Math.sin(time * blob.breathe + i * 1.3);
-      const rad = blob.radius * sizeScale * (1 + wave * 0.1);
-      drawSoftBlob(blob.x, blob.y, rad, blob.r, blob.g, blob.b, 0.58 + wave * 0.05);
+      const wave = Math.sin(time * blob.breathe + i * 1.25);
+      const rad = blob.radius * sizeScale * (1 + wave * 0.12);
+      drawSoftBlob(blob.x, blob.y, rad, blob.r, blob.g, blob.b, blob.alpha + wave * 0.06);
     }
 
     rafId = requestAnimationFrame(animate);
   }
 
-  // Pausa quando o 1º container sai da tela
+  // Pausa com IntersectionObserver quando o hero estiver totalmente fora do viewport
   if ('IntersectionObserver' in window && canvas.parentElement) {
     const heroObs = new IntersectionObserver(
       (entries) => {
@@ -218,7 +232,9 @@
 
 /* ==========================================================================
    6º CONTAINER: CANVAS DE CORES AUTÔNOMO DENTRO DO CARD DO WHATSAPP/CONTATO
-   (Só roda quando o card de contato está visível na tela!)
+   - Mesmo mix vivo (roxo, laranja, azul royal, ciano, rosa) em movimento contínuo
+   - Exclusivo no card limitado (~60-70% da tela) com resolução 1:1 límpida
+   - Roda 100% liso apenas quando a seção estiver visível
    ========================================================================== */
 (function () {
   const contactCanvas = document.getElementById('contact-breathing-canvas');
@@ -227,7 +243,6 @@
 
   let width = 0;
   let height = 0;
-  let renderScale = 0.18;
   let isContactVisible = false;
   let contactRafId = 0;
 
@@ -236,22 +251,36 @@
     if (!parent) return;
     width = Math.max(260, parent.offsetWidth);
     height = Math.max(220, parent.offsetHeight);
-    renderScale = width <= 768 ? 0.14 : 0.18;
-    contactCanvas.width = Math.max(48, Math.round(width * renderScale));
-    contactCanvas.height = Math.max(48, Math.round(height * renderScale));
-    ctx.setTransform(renderScale, 0, 0, renderScale, 0, 0);
+    contactCanvas.width = Math.round(width);
+    contactCanvas.height = Math.round(height);
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
   }
 
   window.addEventListener('resize', resizeContactCanvas, { passive: true });
   resizeContactCanvas();
 
   const autonomousBlobs = [
-    { r: 27,  g: 98,  b: 248, baseRadius: 245, xRatio: 0.22, yRatio: 0.32, speedX: 0.00024, speedY: 0.00019, ampX: 0.22, ampY: 0.24, phase: 0.0 },
-    { r: 0,   g: 204, b: 255, baseRadius: 225, xRatio: 0.76, yRatio: 0.28, speedX: 0.00021, speedY: 0.00025, ampX: 0.20, ampY: 0.22, phase: 1.4 },
-    { r: 16,  g: 185, b: 129, baseRadius: 210, xRatio: 0.48, yRatio: 0.72, speedX: 0.00019, speedY: 0.00022, ampX: 0.24, ampY: 0.20, phase: 2.8 },
-    { r: 124, g: 58,  b: 237, baseRadius: 235, xRatio: 0.80, yRatio: 0.74, speedX: 0.00023, speedY: 0.00018, ampX: 0.21, ampY: 0.23, phase: 4.2 },
-    { r: 217, g: 70,  b: 239, baseRadius: 200, xRatio: 0.26, yRatio: 0.68, speedX: 0.00025, speedY: 0.00021, ampX: 0.19, ampY: 0.21, phase: 5.5 }
+    { r: 138, g: 43,  b: 226, baseRadius: 280, xRatio: 0.24, yRatio: 0.35, speedX:  0.00032, speedY:  0.00024, ampX: 0.22, ampY: 0.24, phase: 0.0, alpha: 0.46 }, // Roxo
+    { r: 255, g: 110, b: 20,  baseRadius: 260, xRatio: 0.78, yRatio: 0.30, speedX: -0.00028, speedY:  0.00029, ampX: 0.20, ampY: 0.22, phase: 1.5, alpha: 0.44 }, // Laranja
+    { r: 27,  g: 98,  b: 248, baseRadius: 310, xRatio: 0.50, yRatio: 0.70, speedX:  0.00025, speedY: -0.00026, ampX: 0.25, ampY: 0.20, phase: 3.1, alpha: 0.48 }, // Azul Royal
+    { r: 0,   g: 215, b: 255, baseRadius: 250, xRatio: 0.82, yRatio: 0.75, speedX: -0.00030, speedY:  0.00022, ampX: 0.21, ampY: 0.23, phase: 4.4, alpha: 0.40 }, // Ciano
+    { r: 242, g: 42,  b: 142, baseRadius: 240, xRatio: 0.22, yRatio: 0.68, speedX:  0.00033, speedY: -0.00025, ampX: 0.19, ampY: 0.21, phase: 5.6, alpha: 0.42 }, // Magenta
+    { r: 255, g: 168, b: 24,  baseRadius: 230, xRatio: 0.55, yRatio: 0.32, speedX: -0.00024, speedY:  0.00031, ampX: 0.23, ampY: 0.19, phase: 2.3, alpha: 0.38 }  // Âmbar
   ];
+
+  function drawContactBlob(x, y, rad, r, g, b, alpha) {
+    if (rad <= 0 || alpha <= 0) return;
+    const grad = ctx.createRadialGradient(x, y, 0, x, y, rad);
+    grad.addColorStop(0.00, `rgba(${r}, ${g}, ${b}, ${alpha.toFixed(3)})`);
+    grad.addColorStop(0.28, `rgba(${r}, ${g}, ${b}, ${(alpha * 0.70).toFixed(3)})`);
+    grad.addColorStop(0.58, `rgba(${r}, ${g}, ${b}, ${(alpha * 0.34).toFixed(3)})`);
+    grad.addColorStop(0.82, `rgba(${r}, ${g}, ${b}, ${(alpha * 0.10).toFixed(3)})`);
+    grad.addColorStop(1.00, `rgba(${r}, ${g}, ${b}, 0)`);
+    ctx.fillStyle = grad;
+    ctx.beginPath();
+    ctx.arc(x, y, rad, 0, Math.PI * 2);
+    ctx.fill();
+  }
 
   function animateContact(time) {
     if (!isContactVisible) {
@@ -260,34 +289,25 @@
     }
 
     ctx.clearRect(0, 0, width, height);
-    const mobileScale = width <= 600 ? 0.72 : 1;
+    const mobileScale = width <= 600 ? 0.78 : 1.0;
 
     for (let i = 0; i < autonomousBlobs.length; i++) {
       const b = autonomousBlobs[i];
       const x =
         width * b.xRatio +
         Math.sin(time * b.speedX + b.phase) * (width * b.ampX) +
-        Math.cos(time * b.speedY * 0.8 - b.phase) * (width * 0.06);
+        Math.cos(time * b.speedY * 0.8 - b.phase) * (width * 0.07);
 
       const y =
         height * b.yRatio +
         Math.cos(time * b.speedY + b.phase) * (height * b.ampY) +
-        Math.sin(time * b.speedX * 0.7 + b.phase) * (height * 0.06);
+        Math.sin(time * b.speedX * 0.7 + b.phase) * (height * 0.07);
 
-      const breathe = Math.sin(time * 0.0003 + b.phase);
+      const breathe = Math.sin(time * 0.00032 + b.phase);
       const rad = b.baseRadius * mobileScale * (1 + breathe * 0.12);
-      const alpha = 0.36 + breathe * 0.04;
+      const alpha = b.alpha + breathe * 0.05;
 
-      const grad = ctx.createRadialGradient(x, y, 0, x, y, rad);
-      grad.addColorStop(0, `rgba(${b.r}, ${b.g}, ${b.b}, ${alpha.toFixed(3)})`);
-      grad.addColorStop(0.4, `rgba(${b.r}, ${b.g}, ${b.b}, ${(alpha * 0.58).toFixed(3)})`);
-      grad.addColorStop(0.75, `rgba(${b.r}, ${b.g}, ${b.b}, ${(alpha * 0.2).toFixed(3)})`);
-      grad.addColorStop(1, `rgba(${b.r}, ${b.g}, ${b.b}, 0)`);
-
-      ctx.fillStyle = grad;
-      ctx.beginPath();
-      ctx.arc(x, y, rad, 0, Math.PI * 2);
-      ctx.fill();
+      drawContactBlob(x, y, rad, b.r, b.g, b.b, alpha);
     }
 
     contactRafId = requestAnimationFrame(animateContact);

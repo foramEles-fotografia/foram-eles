@@ -233,11 +233,12 @@ body {
    ========================================================================== */
 .container-hero {
   position: relative;
-  min-height: 54vh;
+  min-height: 98vh;
+  min-height: 98svh;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 8.4rem 1.75rem 1.6rem;
+  padding: 14rem 1.75rem 6.5rem;
   overflow: visible;
   background: transparent;
   z-index: 1;
@@ -248,8 +249,7 @@ body {
   top: 0;
   left: 0;
   right: 0;
-  /* Estende o fundo colorido do 1º container por trás de todo o 2º container (vídeo) */
-  height: 215vh;
+  height: 220vh;
   z-index: 0;
   overflow: hidden;
   pointer-events: none;
@@ -273,15 +273,15 @@ body {
   width: 100%;
   height: 100%;
   display: block;
-  /* Sem filter:blur() pesado! O canvas é renderizado em baixa resolução com gradientes suaves
-     e interpolado via GPU, reduzindo em 98% o uso de placa de vídeo e deixando o scroll liso */
-  transform: translateZ(0);
+  filter: blur(56px);
+  -webkit-filter: blur(56px);
+  transform: translate3d(0, 0, 0);
 }
 
 .hero-content {
   position: relative;
   z-index: 2;
-  max-width: 860px;
+  max-width: 900px;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -290,20 +290,21 @@ body {
 
 .hero-title {
   font-family: var(--font-display);
-  font-size: clamp(2.2rem, 4.6vw, 3.85rem);
-  line-height: 1.13;
+  font-size: clamp(2.35rem, 5vw, 4.1rem);
+  line-height: 1.12;
   letter-spacing: -0.035em;
   font-weight: 800;
   color: var(--slate-800);
-  margin-top: 0.4rem;
-  margin-bottom: 1.05rem;
+  margin-top: 0.8rem;
+  margin-bottom: 1.35rem;
 }
 
 .hero-subtitle {
-  font-size: clamp(0.96rem, 1.18vw, 1.08rem);
+  font-size: clamp(1.02rem, 1.25vw, 1.18rem);
   color: var(--slate-700);
-  max-width: 630px;
-  margin-bottom: 1.6rem;
+  max-width: 680px;
+  line-height: 1.65;
+  margin-bottom: 0;
 }
 
 /* ==========================================================================
@@ -375,7 +376,7 @@ body {
 .video-scroll-track {
   position: relative;
   height: 235vh;
-  margin-top: -13vh;
+  margin-top: 6vh;
   z-index: 5;
 }
 
@@ -1106,16 +1107,16 @@ body {
 .contact-card {
   position: relative;
   overflow: hidden;
-  max-width: 940px;
+  max-width: 960px;
   margin: 0 auto;
   background: #ffffff;
   color: var(--slate-800);
   border: 1.5px solid var(--blue-border);
   border-radius: var(--radius-xl);
-  padding: 3.2rem;
+  padding: 3.5rem;
   display: grid;
-  grid-template-columns: 1.08fr 1fr;
-  gap: 2.6rem;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 3rem;
   align-items: center;
   box-shadow: 0 20px 50px rgba(27, 98, 248, 0.08);
 }
@@ -1133,172 +1134,84 @@ body {
   width: 100%;
   height: 100%;
   display: block;
-  /* Sem filter:blur() pesado: renderizado em baixa resolução com interpolação nativa da GPU */
-  transform: translateZ(0);
+  filter: blur(48px);
+  -webkit-filter: blur(48px);
+  transform: translate3d(0, 0, 0);
 }
 
 .contact-copy,
-.contact-channels-panel {
+.contact-buttons-panel {
   position: relative;
   z-index: 2;
 }
 
 .contact-copy .section-desc {
   color: var(--slate-700);
+  font-size: 1.05rem;
+  line-height: 1.6;
 }
 
-.contact-direct-badges {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.6rem;
-  margin-top: 1.6rem;
-}
-
-.direct-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  padding: 0.42rem 0.95rem;
-  border-radius: 999px;
-  background: var(--bg-soft);
-  border: 1px solid var(--border-strong);
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: var(--slate-700);
-}
-
-.badge-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: #10b981;
-}
-
-/* Painel de canais diretos (WhatsApp e Instagram) preenchendo o espaço */
-.contact-channels-panel {
+/* Painel de botões elegantes (apenas logo e nome) */
+.contact-buttons-panel {
   display: flex;
   flex-direction: column;
   gap: 1.15rem;
-  background: rgba(255, 255, 255, 0.9);
-  padding: 1.85rem;
-  border-radius: var(--radius-lg);
-  border: 1px solid rgba(255, 255, 255, 0.95);
-  box-shadow: 0 12px 30px rgba(30, 38, 54, 0.06);
+  justify-content: center;
+  align-items: stretch;
 }
 
-.channel-card {
-  display: flex;
+.btn-brand {
+  display: inline-flex;
   align-items: center;
-  gap: 1.15rem;
-  padding: 1.35rem 1.4rem;
-  background: #ffffff;
-  border: 1.5px solid var(--border-subtle);
-  border-radius: 18px;
+  justify-content: center;
+  gap: 0.85rem;
+  padding: 1.15rem 2.2rem;
+  border-radius: 999px;
+  font-family: var(--font-sans);
+  font-size: 1.06rem;
+  font-weight: 600;
   text-decoration: none;
-  color: var(--slate-800);
-  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.3s ease;
+  cursor: pointer;
+  border: none;
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.btn-brand svg {
+  flex-shrink: 0;
+}
+
+.btn-brand.btn-whatsapp {
+  background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
+  color: #ffffff;
+  box-shadow: 3px 6px 20px -4px rgba(37, 211, 102, 0.45);
+}
+
+.btn-brand.btn-instagram {
+  background: linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+  color: #ffffff;
+  box-shadow: 3px 6px 20px -4px rgba(220, 39, 67, 0.45);
 }
 
 @media (hover: hover) {
-  .channel-card:hover {
-    transform: translateY(-2px) scale(1.02);
-    border-color: var(--blue-primary);
+  .btn-brand:hover {
+    transform: translateY(-2px) scale(1.035);
+  }
+
+  .btn-brand.btn-whatsapp:hover {
     box-shadow:
-      6px 10px 24px -6px rgba(27, 98, 248, 0.28),
-      10px 14px 32px -10px rgba(0, 190, 255, 0.35);
+      6px 10px 28px -4px rgba(37, 211, 102, 0.6),
+      10px 14px 34px -8px rgba(0, 210, 255, 0.35);
   }
 
-  .channel-card:hover .channel-arrow {
-    transform: translateX(4px);
-    color: var(--blue-primary);
+  .btn-brand.btn-instagram:hover {
+    box-shadow:
+      6px 10px 28px -4px rgba(220, 39, 67, 0.6),
+      10px 14px 34px -8px rgba(255, 122, 24, 0.35);
   }
 }
 
-.channel-card:active {
-  transform: scale(0.985);
-}
-
-.channel-icon-wrap {
-  width: 52px;
-  height: 52px;
-  border-radius: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-.channel-icon-wrap.icon-wa {
-  background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
-  color: #ffffff;
-  box-shadow: 0 6px 16px rgba(37, 211, 102, 0.28);
-}
-
-.channel-icon-wrap.icon-ig {
-  background: linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
-  color: #ffffff;
-  box-shadow: 0 6px 16px rgba(220, 39, 67, 0.28);
-}
-
-.channel-info {
-  flex: 1;
-}
-
-.channel-tag {
-  display: inline-block;
-  font-size: 0.72rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--blue-primary);
-  margin-bottom: 0.15rem;
-}
-
-.channel-title {
-  font-family: var(--font-display);
-  font-size: 1.12rem;
-  font-weight: 700;
-  color: var(--slate-800);
-  margin-bottom: 0.2rem;
-  line-height: 1.2;
-}
-
-.channel-desc {
-  font-size: 0.84rem;
-  color: var(--slate-500);
-  line-height: 1.42;
-}
-
-.channel-arrow {
-  color: var(--slate-500);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: transform 0.3s ease, color 0.3s ease;
-  flex-shrink: 0;
-}
-
-.channel-extra-info {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding-top: 0.5rem;
-  border-top: 1px solid var(--border-subtle);
-}
-
-.channel-email-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  color: var(--slate-700);
-  text-decoration: none;
-  font-size: 0.86rem;
-  font-weight: 500;
-  transition: color 0.2s ease;
-}
-
-.channel-email-link:hover {
-  color: var(--blue-primary);
+.btn-brand:active {
+  transform: scale(0.98);
 }
 
 /* Footer */
@@ -1418,14 +1331,15 @@ body {
     text-align: center;
   }
 
-  /* 1º Container delicado no celular */
+  /* 1º Container delicado, arejado e elegante no celular (espaço generoso do menu) */
   .container-hero {
-    min-height: 50vh;
-    padding: 5.3rem 1.15rem 0.6rem;
+    min-height: 92vh;
+    min-height: 92svh;
+    padding: 9.5rem 1.25rem 4rem;
   }
 
   .hero-canvas-wrapper {
-    height: 165vh;
+    height: 195vh;
   }
 
   .hero-badge {
@@ -1457,10 +1371,10 @@ body {
     transform: none;
   }
 
-  /* 2º Container (Vídeo) leve e proporcional no celular */
+  /* 2º Container (Vídeo): fica abaixo da dobra no 1º load e surge suave no scroll */
   .video-scroll-track {
-    height: 165vh;
-    margin-top: -4vh;
+    height: 175vh;
+    margin-top: 4vh;
   }
 
   .video-expand-card {
@@ -1692,40 +1606,20 @@ body {
 
   /* 6º Container: Card de Contato / WhatsApp no celular */
   .contact-card {
-    padding: 1.65rem 1.15rem;
+    padding: 2.2rem 1.35rem;
     border-radius: 22px;
     gap: 1.6rem;
   }
 
-  .contact-channels-panel {
-    padding: 1.15rem;
-    gap: 0.85rem;
-    border-radius: 18px;
+  .contact-buttons-panel {
+    gap: 0.95rem;
+    width: 100%;
   }
 
-  .channel-card {
-    padding: 1.05rem 1.1rem;
-    gap: 0.9rem;
-    border-radius: 16px;
-  }
-
-  .channel-icon-wrap {
-    width: 44px;
-    height: 44px;
-    border-radius: 12px;
-  }
-
-  .channel-icon-wrap svg {
-    width: 22px;
-    height: 22px;
-  }
-
-  .channel-title {
-    font-size: 1.02rem;
-  }
-
-  .channel-desc {
-    font-size: 0.8rem;
+  .btn-brand {
+    width: 100%;
+    padding: 1.05rem 1.6rem;
+    font-size: 1rem;
   }
 
   /* Modal no celular */
