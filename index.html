@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FORAM Eles | Fotografia & Audiovisual</title>
+  <title>FORAM Eles. | Fotografia & Audiovisual</title>
   <meta name="description" content="FORAM Eles — Marca de fotografia e audiovisual por Luiz e João Arthur. Qualidade, naturalidade e equipamentos profissionais para fotos corporativas e profissionais em ação." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -12,23 +12,18 @@
 </head>
 <body>
 
-  <!-- Header / Navbar -->
+  <!-- Header / Navbar (Fundo Branco Limpo estilo Antigravity + Logo Preta com Ponto Azul) -->
   <header class="navbar" id="navbar">
     <div class="nav-container">
       <a href="#hero" class="brand-logo" aria-label="FORAM Eles - Início">
-        <!-- Quando você enviar a logo, basta salvar em assets/logo.png que ela aparece automaticamente -->
-        <img src="assets/logo.png" alt="Logo FORAM Eles" class="logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
-        <div class="logo-fallback">
-          <span class="logo-mark">FE</span>
-          <span class="logo-text">FORAM <strong>Eles</strong></span>
-        </div>
+        <img src="assets/logo-preta.png" alt="FORAM Eles." class="logo-img" />
       </a>
 
       <nav class="nav-links" id="nav-links">
         <a href="#hero" class="nav-link active">Início</a>
-        <a href="#destaque" class="nav-link">Olhar</a>
+        <a href="#destaque" class="nav-link">Showreel</a>
+        <a href="#portfolio" class="nav-link">Trabalhos</a>
         <a href="#sobre" class="nav-link">Quem Somos</a>
-        <a href="#portfolio" class="nav-link">Portfólio</a>
         <a href="#diferenciais" class="nav-link">Estrutura</a>
         <a href="#contato" class="nav-link nav-cta">Solicitar Orçamento</a>
       </nav>
@@ -42,12 +37,10 @@
   </header>
 
   <main>
-    <!-- 1º CONTAINER: HERO COM EFEITO ABSTRATO DE CORES VIVAS DESFOCADAS ("RESPIRANDO") + MOUSE TRACKING -->
+    <!-- 1º CONTAINER: BRANCO ESTILO ANTIGRAVITY + DESFOQUE COLORIDO LENTO INTERATIVO -->
     <section class="container-hero" id="hero">
       <div class="hero-canvas-wrapper">
         <canvas id="breathing-canvas"></canvas>
-        <div class="canvas-noise-overlay"></div>
-        <div class="canvas-vignette"></div>
       </div>
 
       <div class="hero-content reveal">
@@ -57,89 +50,229 @@
         </div>
 
         <h1 class="hero-title">
-          Capturamos a essência de quem faz acontecer. <br />
-          <span class="gradient-text">FORAM Eles.</span>
+          A essência de quem faz acontecer.<br />
+          <span class="brand-accent">FORAM Eles<span class="blue-dot">.</span></span>
         </h1>
 
         <p class="hero-subtitle">
           Qualidade, naturalidade e direção autêntica em fotos corporativas e profissionais trabalhando.
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.
         </p>
 
         <div class="hero-actions">
           <a href="#portfolio" class="btn btn-primary">
-            Ver Trabalhos
+            Ver Trabalhos Realizados
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M5 12h14M12 5l7 7-7 7"/>
             </svg>
           </a>
-          <a href="#sobre" class="btn btn-glass">Conheça a Dupla</a>
-        </div>
-
-        <div class="hero-mouse-hint">
-          <span class="mouse-icon"></span>
-          <span>Mova o cursor para interagir com a luz</span>
+          <a href="#sobre" class="btn btn-secondary">Conheça a Dupla</a>
         </div>
       </div>
     </section>
 
-    <!-- 2º CONTAINER: DESTAQUE COM FOTO (SEM VÍDEO, COMO SOLICITADO) -->
-    <section class="container-featured section-padding" id="destaque">
-      <div class="section-inner">
-        <div class="featured-header reveal">
-          <span class="section-tag">01 / O Segundo Container • Fotografia em Destaque</span>
-          <h2 class="section-title">Naturalidade em cada frame, <br />precisão em cada detalhe.</h2>
-          <p class="section-desc">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-          </p>
-        </div>
+    <!-- 2º CONTAINER: VÍDEO EXPANSIVO NO SCROLL
+         - Começa em 60% da tela já visível a partir do 1º container
+         - Cresce até 100% da tela conforme rola para baixo
+         - Permanece em 100% da tela durante 2 scrolls completos (200vh)
+         - Depois reduz suavemente e continua descendo a página -->
+    <section class="video-scroll-track" id="destaque">
+      <div class="video-sticky-stage">
+        <div class="video-expand-card" id="video-expand-card">
+          <!-- Quando você mandar o vídeo, salvaremos como assets/video.mp4 -->
+          <video
+            id="showcase-video"
+            class="showcase-video"
+            autoplay
+            muted
+            loop
+            playsinline
+            poster="https://images.unsplash.com/photo-1542038784456-1ea8e935640e?auto=format&fit=crop&w=1800&q=85"
+          >
+            <source src="assets/video.mp4" type="video/mp4" />
+            <source src="https://assets.mixkit.co/videos/preview/mixkit-photographer-taking-photos-of-a-model-in-a-studio-34488-large.mp4" type="video/mp4" />
+          </video>
 
-        <!-- Container de Foto Principal (Substituindo o vídeo do site inspiração por uma fotografia em destaque) -->
-        <div class="featured-photo-frame reveal" id="featured-photo-card">
-          <div class="photo-glow-backdrop"></div>
-          <div class="photo-inner-wrapper">
-            <img
-              src="https://images.unsplash.com/photo-1542038784456-1ea8e935640e?auto=format&fit=crop&w=1800&q=85"
-              alt="Fotografia profissional em ação — FORAM Eles"
-              class="featured-photo-img"
-            />
-            <div class="photo-overlay-gradient"></div>
+          <div class="video-gradient-overlay"></div>
 
-            <div class="photo-caption-bar">
-              <div class="caption-left">
-                <span class="caption-label">Fotografia Corporativa &amp; Retratos em Ação</span>
-                <p class="caption-sub">Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor.</p>
-              </div>
-              <div class="caption-specs">
-                <span class="spec-pill">Full-Frame Pro</span>
-                <span class="spec-pill">Luz Natural &amp; Estúdio</span>
-                <span class="spec-pill">4K / RAW</span>
-              </div>
+          <div class="video-floating-bar">
+            <div class="video-bar-left">
+              <span class="video-tag">Showreel • FORAM Eles.</span>
+              <h3>Produção Audiovisual &amp; Fotografia em Movimento</h3>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor.</p>
+            </div>
+            <div class="video-bar-pills">
+              <span class="video-pill">4K Cinema</span>
+              <span class="video-pill">Luz Natural &amp; Pro</span>
+              <span class="video-pill">Luiz &amp; João Arthur</span>
             </div>
           </div>
         </div>
+      </div>
+    </section>
 
-        <div class="featured-metrics reveal">
-          <div class="metric-card">
-            <span class="metric-number">100%</span>
-            <span class="metric-title">Equipamento Profissional</span>
-            <p class="metric-lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</p>
+    <!-- 3º CONTAINER: TRABALHOS REALIZADOS (CARDS ESTILO APPLE COM FOTOS POR BAIXO NAS LATERAIS) -->
+    <section class="container-portfolio section-padding" id="portfolio">
+      <div class="section-inner">
+        <div class="portfolio-header reveal">
+          <div>
+            <span class="section-tag">Trabalhos Realizados</span>
+            <h2 class="section-title">Profissionais em ação,<br />marcas com presença.</h2>
+            <p class="section-desc">
+              Passe o mouse sobre cada álbum para espiar as fotos da sessão. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            </p>
           </div>
-          <div class="metric-card">
-            <span class="metric-number">Natural</span>
-            <span class="metric-title">Direção Espontânea</span>
-            <p class="metric-lorem">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip.</p>
+          <div class="portfolio-filters" role="tablist">
+            <button class="filter-btn active" data-filter="all">Todos</button>
+            <button class="filter-btn" data-filter="corporativo">Retratos Corporativos</button>
+            <button class="filter-btn" data-filter="trabalhando">Profissionais Trabalhando</button>
+            <button class="filter-btn" data-filter="audiovisual">Audiovisual</button>
           </div>
-          <div class="metric-card">
-            <span class="metric-number">Dupla</span>
-            <span class="metric-title">Luiz &amp; João Arthur</span>
-            <p class="metric-lorem">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore.</p>
-          </div>
+        </div>
+
+        <div class="portfolio-grid reveal" id="portfolio-grid">
+          <!-- Card Stack 1 -->
+          <article class="apple-stack-item" data-category="trabalhando">
+            <div class="apple-card-stack">
+              <div class="stack-layer layer-left">
+                <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=700&q=80" alt="Foto secundária esquerda" />
+              </div>
+              <div class="stack-layer layer-right">
+                <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=700&q=80" alt="Foto secundária direita" />
+              </div>
+              <div class="stack-layer layer-main">
+                <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=900&q=85" alt="Profissionais em ação" />
+                <div class="card-main-overlay">
+                  <span class="item-cat">Profissionais Trabalhando</span>
+                  <h3>Rotina Executiva &amp; Equipes</h3>
+                </div>
+              </div>
+            </div>
+            <div class="stack-meta">
+              <h4>Rotina Executiva &amp; Equipes</h4>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            </div>
+          </article>
+
+          <!-- Card Stack 2 -->
+          <article class="apple-stack-item" data-category="corporativo">
+            <div class="apple-card-stack">
+              <div class="stack-layer layer-left">
+                <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=700&q=80" alt="Foto secundária esquerda" />
+              </div>
+              <div class="stack-layer layer-right">
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=700&q=80" alt="Foto secundária direita" />
+              </div>
+              <div class="stack-layer layer-main">
+                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=900&q=85" alt="Retrato Corporativo Natural" />
+                <div class="card-main-overlay">
+                  <span class="item-cat">Retratos Corporativos</span>
+                  <h3>Posicionamento &amp; Naturalidade</h3>
+                </div>
+              </div>
+            </div>
+            <div class="stack-meta">
+              <h4>Posicionamento &amp; Naturalidade</h4>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            </div>
+          </article>
+
+          <!-- Card Stack 3 -->
+          <article class="apple-stack-item" data-category="audiovisual">
+            <div class="apple-card-stack">
+              <div class="stack-layer layer-left">
+                <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=700&q=80" alt="Foto secundária esquerda" />
+              </div>
+              <div class="stack-layer layer-right">
+                <img src="https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&w=700&q=80" alt="Foto secundária direita" />
+              </div>
+              <div class="stack-layer layer-main">
+                <img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=900&q=85" alt="Produção Audiovisual" />
+                <div class="card-main-overlay">
+                  <span class="item-cat">Audiovisual</span>
+                  <h3>Storytelling de Marca</h3>
+                </div>
+              </div>
+            </div>
+            <div class="stack-meta">
+              <h4>Storytelling de Marca</h4>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            </div>
+          </article>
+
+          <!-- Card Stack 4 -->
+          <article class="apple-stack-item" data-category="trabalhando">
+            <div class="apple-card-stack">
+              <div class="stack-layer layer-left">
+                <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=700&q=80" alt="Foto secundária esquerda" />
+              </div>
+              <div class="stack-layer layer-right">
+                <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=700&q=80" alt="Foto secundária direita" />
+              </div>
+              <div class="stack-layer layer-main">
+                <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=900&q=85" alt="Ambiente de trabalho real" />
+                <div class="card-main-overlay">
+                  <span class="item-cat">Profissionais Trabalhando</span>
+                  <h3>Bastidores &amp; Autenticidade</h3>
+                </div>
+              </div>
+            </div>
+            <div class="stack-meta">
+              <h4>Bastidores &amp; Autenticidade</h4>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            </div>
+          </article>
+
+          <!-- Card Stack 5 -->
+          <article class="apple-stack-item" data-category="corporativo">
+            <div class="apple-card-stack">
+              <div class="stack-layer layer-left">
+                <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=700&q=80" alt="Foto secundária esquerda" />
+              </div>
+              <div class="stack-layer layer-right">
+                <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=700&q=80" alt="Foto secundária direita" />
+              </div>
+              <div class="stack-layer layer-main">
+                <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=900&q=85" alt="Retrato de Liderança" />
+                <div class="card-main-overlay">
+                  <span class="item-cat">Retratos Corporativos</span>
+                  <h3>Direção Executiva</h3>
+                </div>
+              </div>
+            </div>
+            <div class="stack-meta">
+              <h4>Direção Executiva</h4>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            </div>
+          </article>
+
+          <!-- Card Stack 6 -->
+          <article class="apple-stack-item" data-category="audiovisual">
+            <div class="apple-card-stack">
+              <div class="stack-layer layer-left">
+                <img src="https://images.unsplash.com/photo-1542038784456-1ea8e935640e?auto=format&fit=crop&w=700&q=80" alt="Foto secundária esquerda" />
+              </div>
+              <div class="stack-layer layer-right">
+                <img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=700&q=80" alt="Foto secundária direita" />
+              </div>
+              <div class="stack-layer layer-main">
+                <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=900&q=85" alt="Set e Equipamentos" />
+                <div class="card-main-overlay">
+                  <span class="item-cat">Audiovisual &amp; Set</span>
+                  <h3>Captação de Alta Performance</h3>
+                </div>
+              </div>
+            </div>
+            <div class="stack-meta">
+              <h4>Captação de Alta Performance</h4>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            </div>
+          </article>
         </div>
       </div>
     </section>
 
-    <!-- 3º CONTAINER: SOBRE NÓS (A HISTÓRIA DE LUIZ & JOÃO ARTHUR + LOREM IPSUM) -->
+    <!-- 4º CONTAINER: SOBRE NÓS (A HISTÓRIA DE LUIZ & JOÃO ARTHUR) -->
     <section class="container-about section-padding" id="sobre">
       <div class="section-inner">
         <div class="about-grid">
@@ -156,14 +289,14 @@
                 alt="Profissionais trabalhando em ambiente corporativo"
               />
               <div class="about-floating-tag">
-                <strong>FORAM Eles</strong>
+                <strong>FORAM Eles.</strong>
                 <span>Luiz &amp; João Arthur</span>
               </div>
             </div>
           </div>
 
           <div class="about-text reveal">
-            <span class="section-tag">02 / Nossa Origem</span>
+            <span class="section-tag">Nossa Origem</span>
             <h2 class="section-title">Nascida da vontade de crescer e elevar o padrão visual.</h2>
 
             <p class="about-paragraph highlight-p">
@@ -175,7 +308,7 @@
             </p>
 
             <p class="about-paragraph lorem-block">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
             </p>
 
             <div class="founders-row">
@@ -199,85 +332,11 @@
       </div>
     </section>
 
-    <!-- 4º CONTAINER: PORTFÓLIO / GALERIA CORPORATIVA -->
-    <section class="container-portfolio section-padding" id="portfolio">
-      <div class="section-inner">
-        <div class="portfolio-header reveal">
-          <div>
-            <span class="section-tag">03 / Portfólio &amp; Atuação</span>
-            <h2 class="section-title">Profissionais em ação, <br />marcas com presença.</h2>
-          </div>
-          <div class="portfolio-filters" role="tablist">
-            <button class="filter-btn active" data-filter="all">Todos</button>
-            <button class="filter-btn" data-filter="corporativo">Retratos Corporativos</button>
-            <button class="filter-btn" data-filter="trabalhando">Profissionais Trabalhando</button>
-            <button class="filter-btn" data-filter="audiovisual">Audiovisual</button>
-          </div>
-        </div>
-
-        <div class="portfolio-grid reveal" id="portfolio-grid">
-          <article class="portfolio-item" data-category="trabalhando">
-            <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=900&q=80" alt="Profissionais em ação" />
-            <div class="portfolio-item-overlay">
-              <span class="item-cat">Profissionais Trabalhando</span>
-              <h3>Rotina Executiva &amp; Equipes</h3>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            </div>
-          </article>
-
-          <article class="portfolio-item" data-category="corporativo">
-            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=900&q=80" alt="Retrato Corporativo Natural" />
-            <div class="portfolio-item-overlay">
-              <span class="item-cat">Retratos Corporativos</span>
-              <h3>Posicionamento &amp; Naturalidade</h3>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            </div>
-          </article>
-
-          <article class="portfolio-item" data-category="audiovisual">
-            <img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=900&q=80" alt="Produção Audiovisual" />
-            <div class="portfolio-item-overlay">
-              <span class="item-cat">Audiovisual</span>
-              <h3>Storytelling de Marca</h3>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            </div>
-          </article>
-
-          <article class="portfolio-item" data-category="trabalhando">
-            <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=900&q=80" alt="Ambiente de trabalho real" />
-            <div class="portfolio-item-overlay">
-              <span class="item-cat">Profissionais Trabalhando</span>
-              <h3>Bastidores &amp; Autenticidade</h3>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            </div>
-          </article>
-
-          <article class="portfolio-item" data-category="corporativo">
-            <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=900&q=80" alt="Retrato de Liderança" />
-            <div class="portfolio-item-overlay">
-              <span class="item-cat">Retratos Corporativos</span>
-              <h3>Direção Executiva</h3>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            </div>
-          </article>
-
-          <article class="portfolio-item" data-category="audiovisual">
-            <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=900&q=80" alt="Set e Equipamentos" />
-            <div class="portfolio-item-overlay">
-              <span class="item-cat">Audiovisual &amp; Set</span>
-              <h3>Captação de Alta Performance</h3>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- 5º CONTAINER: DIFERENCIAIS & EQUIPAMENTOS (LOREM IPSUM) -->
+    <!-- 5º CONTAINER: DIFERENCIAIS & EQUIPAMENTOS -->
     <section class="container-features section-padding" id="diferenciais">
       <div class="section-inner">
         <div class="features-header reveal">
-          <span class="section-tag">04 / Por que FORAM Eles?</span>
+          <span class="section-tag">Por que FORAM Eles?</span>
           <h2 class="section-title">Investimento sério para resultados que se destacam.</h2>
           <p class="section-desc">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
@@ -289,7 +348,7 @@
             <div class="feature-icon">01</div>
             <h3>Equipamentos de Ponta</h3>
             <p>
-              Investimento contínuo em câmeras, lentes claras e iluminação profissional para garantir nitidez e textura impecáveis. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              Investimento contínuo em câmeras, lentes claras e iluminação profissional para garantir nitidez e textura impecáveis. Lorem ipsum dolor sit amet.
             </p>
           </div>
 
@@ -297,7 +356,7 @@
             <div class="feature-icon">02</div>
             <h3>Naturalidade no Registro</h3>
             <p>
-              Nada de poses engessadas. Capturamos profissionais trabalhando de verdade, transmitindo confiança e espontaneidade. Ut enim ad minim veniam, quis nostrud exercitation.
+              Nada de poses engessadas. Capturamos profissionais trabalhando de verdade, transmitindo confiança e espontaneidade. Ut enim ad minim veniam.
             </p>
           </div>
 
@@ -305,7 +364,7 @@
             <div class="feature-icon">03</div>
             <h3>Olhar em Dupla</h3>
             <p>
-              Com Luiz e João Arthur atuando juntos, cada projeto ganha múltiplos ângulos, agilidade no set e atenção completa aos detalhes. Duis aute irure dolor in reprehenderit.
+              Com Luiz e João Arthur atuando juntos, cada projeto ganha múltiplos ângulos, agilidade no set e atenção completa aos detalhes.
             </p>
           </div>
 
@@ -313,7 +372,7 @@
             <div class="feature-icon">04</div>
             <h3>Pós-Produção Refinada</h3>
             <p>
-              Color grading fiel e tratamento de pele natural que valorizam a identidade da sua marca. Excepteur sint occaecat cupidatat non proident, sunt in culpa.
+              Color grading fiel e tratamento natural que valorizam a identidade da sua marca. Excepteur sint occaecat cupidatat non proident.
             </p>
           </div>
         </div>
@@ -324,9 +383,9 @@
     <section class="container-contact section-padding" id="contato">
       <div class="section-inner">
         <div class="contact-card reveal">
-          <div class="contact-Copy">
-            <span class="section-tag">05 / Vamos Produzir Juntos?</span>
-            <h2 class="section-title">Quem fez essa imagem? <br /><span class="gradient-text">FORAM Eles.</span></h2>
+          <div class="contact-copy">
+            <span class="section-tag">Vamos Produzir Juntos?</span>
+            <h2 class="section-title">Quem fez essa imagem?<br /><span class="contact-brand">FORAM Eles.</span></h2>
             <p class="section-desc">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Entre em contato com Luiz e João Arthur para agendar seu ensaio corporativo ou produção audiovisual.
             </p>
@@ -335,13 +394,13 @@
               <a href="https://wa.me/" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
                 Chamar no WhatsApp
               </a>
-              <a href="https://instagram.com/" target="_blank" rel="noopener noreferrer" class="btn btn-glass">
+              <a href="https://instagram.com/" target="_blank" rel="noopener noreferrer" class="btn btn-secondary-dark">
                 Ver Instagram
               </a>
             </div>
           </div>
 
-          <form class="contact-form" onsubmit="event.preventDefault(); alert('Mensagem de demonstração enviada! Em breve conectaremos ao seu contato oficial.');">
+          <form class="contact-form" onsubmit="event.preventDefault(); alert('Mensagem de demonstração enviada!');">
             <div class="form-group">
               <label for="nome">Seu Nome / Empresa</label>
               <input type="text" id="nome" placeholder="Ex.: João Silva • Empresa X" required />
@@ -369,7 +428,7 @@
   <footer class="footer">
     <div class="section-inner footer-inner">
       <div class="footer-brand">
-        <img src="assets/logo-branca-1.png" alt="Eles." style="height: 28px; width: auto; vertical-align: middle; margin-right: 10px;" />
+        <img src="assets/logo-eles-preta.png" alt="Eles." class="footer-logo" />
         <span>Fotografia &amp; Audiovisual por Luiz &amp; João Arthur.</span>
       </div>
       <div class="footer-copy">
