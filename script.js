@@ -259,13 +259,14 @@
   window.addEventListener('resize', resizeContactCanvas, { passive: true });
   resizeContactCanvas();
 
+  // Cores mais unidas no centro e velocidade mais rápida e vibrante no container de contato
   const autonomousBlobs = [
-    { r: 138, g: 43,  b: 226, baseRadius: 280, xRatio: 0.24, yRatio: 0.35, speedX:  0.00052, speedY:  0.00038, ampX: 0.22, ampY: 0.24, phase: 0.0, alpha: 0.46 }, // Roxo
-    { r: 255, g: 110, b: 20,  baseRadius: 260, xRatio: 0.78, yRatio: 0.30, speedX: -0.00045, speedY:  0.00046, ampX: 0.20, ampY: 0.22, phase: 1.5, alpha: 0.44 }, // Laranja
-    { r: 27,  g: 98,  b: 248, baseRadius: 310, xRatio: 0.50, yRatio: 0.70, speedX:  0.00042, speedY: -0.00040, ampX: 0.25, ampY: 0.20, phase: 3.1, alpha: 0.48 }, // Azul Royal
-    { r: 0,   g: 215, b: 255, baseRadius: 250, xRatio: 0.82, yRatio: 0.75, speedX: -0.00048, speedY:  0.00036, ampX: 0.21, ampY: 0.23, phase: 4.4, alpha: 0.40 }, // Ciano
-    { r: 242, g: 42,  b: 142, baseRadius: 240, xRatio: 0.22, yRatio: 0.68, speedX:  0.00050, speedY: -0.00042, ampX: 0.19, ampY: 0.21, phase: 5.6, alpha: 0.42 }, // Magenta
-    { r: 255, g: 168, b: 24,  baseRadius: 230, xRatio: 0.55, yRatio: 0.32, speedX: -0.00039, speedY:  0.00049, ampX: 0.23, ampY: 0.19, phase: 2.3, alpha: 0.38 }  // Âmbar
+    { r: 138, g: 43,  b: 226, baseRadius: 360, xRatio: 0.45, yRatio: 0.46, speedX:  0.00135, speedY:  0.00110, ampX: 0.16, ampY: 0.15, phase: 0.0, alpha: 0.52 }, // Roxo
+    { r: 255, g: 110, b: 20,  baseRadius: 340, xRatio: 0.55, yRatio: 0.43, speedX: -0.00125, speedY:  0.00122, ampX: 0.15, ampY: 0.16, phase: 1.5, alpha: 0.50 }, // Laranja
+    { r: 27,  g: 98,  b: 248, baseRadius: 380, xRatio: 0.50, yRatio: 0.54, speedX:  0.00115, speedY: -0.00110, ampX: 0.17, ampY: 0.14, phase: 3.1, alpha: 0.54 }, // Azul Royal
+    { r: 0,   g: 215, b: 255, baseRadius: 330, xRatio: 0.57, yRatio: 0.52, speedX: -0.00130, speedY:  0.00105, ampX: 0.14, ampY: 0.15, phase: 4.4, alpha: 0.46 }, // Ciano
+    { r: 242, g: 42,  b: 142, baseRadius: 340, xRatio: 0.43, yRatio: 0.55, speedX:  0.00140, speedY: -0.00118, ampX: 0.15, ampY: 0.14, phase: 5.6, alpha: 0.48 }, // Magenta
+    { r: 255, g: 168, b: 24,  baseRadius: 320, xRatio: 0.48, yRatio: 0.39, speedX: -0.00110, speedY:  0.00125, ampX: 0.16, ampY: 0.13, phase: 2.3, alpha: 0.44 }  // Âmbar
   ];
 
   function drawContactBlob(x, y, rad, r, g, b, alpha) {
@@ -432,7 +433,13 @@
   }
 
   function applyVideoTransform(factor) {
-    const minScale = isMobileView ? 0.88 : 0.60;
+    if (isMobileView) {
+      // No celular: 100% da tela ocupada sem corte na altura e sem bordas brancas
+      videoCard.style.transform = 'none';
+      videoCard.style.borderRadius = '0';
+      return;
+    }
+    const minScale = 0.60;
     const scale = minScale + (1 - minScale) * factor;
     videoCard.style.transform = `scale3d(${scale.toFixed(4)}, ${scale.toFixed(4)}, 1)`;
   }
