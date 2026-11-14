@@ -563,6 +563,31 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Scrollspy: destaca automaticamente o link da seção visível no menu
+  const navAnchorLinks = document.querySelectorAll('.nav-links .nav-link:not(.nav-cta)');
+  const observedSectionIds = ['inicio', 'destaque', 'portfolio', 'servicos', 'sobre', 'diferenciais', 'contato'];
+  const observedSections = observedSectionIds.map(id => document.getElementById(id)).filter(Boolean);
+
+  if ('IntersectionObserver' in window && observedSections.length > 0) {
+    const navSpyObs = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const id = entry.target.id;
+          navAnchorLinks.forEach((link) => {
+            const href = link.getAttribute('href');
+            if (href === `#${id}`) {
+              link.classList.add('active');
+            } else {
+              link.classList.remove('active');
+            }
+          });
+        }
+      });
+    }, { rootMargin: '-20% 0px -55% 0px' });
+
+    observedSections.forEach(sec => navSpyObs.observe(sec));
+  }
+
   // Filtro de Portfólio
   const filterBtns = document.querySelectorAll('.filter-btn');
   const portfolioItems = document.querySelectorAll('.apple-stack-item');
