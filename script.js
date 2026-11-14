@@ -77,23 +77,23 @@
     }
   }
 
-  // Paleta Desktop: espectro completo original com roxo, laranja, azul royal, ciano elétrico, magenta e âmbar
+  // Paleta Desktop: alta transparência e orbes amplos e desfocados para visual etéreo, suave e elegante
   const desktopPalette = [
-    { r: 138, g: 43,  b: 226, radius: 380, angle: 0.00, orbitX: 1.15, orbitY: 0.95, speed:  0.00078, breathe: 0.00045, alpha: 0.72 }, // Roxo / Violeta vibrante
-    { r: 255, g: 108, b: 20,  radius: 410, angle: 0.95, orbitX: 1.28, orbitY: 1.10, speed: -0.00068, breathe: 0.00048, alpha: 0.68 }, // Laranja pôr-do-sol
-    { r: 27,  g: 98,  b: 248, radius: 440, angle: 1.95, orbitX: 0.95, orbitY: 1.05, speed:  0.00060, breathe: 0.00038, alpha: 0.70 }, // Azul Royal da marca
-    { r: 0,   g: 216, b: 255, radius: 360, angle: 2.95, orbitX: 1.22, orbitY: 0.88, speed: -0.00065, breathe: 0.00044, alpha: 0.65 }, // Ciano elétrico
-    { r: 242, g: 42,  b: 142, radius: 370, angle: 3.90, orbitX: 1.05, orbitY: 1.22, speed:  0.00070, breathe: 0.00040, alpha: 0.66 }, // Rosa / Magenta vivo
-    { r: 255, g: 168, b: 24,  radius: 350, angle: 4.85, orbitX: 1.18, orbitY: 0.92, speed: -0.00058, breathe: 0.00042, alpha: 0.62 }, // Âmbar solar
-    { r: 112, g: 38,  b: 238, radius: 390, angle: 5.65, orbitX: 0.92, orbitY: 1.18, speed:  0.00064, breathe: 0.00039, alpha: 0.68 }  // Violeta profundo
+    { r: 138, g: 43,  b: 226, radius: 520, angle: 0.00, orbitX: 1.15, orbitY: 0.95, speed:  0.00078, breathe: 0.00045, alpha: 0.34 }, // Roxo / Violeta suave
+    { r: 255, g: 108, b: 20,  radius: 540, angle: 0.95, orbitX: 1.28, orbitY: 1.10, speed: -0.00068, breathe: 0.00048, alpha: 0.32 }, // Laranja pôr-do-sol
+    { r: 27,  g: 98,  b: 248, radius: 560, angle: 1.95, orbitX: 0.95, orbitY: 1.05, speed:  0.00060, breathe: 0.00038, alpha: 0.35 }, // Azul Royal da marca
+    { r: 0,   g: 216, b: 255, radius: 490, angle: 2.95, orbitX: 1.22, orbitY: 0.88, speed: -0.00065, breathe: 0.00044, alpha: 0.32 }, // Ciano elétrico
+    { r: 242, g: 42,  b: 142, radius: 500, angle: 3.90, orbitX: 1.05, orbitY: 1.22, speed:  0.00070, breathe: 0.00040, alpha: 0.32 }, // Rosa / Magenta vivo
+    { r: 255, g: 168, b: 24,  radius: 480, angle: 4.85, orbitX: 1.18, orbitY: 0.92, speed: -0.00058, breathe: 0.00042, alpha: 0.30 }, // Âmbar solar
+    { r: 112, g: 38,  b: 238, radius: 530, angle: 5.65, orbitX: 0.92, orbitY: 1.18, speed:  0.00064, breathe: 0.00039, alpha: 0.34 }  // Violeta profundo
   ];
 
   const desktopLowerBlobs = [
-    { r: 138, g: 43,  b: 226, radius: 480, xr: 0.28, yr: 0.44, speed: 0.00028, phase: 0.8,  alpha: 0.36 }, // Roxo
-    { r: 255, g: 110, b: 20,  radius: 460, xr: 0.72, yr: 0.48, speed: 0.00024, phase: 2.1,  alpha: 0.34 }, // Laranja
-    { r: 27,  g: 98,  b: 248, radius: 500, xr: 0.48, yr: 0.58, speed: 0.00022, phase: 3.6,  alpha: 0.38 }, // Azul Royal
-    { r: 0,   g: 215, b: 255, radius: 430, xr: 0.22, yr: 0.68, speed: 0.00025, phase: 4.9,  alpha: 0.32 }, // Ciano
-    { r: 242, g: 42,  b: 142, radius: 450, xr: 0.76, yr: 0.72, speed: 0.00026, phase: 1.2,  alpha: 0.34 }  // Magenta
+    { r: 138, g: 43,  b: 226, radius: 600, xr: 0.28, yr: 0.44, speed: 0.00028, phase: 0.8,  alpha: 0.17 }, // Roxo
+    { r: 255, g: 110, b: 20,  radius: 580, xr: 0.72, yr: 0.48, speed: 0.00024, phase: 2.1,  alpha: 0.16 }, // Laranja
+    { r: 27,  g: 98,  b: 248, radius: 620, xr: 0.48, yr: 0.58, speed: 0.00022, phase: 3.6,  alpha: 0.18 }, // Azul Royal
+    { r: 0,   g: 215, b: 255, radius: 550, xr: 0.22, yr: 0.68, speed: 0.00025, phase: 4.9,  alpha: 0.15 }, // Ciano
+    { r: 242, g: 42,  b: 142, radius: 570, xr: 0.76, yr: 0.72, speed: 0.00026, phase: 1.2,  alpha: 0.16 }  // Magenta
   ];
 
   // Espectro dinâmico para mobile: dominado por azuis vibrantes (royal, ciano, celeste, safira),
@@ -629,12 +629,12 @@ document.addEventListener('DOMContentLoaded', () => {
       category: 'Harmonização Orofacial',
       title: 'Dra. Joyce Menezes',
       photos: [
+        'assets/albuns/joyce/foto-06.jpg',
         'assets/albuns/joyce/foto-01.jpg',
         'assets/albuns/joyce/foto-02.jpg',
         'assets/albuns/joyce/foto-03.jpg',
         'assets/albuns/joyce/foto-04.jpg',
         'assets/albuns/joyce/foto-05.jpg',
-        'assets/albuns/joyce/foto-06.jpg',
         'assets/albuns/joyce/foto-07.jpg',
         'assets/albuns/joyce/foto-08.jpg',
         'assets/albuns/joyce/foto-09.jpg',
@@ -685,14 +685,14 @@ document.addEventListener('DOMContentLoaded', () => {
       category: 'Texturas, Produtos & Essência',
       title: 'Branding & Detalhes',
       photos: [
+        'assets/albuns/branding/foto-08.jpg',
         'assets/albuns/branding/foto-01.jpg',
         'assets/albuns/branding/foto-02.jpg',
         'assets/albuns/branding/foto-03.jpg',
         'assets/albuns/branding/foto-04.jpg',
         'assets/albuns/branding/foto-05.jpg',
         'assets/albuns/branding/foto-06.jpg',
-        'assets/albuns/branding/foto-07.jpg',
-        'assets/albuns/branding/foto-08.jpg'
+        'assets/albuns/branding/foto-07.jpg'
       ]
     }
   ];

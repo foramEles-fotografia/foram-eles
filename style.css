@@ -257,8 +257,8 @@ body {
   width: 100%;
   height: 100%;
   display: block;
-  filter: blur(56px);
-  -webkit-filter: blur(56px);
+  filter: blur(88px);
+  -webkit-filter: blur(88px);
   transform: translate3d(0, 0, 0);
 }
 
@@ -1299,6 +1299,11 @@ body {
 
   .hero-canvas-wrapper {
     height: 195vh;
+  }
+
+  #breathing-canvas {
+    filter: blur(52px);
+    -webkit-filter: blur(52px);
   }
 
   .hero-content {
