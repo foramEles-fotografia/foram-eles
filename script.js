@@ -287,14 +287,14 @@
     { r: 255, g: 226, b: 132 }  // Amarelo manteiga / Âmbar claro alegre
   ];
 
-  // Cores pastéis suaves, unidas no centro e mudando continuamente entre tons claros e alegres
+  // Cores pastéis suaves e reduzidas, ocupando uma fração delicada e elegante no centro do container
   const autonomousBlobs = [
-    { baseRadius: 370, xRatio: 0.46, yRatio: 0.46, speedX:  0.00135, speedY:  0.00110, ampX: 0.16, ampY: 0.15, phase: 0.0, colorOffset: 0.0, baseAlpha: 0.38 },
-    { baseRadius: 350, xRatio: 0.54, yRatio: 0.43, speedX: -0.00125, speedY:  0.00122, ampX: 0.15, ampY: 0.16, phase: 1.5, colorOffset: 1.0, baseAlpha: 0.36 },
-    { baseRadius: 390, xRatio: 0.50, yRatio: 0.54, speedX:  0.00115, speedY: -0.00110, ampX: 0.17, ampY: 0.14, phase: 3.1, colorOffset: 2.0, baseAlpha: 0.40 },
-    { baseRadius: 340, xRatio: 0.57, yRatio: 0.52, speedX: -0.00130, speedY:  0.00105, ampX: 0.14, ampY: 0.15, phase: 4.4, colorOffset: 3.0, baseAlpha: 0.34 },
-    { baseRadius: 350, xRatio: 0.43, yRatio: 0.55, speedX:  0.00140, speedY: -0.00118, ampX: 0.15, ampY: 0.14, phase: 5.6, colorOffset: 4.0, baseAlpha: 0.37 },
-    { baseRadius: 330, xRatio: 0.48, yRatio: 0.39, speedX: -0.00110, speedY:  0.00125, ampX: 0.16, ampY: 0.13, phase: 2.3, colorOffset: 5.0, baseAlpha: 0.34 }
+    { baseRadius: 210, xRatio: 0.48, yRatio: 0.48, speedX:  0.00135, speedY:  0.00110, ampX: 0.08, ampY: 0.08, phase: 0.0, colorOffset: 0.0, baseAlpha: 0.35 },
+    { baseRadius: 195, xRatio: 0.52, yRatio: 0.46, speedX: -0.00125, speedY:  0.00122, ampX: 0.08, ampY: 0.08, phase: 1.5, colorOffset: 1.0, baseAlpha: 0.33 },
+    { baseRadius: 220, xRatio: 0.50, yRatio: 0.52, speedX:  0.00115, speedY: -0.00110, ampX: 0.09, ampY: 0.08, phase: 3.1, colorOffset: 2.0, baseAlpha: 0.36 },
+    { baseRadius: 190, xRatio: 0.53, yRatio: 0.50, speedX: -0.00130, speedY:  0.00105, ampX: 0.07, ampY: 0.08, phase: 4.4, colorOffset: 3.0, baseAlpha: 0.32 },
+    { baseRadius: 205, xRatio: 0.47, yRatio: 0.51, speedX:  0.00140, speedY: -0.00118, ampX: 0.08, ampY: 0.07, phase: 5.6, colorOffset: 4.0, baseAlpha: 0.34 },
+    { baseRadius: 185, xRatio: 0.49, yRatio: 0.45, speedX: -0.00110, speedY:  0.00125, ampX: 0.08, ampY: 0.07, phase: 2.3, colorOffset: 5.0, baseAlpha: 0.32 }
   ];
 
   function getInterpolatedContactColor(time, offset) {
@@ -334,22 +334,24 @@
     }
 
     ctx.clearRect(0, 0, width, height);
-    const mobileScale = width <= 600 ? 0.78 : 1.0;
+    const isMobileContact = width <= 768;
+    // Escala compacta no PC (0.72) e no celular (0.48) para ocupar bem menos espaço no card
+    const scaleFactor = isMobileContact ? 0.48 : 0.72;
 
     for (let i = 0; i < autonomousBlobs.length; i++) {
       const b = autonomousBlobs[i];
       const x =
         width * b.xRatio +
         Math.sin(time * b.speedX + b.phase) * (width * b.ampX) +
-        Math.cos(time * b.speedY * 0.8 - b.phase) * (width * 0.07);
+        Math.cos(time * b.speedY * 0.8 - b.phase) * (width * 0.04);
 
       const y =
         height * b.yRatio +
         Math.cos(time * b.speedY + b.phase) * (height * b.ampY) +
-        Math.sin(time * b.speedX * 0.7 + b.phase) * (height * 0.07);
+        Math.sin(time * b.speedX * 0.7 + b.phase) * (height * 0.04);
 
       const breathe = Math.sin(time * 0.00032 + b.phase);
-      const rad = b.baseRadius * mobileScale * (1 + breathe * 0.12);
+      const rad = b.baseRadius * scaleFactor * (1 + breathe * 0.10);
       const alpha = b.baseAlpha + breathe * 0.03;
 
       const col = getInterpolatedContactColor(time, b.colorOffset);
