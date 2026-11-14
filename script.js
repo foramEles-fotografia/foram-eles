@@ -77,36 +77,35 @@
     }
   }
 
-  // Paleta Desktop: Tons pastéis delicados, suaves e luminosos, com alta transparência e orbes amplos e desfocados
+  // Paleta Desktop: Tons clarinhos, alegres e luminosos — Azul bebê, Verde menta, Lilás clarinho e Laranja suave (zero roxo escuro)
   const desktopPalette = [
-    { r: 175, g: 195, b: 255, radius: 590, angle: 0.00, orbitX: 1.15, orbitY: 0.95, speed:  0.00078, breathe: 0.00045, alpha: 0.22 }, // Azul celeste pastel suave
-    { r: 255, g: 205, b: 170, radius: 610, angle: 0.95, orbitX: 1.28, orbitY: 1.10, speed: -0.00068, breathe: 0.00048, alpha: 0.20 }, // Pêssego solar pastel
-    { r: 155, g: 200, b: 255, radius: 630, angle: 1.95, orbitX: 0.95, orbitY: 1.05, speed:  0.00060, breathe: 0.00038, alpha: 0.23 }, // Azul sereno suave da marca
-    { r: 165, g: 235, b: 245, radius: 570, angle: 2.95, orbitX: 1.22, orbitY: 0.88, speed: -0.00065, breathe: 0.00044, alpha: 0.20 }, // Aqua / Ciano pastel límpido
-    { r: 215, g: 190, b: 255, radius: 580, angle: 3.90, orbitX: 1.05, orbitY: 1.22, speed:  0.00070, breathe: 0.00040, alpha: 0.21 }, // Lavanda suave pastel
-    { r: 255, g: 220, b: 175, radius: 560, angle: 4.85, orbitX: 1.18, orbitY: 0.92, speed: -0.00058, breathe: 0.00042, alpha: 0.19 }, // Âmbar creme pastel
-    { r: 190, g: 205, b: 255, radius: 600, angle: 5.65, orbitX: 0.92, orbitY: 1.18, speed:  0.00064, breathe: 0.00039, alpha: 0.22 }  // Hortênsia pastel
+    { r: 180, g: 220, b: 255, radius: 620, angle: 0.00, orbitX: 1.15, orbitY: 0.95, speed:  0.00078, breathe: 0.00045, alpha: 0.22 }, // Azul bebê suave
+    { r: 180, g: 245, b: 215, radius: 610, angle: 0.95, orbitX: 1.25, orbitY: 1.10, speed: -0.00068, breathe: 0.00048, alpha: 0.20 }, // Verde menta fresco e claro
+    { r: 255, g: 215, b: 175, radius: 630, angle: 1.95, orbitX: 0.95, orbitY: 1.05, speed:  0.00060, breathe: 0.00038, alpha: 0.21 }, // Laranja clarinho / pêssego
+    { r: 228, g: 212, b: 255, radius: 600, angle: 2.95, orbitX: 1.22, orbitY: 0.88, speed: -0.00065, breathe: 0.00044, alpha: 0.19 }, // Lilás bem clarinho
+    { r: 175, g: 235, b: 252, radius: 590, angle: 3.90, orbitX: 1.05, orbitY: 1.22, speed:  0.00070, breathe: 0.00040, alpha: 0.20 }, // Azul bebê celeste
+    { r: 190, g: 248, b: 228, radius: 580, angle: 4.85, orbitX: 1.18, orbitY: 0.92, speed: -0.00058, breathe: 0.00042, alpha: 0.19 }, // Verde menta pastel
+    { r: 255, g: 225, b: 185, radius: 610, angle: 5.65, orbitX: 0.92, orbitY: 1.18, speed:  0.00064, breathe: 0.00039, alpha: 0.20 }  // Laranja solar suave
   ];
 
   const desktopLowerBlobs = [
-    { r: 180, g: 195, b: 255, radius: 690, xr: 0.28, yr: 0.44, speed: 0.00028, phase: 0.8,  alpha: 0.10 }, // Lavanda pastel
-    { r: 255, g: 210, b: 180, radius: 670, xr: 0.72, yr: 0.48, speed: 0.00024, phase: 2.1,  alpha: 0.09 }, // Pêssego pastel
-    { r: 160, g: 205, b: 255, radius: 710, xr: 0.48, yr: 0.58, speed: 0.00022, phase: 3.6,  alpha: 0.11 }, // Azul pastel
-    { r: 170, g: 235, b: 245, radius: 650, xr: 0.22, yr: 0.68, speed: 0.00025, phase: 4.9,  alpha: 0.09 }, // Aqua pastel
-    { r: 255, g: 200, b: 225, radius: 660, xr: 0.76, yr: 0.72, speed: 0.00026, phase: 1.2,  alpha: 0.09 }  // Rosa pétala pastel
+    { r: 180, g: 220, b: 255, radius: 700, xr: 0.28, yr: 0.44, speed: 0.00028, phase: 0.8,  alpha: 0.08 }, // Azul bebê
+    { r: 180, g: 245, b: 215, radius: 680, xr: 0.72, yr: 0.48, speed: 0.00024, phase: 2.1,  alpha: 0.08 }, // Verde menta
+    { r: 255, g: 215, b: 175, radius: 720, xr: 0.48, yr: 0.58, speed: 0.00022, phase: 3.6,  alpha: 0.08 }, // Laranja clarinho
+    { r: 228, g: 212, b: 255, radius: 660, xr: 0.22, yr: 0.68, speed: 0.00025, phase: 4.9,  alpha: 0.07 }, // Lilás clarinho
+    { r: 175, g: 235, b: 252, radius: 670, xr: 0.76, yr: 0.72, speed: 0.00026, phase: 1.2,  alpha: 0.08 }  // Azul bebê celeste
   ];
 
-  // Espectro dinâmico para mobile: tons pastéis suaves dominados por azul celeste límpido,
-  // calor suave de pêssego/âmbar pastel e aqua delicado (tons claros, alta transparência)
+  // Espectro dinâmico para mobile: clarinho e suave — Azul bebê, Verde menta, Lilás clarinho e Laranja pastel
   const mobileColorSpectrum = [
-    { r: 155, g: 200, b: 255 }, // Azul suave pastel da marca
-    { r: 165, g: 235, b: 248 }, // Ciano sky pastel
-    { r: 255, g: 205, b: 170 }, // Pêssego solar pastel
-    { r: 175, g: 210, b: 255 }, // Celeste claro pastel
-    { r: 170, g: 235, b: 235 }, // Aqua suave pastel
-    { r: 255, g: 220, b: 175 }, // Âmbar creme pastel
-    { r: 160, g: 195, b: 255 }, // Azul safira claro pastel
-    { r: 180, g: 240, b: 225 }  // Toque sutil de menta pastel
+    { r: 180, g: 220, b: 255 }, // Azul bebê límpido
+    { r: 180, g: 245, b: 215 }, // Verde menta fresco
+    { r: 255, g: 215, b: 175 }, // Laranja clarinho / pêssego
+    { r: 228, g: 212, b: 255 }, // Lilás clarinho suave (zero roxo)
+    { r: 175, g: 235, b: 252 }, // Azul bebê celeste
+    { r: 190, g: 248, b: 228 }, // Verde menta claro
+    { r: 255, g: 225, b: 185 }, // Pêssego solar pastel
+    { r: 235, g: 220, b: 255 }  // Lilás suave luminoso
   ];
 
   function getMobileMorphColor(time, offset) {
@@ -125,23 +124,23 @@
   }
 
   // Paleta Mobile exclusiva: alta transparência (alphas 0.16-0.20), movimento e rotação acelerados (~3x mais rápidos)
-  // e troca dinâmica contínua de cores pastéis para eliminar saturação pesada
+  // e troca dinâmica contínua de cores clarinhas para visual leve e alegre
   const mobilePalette = [
-    { r: 155, g: 200, b: 255, radius: 430, angle: 0.00, orbitX: 1.12, orbitY: 0.94, speed:  0.00185, breathe: 0.00098, alpha: 0.20, colorCycle: true, colorOffset: 0.0 },
-    { r: 255, g: 205, b: 170, radius: 390, angle: 0.92, orbitX: 1.25, orbitY: 1.08, speed: -0.00175, breathe: 0.00105, alpha: 0.18, colorCycle: true, colorOffset: 1.15 },
-    { r: 175, g: 210, b: 255, radius: 420, angle: 1.88, orbitX: 0.96, orbitY: 1.05, speed:  0.00180, breathe: 0.00092, alpha: 0.20, colorCycle: true, colorOffset: 2.30 },
-    { r: 170, g: 235, b: 235, radius: 380, angle: 2.82, orbitX: 1.22, orbitY: 0.90, speed: -0.00190, breathe: 0.00108, alpha: 0.17, colorCycle: true, colorOffset: 3.45 },
-    { r: 165, g: 235, b: 248, radius: 400, angle: 3.75, orbitX: 1.05, orbitY: 1.22, speed:  0.00195, breathe: 0.00095, alpha: 0.18, colorCycle: true, colorOffset: 4.60 },
-    { r: 255, g: 220, b: 175, radius: 370, angle: 4.70, orbitX: 1.16, orbitY: 0.92, speed: -0.00170, breathe: 0.00102, alpha: 0.16, colorCycle: true, colorOffset: 5.75 },
-    { r: 160, g: 195, b: 255, radius: 410, angle: 5.58, orbitX: 0.92, orbitY: 1.15, speed:  0.00175, breathe: 0.00094, alpha: 0.19, colorCycle: true, colorOffset: 6.90 }
+    { r: 180, g: 220, b: 255, radius: 440, angle: 0.00, orbitX: 1.12, orbitY: 0.94, speed:  0.00185, breathe: 0.00098, alpha: 0.20, colorCycle: true, colorOffset: 0.0 },
+    { r: 180, g: 245, b: 215, radius: 400, angle: 0.92, orbitX: 1.25, orbitY: 1.08, speed: -0.00175, breathe: 0.00105, alpha: 0.18, colorCycle: true, colorOffset: 1.15 },
+    { r: 255, g: 215, b: 175, radius: 430, angle: 1.88, orbitX: 0.96, orbitY: 1.05, speed:  0.00180, breathe: 0.00092, alpha: 0.19, colorCycle: true, colorOffset: 2.30 },
+    { r: 228, g: 212, b: 255, radius: 390, angle: 2.82, orbitX: 1.22, orbitY: 0.90, speed: -0.00190, breathe: 0.00108, alpha: 0.17, colorCycle: true, colorOffset: 3.45 },
+    { r: 175, g: 235, b: 252, radius: 410, angle: 3.75, orbitX: 1.05, orbitY: 1.22, speed:  0.00195, breathe: 0.00095, alpha: 0.18, colorCycle: true, colorOffset: 4.60 },
+    { r: 190, g: 248, b: 228, radius: 380, angle: 4.70, orbitX: 1.16, orbitY: 0.92, speed: -0.00170, breathe: 0.00102, alpha: 0.16, colorCycle: true, colorOffset: 5.75 },
+    { r: 255, g: 225, b: 185, radius: 420, angle: 5.58, orbitX: 0.92, orbitY: 1.15, speed:  0.00175, breathe: 0.00094, alpha: 0.18, colorCycle: true, colorOffset: 6.90 }
   ];
 
   const mobileLowerBlobs = [
-    { r: 155, g: 200, b: 255, radius: 460, xr: 0.28, yr: 0.45, speed: 0.00055, phase: 0.8, alpha: 0.09, colorOffset: 0.5 },
-    { r: 255, g: 205, b: 170, radius: 420, xr: 0.72, yr: 0.50, speed: 0.00050, phase: 2.2, alpha: 0.08, colorOffset: 2.3 },
-    { r: 165, g: 235, b: 248, radius: 440, xr: 0.48, yr: 0.60, speed: 0.00048, phase: 3.7, alpha: 0.09, colorOffset: 4.2 },
-    { r: 175, g: 210, b: 255, radius: 410, xr: 0.22, yr: 0.70, speed: 0.00052, phase: 5.0, alpha: 0.08, colorOffset: 5.9 },
-    { r: 170, g: 235, b: 235, radius: 430, xr: 0.76, yr: 0.72, speed: 0.00050, phase: 1.4, alpha: 0.08, colorOffset: 7.3 }
+    { r: 180, g: 220, b: 255, radius: 470, xr: 0.28, yr: 0.45, speed: 0.00055, phase: 0.8, alpha: 0.08, colorOffset: 0.5 },
+    { r: 180, g: 245, b: 215, radius: 430, xr: 0.72, yr: 0.50, speed: 0.00050, phase: 2.2, alpha: 0.07, colorOffset: 2.3 },
+    { r: 255, g: 215, b: 175, radius: 450, xr: 0.48, yr: 0.60, speed: 0.00048, phase: 3.7, alpha: 0.08, colorOffset: 4.2 },
+    { r: 228, g: 212, b: 255, radius: 420, xr: 0.22, yr: 0.70, speed: 0.00052, phase: 5.0, alpha: 0.07, colorOffset: 5.9 },
+    { r: 175, g: 235, b: 252, radius: 440, xr: 0.76, yr: 0.72, speed: 0.00050, phase: 1.4, alpha: 0.07, colorOffset: 7.3 }
   ];
 
   let blobs = [];
@@ -656,7 +655,7 @@ document.addEventListener('DOMContentLoaded', () => {
       category: 'Odontologia & Estética',
       title: 'Dra. Jéssica Cardoso',
       photos: [
-        'assets/albuns/jessica/foto-03.jpg',
+        'assets/albuns/jessica/jessica-3.jpg',
         'assets/albuns/jessica/foto-01.jpg',
         'assets/albuns/jessica/foto-02.jpg'
       ]
