@@ -217,12 +217,12 @@ body {
    ========================================================================== */
 .container-hero {
   position: relative;
-  min-height: 98vh;
-  min-height: 98svh;
+  min-height: 96vh;
+  min-height: 96svh;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 12.6rem 1.75rem 5.4rem;
+  padding: 10.4rem 1.75rem 5rem;
   overflow: visible;
   background: transparent;
   z-index: 1;
@@ -274,9 +274,9 @@ body {
 
 .hero-title {
   font-family: var(--font-display);
-  font-size: clamp(2.45rem, 5.2vw, 4.2rem);
-  line-height: 1.14;
-  letter-spacing: -0.035em;
+  font-size: clamp(2rem, 3.8vw, 3.35rem);
+  line-height: 1.16;
+  letter-spacing: -0.03em;
   font-weight: 800;
   color: var(--slate-800);
   margin-top: 0;
@@ -290,14 +290,15 @@ body {
 
 .hero-title-line {
   display: block;
+  white-space: nowrap;
 }
 
 .hero-title-line.line-1 {
-  letter-spacing: -0.03em;
+  letter-spacing: -0.025em;
 }
 
 .hero-title-line.line-2 {
-  letter-spacing: -0.03em;
+  letter-spacing: -0.025em;
   word-spacing: normal;
 }
 
@@ -574,12 +575,12 @@ body {
 }
 
 /* Enquadramento customizado por álbum: elimina teto/parede excessivos e foca nas pessoas e produtos */
-.apple-stack-item[data-album="0"] .stack-layer img { object-position: center 36%; } /* Joyce */
+.apple-stack-item[data-album="0"] .stack-layer img { object-position: center 46%; } /* Joyce: tela descida mais para enquadrar perfeitamente */
 .apple-stack-item[data-album="1"] .stack-layer img { object-position: center 48%; } /* Izabela */
 .apple-stack-item[data-album="2"] .stack-layer img { object-position: center 34%; } /* Jéssica */
 .apple-stack-item[data-album="3"] .stack-layer img { object-position: center 48%; } /* Profissionais */
 .apple-stack-item[data-album="4"] .stack-layer img { object-position: center 50%; } /* Institucional */
-.apple-stack-item[data-album="5"] .stack-layer img { object-position: center 52%; } /* Branding & Detalhes */
+.apple-stack-item[data-album="5"] .stack-layer img { object-position: center 96%; } /* Branding & Detalhes: tudo para baixo */
 
 .stack-layer.layer-left {
   z-index: 1;
@@ -922,9 +923,19 @@ body {
   justify-content: space-between;
   align-items: flex-start;
   height: 100%;
+  position: relative;
   text-align: left;
 }
 
+.about-title-sticky {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 6.8rem;
+  align-self: flex-start;
+  z-index: 2;
+}
+
+.about-title-sticky .section-title,
 .about-col-title .section-title {
   text-align: left;
   line-height: 1.15;
@@ -1417,19 +1428,23 @@ body {
   }
 
   .hero-title {
-    font-size: clamp(2rem, 8.4vw, 2.65rem);
-    line-height: 1.16;
+    font-size: clamp(1.75rem, 7.6vw, 2.35rem);
+    line-height: 1.18;
     letter-spacing: -0.03em;
     margin-top: 0;
     margin-bottom: 0;
   }
 
+  .hero-title-line {
+    white-space: normal;
+  }
+
   .hero-title-line.line-1 {
-    letter-spacing: -0.03em;
+    letter-spacing: -0.025em;
   }
 
   .hero-title-line.line-2 {
-    letter-spacing: -0.03em;
+    letter-spacing: -0.025em;
     word-spacing: normal;
   }
 
@@ -1607,6 +1622,10 @@ body {
     position: static;
     height: auto;
     display: block;
+  }
+
+  .about-title-sticky {
+    position: static;
   }
 
   .about-logo-bottom.desktop-logo {
