@@ -871,6 +871,37 @@ body {
   align-items: center;
 }
 
+.about-grid.editorial-split {
+  display: grid;
+  grid-template-columns: 0.9fr 1.2fr;
+  gap: 4.8rem;
+  align-items: flex-start;
+  max-width: 1140px;
+  margin: 0 auto;
+}
+
+.about-col-title {
+  position: sticky;
+  top: 6.5rem;
+  text-align: left;
+}
+
+.about-col-title .section-title {
+  text-align: left;
+  line-height: 1.15;
+  font-size: clamp(2rem, 3.8vw, 3rem);
+  margin-bottom: 0;
+}
+
+.about-col-content {
+  text-align: left;
+}
+
+.about-col-content .founders-row {
+  justify-content: flex-start;
+  margin-top: 2rem;
+}
+
 .about-grid.no-visuals {
   display: flex;
   flex-direction: column;
@@ -1483,8 +1514,14 @@ body {
   }
 
   /* 4º Container: Sobre Nós delicado no celular */
-  .about-grid {
+  .about-grid,
+  .about-grid.editorial-split {
+    grid-template-columns: 1fr;
     gap: 2.1rem;
+  }
+
+  .about-col-title {
+    position: static;
   }
 
   .about-photo-main > img {

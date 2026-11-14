@@ -644,10 +644,10 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     {
       category: 'Invisalign Doctor',
-      title: 'Dra. Izabela',
+      title: 'Dra. Izabela Freitas',
       photos: [
-        'assets/albuns/izabela/foto-02.jpg',
         'assets/albuns/izabela/foto-01.jpg',
+        'assets/albuns/izabela/foto-02.jpg',
         'assets/albuns/izabela/foto-03.jpg',
         'assets/albuns/izabela/foto-04.jpg'
       ]
