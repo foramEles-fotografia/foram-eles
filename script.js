@@ -180,12 +180,12 @@
 
     ctx.clearRect(0, 0, width, height);
 
-    // Mouse parado por ~2.5s: a mancha volta a passear sozinha
-    if (anchor.isMoving && time - anchor.lastMoveTime > 2500) {
+    // Mouse parado por ~2s: a mancha volta a passear sozinha ("fumaça solta")
+    if (anchor.isMoving && time - anchor.lastMoveTime > 2000) {
       anchor.isMoving = false;
     }
     const wantInfluence = (!isMobile && anchor.isMoving) ? 1 : 0;
-    stain.influence += (wantInfluence - stain.influence) * (wantInfluence ? 0.06 : 0.012);
+    stain.influence += (wantInfluence - stain.influence) * (wantInfluence ? 0.06 : 0.014);
 
     // Energia do mouse decai sozinha (cores aceleram só enquanto o mouse mexe)
     stain.mouseEnergy *= 0.94;
@@ -217,7 +217,10 @@
     // Tamanho: só um pedaço da tela
     const base = isMobile ? width * 0.52 : Math.min(width, viewH * 1.25) * 0.27;
     const radius = base * (1 + 0.06 * Math.sin(time * 0.0006));
-    const alpha = isMobile ? 0.40 : 0.34;
+
+    // No PC: +15% de força da cor quando o mouse não estiver ativo / fumaça solta (de 0.34 para 0.391)
+    const pcAlpha = 0.34 * (1 + 0.15 * (1 - stain.influence));
+    const alpha = isMobile ? 0.40 : pcAlpha;
 
     // Dois lóbulos próximos (uma cor em cada) que se misturam em degradê e giram devagar
     const spin = time * 0.00035 + stain.phaseX;
