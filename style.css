@@ -293,36 +293,52 @@ body {
 }
 
 .hero-title-line.line-1 {
-  letter-spacing: -0.04em;
+  letter-spacing: -0.03em;
 }
 
 .hero-title-line.line-2 {
-  letter-spacing: 0.045em;
-  word-spacing: 0.16em;
+  letter-spacing: -0.03em;
+  word-spacing: normal;
 }
 
 .hero-logo-wrap {
-  margin: 3.5rem 0 3.5rem;
+  margin: 3.2rem 0 3.2rem;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .hero-main-logo {
-  height: clamp(54px, 5.4vw, 70px);
+  height: clamp(54px, 5.4vw, 72px);
   width: auto;
   object-fit: contain;
   filter: drop-shadow(0 4px 16px rgba(0, 0, 0, 0.05));
 }
 
 .hero-subtitle {
-  font-size: clamp(1.04rem, 1.3vw, 1.2rem);
+  max-width: 710px;
+  margin-bottom: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.hero-sub-lead {
+  font-size: clamp(1.1rem, 1.4vw, 1.28rem);
+  font-weight: 700;
+  color: var(--slate-800);
+  line-height: 1.45;
+  text-align: center;
+  margin: 0;
+}
+
+.hero-sub-desc {
+  font-size: clamp(1.02rem, 1.25vw, 1.15rem);
   color: var(--slate-700);
-  max-width: 680px;
   line-height: 1.72;
   text-align: justify;
   text-justify: inter-word;
-  margin-bottom: 0;
+  margin: 0;
 }
 
 /* ==========================================================================
@@ -1409,12 +1425,12 @@ body {
   }
 
   .hero-title-line.line-1 {
-    letter-spacing: -0.035em;
+    letter-spacing: -0.03em;
   }
 
   .hero-title-line.line-2 {
-    letter-spacing: 0.06em;
-    word-spacing: 0.22em;
+    letter-spacing: -0.03em;
+    word-spacing: normal;
   }
 
   .hero-logo-wrap {
@@ -1431,14 +1447,23 @@ body {
   }
 
   .hero-subtitle {
-    font-size: clamp(1.05rem, 4.3vw, 1.18rem);
-    line-height: 1.68;
-    color: var(--slate-700);
-    text-align: justify;
-    text-justify: inter-word;
     margin-bottom: 0;
     padding: 0 0.2rem;
     max-width: 440px;
+    gap: 0.65rem;
+  }
+
+  .hero-sub-lead {
+    font-size: clamp(1.06rem, 4.3vw, 1.18rem);
+    text-align: center;
+    line-height: 1.42;
+  }
+
+  .hero-sub-desc {
+    font-size: clamp(0.96rem, 3.9vw, 1.08rem);
+    line-height: 1.68;
+    text-align: justify;
+    text-justify: inter-word;
   }
 
   .contact-buttons .btn:hover {
