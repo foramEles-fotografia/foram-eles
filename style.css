@@ -456,6 +456,11 @@ body {
   padding: 6.6rem 1.75rem;
 }
 
+/* Espaço refinado entre o final do vídeo e o início dos trabalhos */
+.container-portfolio.section-padding {
+  padding-top: 2.8rem;
+}
+
 .section-inner {
   max-width: 1240px;
   margin: 0 auto;
@@ -1054,7 +1059,7 @@ body {
 }
 
 .about-paragraph {
-  color: rgba(255, 255, 255, 0.82);
+  color: #ffffff;
   margin-bottom: 1.1rem;
   font-size: 0.98rem;
   line-height: 1.68;
@@ -1419,7 +1424,7 @@ body {
   .container-hero {
     min-height: 96vh;
     min-height: 96svh;
-    padding: 9.6rem clamp(1.4rem, 5.5vw, 2.2rem) 4.2rem;
+    padding: 7.2rem clamp(1.4rem, 5.5vw, 2.2rem) 3.5rem;
   }
 
   .hero-canvas-wrapper {
@@ -1462,14 +1467,14 @@ body {
   }
 
   .hero-logo-wrap {
-    margin: 1.8rem 0 1.8rem;
+    margin: 2.6rem 0 2.6rem;
     display: flex;
     align-items: center;
     justify-content: center;
   }
 
   .hero-main-logo {
-    height: clamp(48px, 12vw, 62px);
+    height: clamp(53px, 13.2vw, 68px);
     width: auto;
     object-fit: contain;
   }
@@ -1483,9 +1488,12 @@ body {
   }
 
   .hero-sub-desc {
-    font-size: clamp(0.96rem, 3.9vw, 1.06rem);
-    line-height: 1.62;
-    text-align: center;
+    font-size: clamp(1.04rem, 4.3vw, 1.14rem);
+    line-height: 1.68;
+    text-align: justify;
+    text-justify: inter-word;
+    hyphens: auto;
+    -webkit-hyphens: auto;
     color: var(--slate-700);
     margin: 0;
   }
@@ -1537,6 +1545,10 @@ body {
   /* Seções gerais mais delicadas no celular */
   .section-padding {
     padding: 3.8rem 1.15rem;
+  }
+
+  .container-portfolio.section-padding {
+    padding-top: 1.6rem;
   }
 
   .section-title {

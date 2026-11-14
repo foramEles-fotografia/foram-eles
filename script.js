@@ -217,7 +217,7 @@
     // Tamanho: só um pedaço da tela
     const base = isMobile ? width * 0.52 : Math.min(width, viewH * 1.25) * 0.27;
     const radius = base * (1 + 0.06 * Math.sin(time * 0.0006));
-    const alpha = isMobile ? 0.40 : 0.30;
+    const alpha = isMobile ? 0.40 : 0.34;
 
     // Dois lóbulos próximos (uma cor em cada) que se misturam em degradê e giram devagar
     const spin = time * 0.00035 + stain.phaseX;
@@ -389,8 +389,8 @@
   const videoEl = document.getElementById('showcase-video');
   if (!track || !videoCard) return;
 
-  // O vídeo começa pausado e só toca quando pelo menos 20% dele (em altura) aparece na tela.
-  // Abaixo disso ele pausa de novo, assim ninguém pega o vídeo "pela metade".
+  // O vídeo começa pausado e toca com extrema agilidade logo ao iniciar o scroll / aparição
+  let tryPlay = () => {};
   if (videoEl) {
     videoEl.muted = true;
     videoEl.removeAttribute('autoplay');
@@ -398,20 +398,22 @@
       videoEl.setAttribute('poster', 'assets/video-poster-mobile.jpg');
     }
 
-    const MIN_VISIBLE = 0.2;
-    const tryPlay = () => {
+    const isMobileDevice = window.matchMedia('(max-width: 768px)').matches;
+    // No mobile reduzimos o delay ao mínimo (3% visível já inicia o play)
+    const MIN_VISIBLE = isMobileDevice ? 0.03 : 0.08;
+    tryPlay = () => {
       const p = videoEl.play();
       if (p && p.catch) p.catch(() => {});
     };
 
     if ('IntersectionObserver' in window) {
-      const thresholds = [0, 0.05, 0.1, 0.15, 0.19, 0.2, 0.21, 0.25, 0.35, 0.5, 0.75, 1];
+      const thresholds = [0, 0.02, 0.04, 0.08, 0.12, 0.2, 0.35, 0.5, 0.75, 1];
       const videoObs = new IntersectionObserver(
         (entries) => {
           const entry = entries[entries.length - 1];
           if (entry.isIntersecting && entry.intersectionRatio >= MIN_VISIBLE) {
             tryPlay();
-          } else {
+          } else if (!entry.isIntersecting || entry.intersectionRatio < 0.01) {
             videoEl.pause();
           }
         },
@@ -456,6 +458,9 @@
       // FASE 1 (1º Scroll): Sobe e cresce gradualmente até atingir o centro (distToTop === 0)
       const rawGrow = clamp(scrollY / trackOffsetTop, 0, 1);
       targetFactor = smoothstep(rawGrow);
+      if (targetFactor > 0.02 && videoEl && videoEl.paused) {
+        tryPlay();
+      }
     } else {
       // O vídeo já chegou no centro da tela
       const pinnedScrolled = -distToTop;
