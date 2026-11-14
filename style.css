@@ -319,9 +319,7 @@ body {
 .hero-subtitle {
   max-width: 710px;
   margin-bottom: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.65rem;
+  display: block;
 }
 
 .hero-sub-lead {
@@ -1440,15 +1438,17 @@ body {
   }
 
   .hero-title {
-    /* Cabe sempre em 2 linhas no celular (cada linha do título numa linha só) */
-    font-size: clamp(1.1rem, 5.7vw, 2rem);
-    line-height: 1.22;
-    letter-spacing: -0.03em;
+    /* Grande destaque no celular em exatamente 2 linhas */
+    font-size: clamp(1.5rem, 6.8vw, 2.25rem);
+    line-height: 1.16;
+    letter-spacing: -0.035em;
+    font-weight: 800;
     margin-top: 0;
     margin-bottom: 0;
   }
 
   .hero-title-line {
+    display: block;
     white-space: nowrap;
   }
 
@@ -1457,39 +1457,37 @@ body {
   }
 
   .hero-title-line.line-2 {
-    letter-spacing: -0.025em;
+    letter-spacing: -0.035em;
     word-spacing: normal;
   }
 
   .hero-logo-wrap {
-    margin: 2.2rem 0 2.2rem;
+    margin: 1.8rem 0 1.8rem;
     display: flex;
     align-items: center;
     justify-content: center;
   }
 
   .hero-main-logo {
-    height: clamp(46px, 13vw, 58px);
+    height: clamp(48px, 12vw, 62px);
     width: auto;
     object-fit: contain;
   }
 
-  /* Celular: subtítulo do container 1 removido */
+  /* Texto descritivo no celular com destaque e clareza */
   .hero-subtitle {
-    display: none;
-  }
-
-  .hero-sub-lead {
-    font-size: clamp(1.06rem, 4.3vw, 1.18rem);
-    text-align: center;
-    line-height: 1.42;
+    display: block;
+    margin-bottom: 0;
+    padding: 0 0.4rem;
+    max-width: 440px;
   }
 
   .hero-sub-desc {
-    font-size: clamp(0.96rem, 3.9vw, 1.08rem);
-    line-height: 1.68;
-    text-align: justify;
-    text-justify: inter-word;
+    font-size: clamp(0.96rem, 3.9vw, 1.06rem);
+    line-height: 1.62;
+    text-align: center;
+    color: var(--slate-700);
+    margin: 0;
   }
 
   .contact-buttons .btn:hover {
