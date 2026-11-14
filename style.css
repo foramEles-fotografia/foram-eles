@@ -575,12 +575,12 @@ body {
 }
 
 /* Enquadramento customizado por álbum: elimina teto/parede excessivos e foca nas pessoas e produtos */
-.apple-stack-item[data-album="0"] .stack-layer img { object-position: center 46%; } /* Joyce: tela descida mais para enquadrar perfeitamente */
+.apple-stack-item[data-album="0"] .stack-layer img { object-position: center 54%; } /* Joyce: enquadramento descendo um pouco mais no PC e celular */
 .apple-stack-item[data-album="1"] .stack-layer img { object-position: center 48%; } /* Izabela */
 .apple-stack-item[data-album="2"] .stack-layer img { object-position: center 34%; } /* Jéssica */
 .apple-stack-item[data-album="3"] .stack-layer img { object-position: center 48%; } /* Profissionais */
 .apple-stack-item[data-album="4"] .stack-layer img { object-position: center 50%; } /* Institucional */
-.apple-stack-item[data-album="5"] .stack-layer img { object-position: center 96%; } /* Branding & Detalhes: tudo para baixo */
+.apple-stack-item[data-album="5"] .stack-layer img { object-position: center 84%; } /* Branding & Detalhes: subindo ~12% para recuperar topo cortado */
 
 .stack-layer.layer-left {
   z-index: 1;
@@ -925,6 +925,18 @@ body {
   height: 100%;
   position: relative;
   text-align: left;
+}
+
+.about-col-title.visible {
+  transform: none;
+}
+
+.about-title-track {
+  flex: 1 1 auto;
+  width: 100%;
+  position: relative;
+  /* Margem inferior de ~2cm (3.2rem / ~52px) que trava o título antes da logo FORAM Eles */
+  margin-bottom: 3.2rem;
 }
 
 .about-title-sticky {
@@ -1417,8 +1429,8 @@ body {
   }
 
   #breathing-canvas {
-    filter: blur(52px);
-    -webkit-filter: blur(52px);
+    filter: blur(34px);
+    -webkit-filter: blur(34px);
   }
 
   .hero-content {
@@ -1620,6 +1632,12 @@ body {
 
   .about-col-title {
     position: static;
+    height: auto;
+    display: block;
+  }
+
+  .about-title-track {
+    margin-bottom: 0;
     height: auto;
     display: block;
   }

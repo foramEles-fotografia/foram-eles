@@ -77,32 +77,32 @@
     }
   }
 
-  // Paleta Desktop (PC): Cores pastéis visíveis, alegres e luminosas (+30% de presença de cor, zero roxo escuro)
+  // Paleta Desktop (PC): Cores pastéis suaves, alegres e luminosas (claramente visíveis, veludo macio, zero roxo escuro)
   const desktopPalette = [
-    { r: 145, g: 205, b: 255, radius: 640, angle: 0.00, orbitX: 1.15, orbitY: 0.95, speed:  0.00078, breathe: 0.00045, alpha: 0.27 }, // Azul bebê nítido e presente
-    { r: 145, g: 235, b: 195, radius: 630, angle: 0.95, orbitX: 1.25, orbitY: 1.10, speed: -0.00068, breathe: 0.00048, alpha: 0.25 }, // Verde menta fresco e claro
-    { r: 255, g: 190, b: 135, radius: 650, angle: 1.95, orbitX: 0.95, orbitY: 1.05, speed:  0.00060, breathe: 0.00038, alpha: 0.26 }, // Laranja suave / pêssego solar
-    { r: 215, g: 185, b: 255, radius: 620, angle: 2.95, orbitX: 1.22, orbitY: 0.88, speed: -0.00065, breathe: 0.00044, alpha: 0.24 }, // Lilás clarinho suave (zero roxo escuro)
-    { r: 135, g: 220, b: 255, radius: 610, angle: 3.90, orbitX: 1.05, orbitY: 1.22, speed:  0.00070, breathe: 0.00040, alpha: 0.26 }, // Azul bebê celeste límpido
-    { r: 155, g: 240, b: 210, radius: 600, angle: 4.85, orbitX: 1.18, orbitY: 0.92, speed: -0.00058, breathe: 0.00042, alpha: 0.24 }, // Verde menta pastel
-    { r: 255, g: 205, b: 145, radius: 630, angle: 5.65, orbitX: 0.92, orbitY: 1.18, speed:  0.00064, breathe: 0.00039, alpha: 0.25 }  // Pêssego solar alegre
+    { r: 140, g: 205, b: 255, radius: 660, angle: 0.00, orbitX: 1.15, orbitY: 0.95, speed:  0.00078, breathe: 0.00045, alpha: 0.33 }, // Azul bebê luminoso e nítido
+    { r: 135, g: 235, b: 195, radius: 650, angle: 0.95, orbitX: 1.25, orbitY: 1.10, speed: -0.00068, breathe: 0.00048, alpha: 0.31 }, // Verde menta pastel fresco
+    { r: 255, g: 185, b: 130, radius: 670, angle: 1.95, orbitX: 0.95, orbitY: 1.05, speed:  0.00060, breathe: 0.00038, alpha: 0.32 }, // Laranja suave / pêssego solar
+    { r: 215, g: 185, b: 255, radius: 640, angle: 2.95, orbitX: 1.22, orbitY: 0.88, speed: -0.00065, breathe: 0.00044, alpha: 0.29 }, // Lilás suave e claro (zero roxo escuro)
+    { r: 130, g: 220, b: 255, radius: 630, angle: 3.90, orbitX: 1.05, orbitY: 1.22, speed:  0.00070, breathe: 0.00040, alpha: 0.31 }, // Azul celeste límpido
+    { r: 150, g: 240, b: 210, radius: 620, angle: 4.85, orbitX: 1.18, orbitY: 0.92, speed: -0.00058, breathe: 0.00042, alpha: 0.29 }, // Verde menta pastel
+    { r: 255, g: 200, b: 140, radius: 650, angle: 5.65, orbitX: 0.92, orbitY: 1.18, speed:  0.00064, breathe: 0.00039, alpha: 0.31 }  // Pêssego solar alegre
   ];
 
   const desktopLowerBlobs = [
-    { r: 145, g: 205, b: 255, radius: 720, xr: 0.28, yr: 0.44, speed: 0.00028, phase: 0.8,  alpha: 0.12 }, // Azul bebê
-    { r: 145, g: 235, b: 195, radius: 700, xr: 0.72, yr: 0.48, speed: 0.00024, phase: 2.1,  alpha: 0.11 }, // Verde menta
-    { r: 255, g: 190, b: 135, radius: 740, xr: 0.48, yr: 0.58, speed: 0.00022, phase: 3.6,  alpha: 0.12 }, // Laranja suave
-    { r: 215, g: 185, b: 255, radius: 680, xr: 0.22, yr: 0.68, speed: 0.00025, phase: 4.9,  alpha: 0.10 }, // Lilás suave
-    { r: 135, g: 220, b: 255, radius: 690, xr: 0.76, yr: 0.72, speed: 0.00026, phase: 1.2,  alpha: 0.11 }  // Azul celeste
+    { r: 140, g: 205, b: 255, radius: 740, xr: 0.28, yr: 0.44, speed: 0.00028, phase: 0.8,  alpha: 0.15 }, // Azul bebê
+    { r: 135, g: 235, b: 195, radius: 720, xr: 0.72, yr: 0.48, speed: 0.00024, phase: 2.1,  alpha: 0.14 }, // Verde menta
+    { r: 255, g: 185, b: 130, radius: 760, xr: 0.48, yr: 0.58, speed: 0.00022, phase: 3.6,  alpha: 0.15 }, // Laranja suave
+    { r: 215, g: 185, b: 255, radius: 700, xr: 0.22, yr: 0.68, speed: 0.00025, phase: 4.9,  alpha: 0.13 }, // Lilás suave
+    { r: 130, g: 220, b: 255, radius: 710, xr: 0.76, yr: 0.72, speed: 0.00026, phase: 1.2,  alpha: 0.14 }  // Azul celeste
   ];
 
   // Mobile: Pares de cores que andam JUNTOS (Verde e Rosa -> Laranja e Azul -> Turquesa e Pêssego -> Menta e Lilás)
   const mobileDuoPairs = [
-    { c1: { r: 35,  g: 220, b: 165 }, c2: { r: 255, g: 105, b: 185 } }, // Verde & Rosa
-    { c1: { r: 255, g: 130, b: 25  }, c2: { r: 27,  g: 98,  b: 248 } }, // Laranja Solar & Azul Royal
-    { c1: { r: 0,   g: 210, b: 245 }, c2: { r: 255, g: 165, b: 50  } }, // Turquesa Sky & Âmbar Solar
-    { c1: { r: 42,  g: 225, b: 178 }, c2: { r: 195, g: 125, b: 255 } }, // Menta & Lilás/Lavanda
-    { c1: { r: 16,  g: 140, b: 252 }, c2: { r: 255, g: 115, b: 170 } }  // Azul Celeste & Rosa Coral
+    { c1: { r: 35,  g: 225, b: 165 }, c2: { r: 255, g: 95,  b: 175 } }, // Verde & Rosa vibrante
+    { c1: { r: 255, g: 130, b: 30  }, c2: { r: 27,  g: 98,  b: 248 } }, // Laranja Solar & Azul Royal
+    { c1: { r: 0,   g: 215, b: 245 }, c2: { r: 255, g: 165, b: 45  } }, // Turquesa Sky & Âmbar Solar
+    { c1: { r: 42,  g: 230, b: 180 }, c2: { r: 195, g: 120, b: 255 } }, // Menta & Lilás/Lavanda
+    { c1: { r: 20,  g: 140, b: 255 }, c2: { r: 255, g: 110, b: 165 } }  // Azul Celeste & Rosa Coral
   ];
 
   function getMobileDuoColors(time) {
@@ -126,10 +126,10 @@
     };
   }
 
-  // Paleta Mobile exclusiva: exatamente 2 orbes que andam juntos, suaves e desfocados, deixando espacos brancos
+  // Paleta Mobile exclusiva: 2 orbes vivos que andam juntos, suaves e desfocados, deixando amplos espaços brancos
   const mobilePalette = [
-    { radius: 340, angle: 0.0, speed:  0.00095, breathe: 0.00075, alpha: 0.28, duoIndex: 0 },
-    { radius: 320, angle: Math.PI, speed: 0.00095, breathe: 0.00080, alpha: 0.26, duoIndex: 1 }
+    { radius: 340, angle: 0.0, speed:  0.00095, breathe: 0.00075, alpha: 0.46, duoIndex: 0 },
+    { radius: 320, angle: Math.PI, speed: 0.00095, breathe: 0.00080, alpha: 0.42, duoIndex: 1 }
   ];
 
   // Mobile nao tem manchas inferiores para preservar amplos espacos brancos sem preencher a tela toda
