@@ -1606,6 +1606,11 @@ body {
     padding: 1rem;
   }
 
+  /* Enquadramento customizado no celular para Branding & Detalhes */
+  .apple-stack-item[data-album="5"] .stack-layer img {
+    object-position: center 78%;
+  }
+
   .item-cat {
     font-size: 0.66rem;
   }
