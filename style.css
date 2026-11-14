@@ -322,15 +322,6 @@ body {
   display: block;
 }
 
-.hero-sub-lead {
-  font-size: clamp(1.1rem, 1.4vw, 1.28rem);
-  font-weight: 700;
-  color: var(--slate-800);
-  line-height: 1.45;
-  text-align: center;
-  margin: 0;
-}
-
 .hero-sub-desc {
   font-size: clamp(1.02rem, 1.25vw, 1.15rem);
   color: var(--slate-700);
@@ -1726,7 +1717,7 @@ body {
     margin: 0;
   }
 
-  .contact-buttons .btn:hover {
+  .contact-buttons-panel .btn-brand:hover {
     transform: none;
   }
 
