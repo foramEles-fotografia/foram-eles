@@ -218,9 +218,11 @@
     const base = isMobile ? width * 0.52 : Math.min(width, viewH * 1.25) * 0.27;
     const radius = base * (1 + 0.06 * Math.sin(time * 0.0006));
 
-    // No PC: +15% de força da cor quando o mouse não estiver ativo / fumaça solta (de 0.34 para 0.391)
-    const pcAlpha = 0.34 * (1 + 0.15 * (1 - stain.influence));
-    const alpha = isMobile ? 0.40 : pcAlpha;
+    // No PC: força da cor quando o mouse não estiver por cima (+10% base de 0.34 para 0.37; +15% enquanto roda solta pela tela: 0.455)
+    const basePC = 0.37;
+    const roamingAlpha = 0.455;
+    const pcAlpha = roamingAlpha + (basePC - roamingAlpha) * stain.influence;
+    const alpha = isMobile ? 0.42 : pcAlpha;
 
     // Dois lóbulos próximos (uma cor em cada) que se misturam em degradê e giram devagar
     const spin = time * 0.00035 + stain.phaseX;
@@ -290,14 +292,15 @@
     { r: 255, g: 226, b: 132 }  // Amarelo manteiga / Âmbar claro alegre
   ];
 
-  // Cores pastéis suaves e reduzidas, ocupando uma fração delicada e elegante no centro do container
+  // Cores pastéis suaves e compactas que percorrem ATIVAMENTE todo o container pelas bordas e cantos
   const autonomousBlobs = [
-    { baseRadius: 210, xRatio: 0.48, yRatio: 0.48, speedX:  0.00135, speedY:  0.00110, ampX: 0.08, ampY: 0.08, phase: 0.0, colorOffset: 0.0, baseAlpha: 0.35 },
-    { baseRadius: 195, xRatio: 0.52, yRatio: 0.46, speedX: -0.00125, speedY:  0.00122, ampX: 0.08, ampY: 0.08, phase: 1.5, colorOffset: 1.0, baseAlpha: 0.33 },
-    { baseRadius: 220, xRatio: 0.50, yRatio: 0.52, speedX:  0.00115, speedY: -0.00110, ampX: 0.09, ampY: 0.08, phase: 3.1, colorOffset: 2.0, baseAlpha: 0.36 },
-    { baseRadius: 190, xRatio: 0.53, yRatio: 0.50, speedX: -0.00130, speedY:  0.00105, ampX: 0.07, ampY: 0.08, phase: 4.4, colorOffset: 3.0, baseAlpha: 0.32 },
-    { baseRadius: 205, xRatio: 0.47, yRatio: 0.51, speedX:  0.00140, speedY: -0.00118, ampX: 0.08, ampY: 0.07, phase: 5.6, colorOffset: 4.0, baseAlpha: 0.34 },
-    { baseRadius: 185, xRatio: 0.49, yRatio: 0.45, speedX: -0.00110, speedY:  0.00125, ampX: 0.08, ampY: 0.07, phase: 2.3, colorOffset: 5.0, baseAlpha: 0.32 }
+    // 6 manchas distribuídas com percursos contínuos ao longo de todo o perímetro do container
+    { baseRadius: 185, speed:  0.00030, phase: 0.00, rx: 0.40, ry: 0.38, wobbleX: 0.06, wobbleY: 0.07, colorOffset: 0.0, baseAlpha: 0.36 },
+    { baseRadius: 175, speed: -0.00027, phase: 1.05, rx: 0.41, ry: 0.36, wobbleX: 0.07, wobbleY: 0.06, colorOffset: 1.0, baseAlpha: 0.34 },
+    { baseRadius: 190, speed:  0.00028, phase: 2.10, rx: 0.39, ry: 0.39, wobbleX: 0.06, wobbleY: 0.08, colorOffset: 2.0, baseAlpha: 0.37 },
+    { baseRadius: 170, speed: -0.00031, phase: 3.15, rx: 0.42, ry: 0.37, wobbleX: 0.08, wobbleY: 0.06, colorOffset: 3.0, baseAlpha: 0.33 },
+    { baseRadius: 180, speed:  0.00029, phase: 4.20, rx: 0.40, ry: 0.39, wobbleX: 0.07, wobbleY: 0.07, colorOffset: 4.0, baseAlpha: 0.35 },
+    { baseRadius: 175, speed: -0.00026, phase: 5.25, rx: 0.41, ry: 0.38, wobbleX: 0.06, wobbleY: 0.07, colorOffset: 5.0, baseAlpha: 0.34 }
   ];
 
   function getInterpolatedContactColor(time, offset) {
@@ -338,20 +341,29 @@
 
     ctx.clearRect(0, 0, width, height);
     const isMobileContact = width <= 768;
-    // Escala compacta no PC (0.72) e no celular (0.48) para ocupar bem menos espaço no card
-    const scaleFactor = isMobileContact ? 0.48 : 0.72;
+    // Escala compacta no PC (0.70) e no celular (0.48) mantendo as cores finas e elegantes
+    const scaleFactor = isMobileContact ? 0.48 : 0.70;
 
     for (let i = 0; i < autonomousBlobs.length; i++) {
       const b = autonomousBlobs[i];
+      const theta = time * b.speed + b.phase;
+
+      // Trajetória que percorre todas as 4 bordas e os cantos do container:
+      // A função exponencial estende os cantos e margens, fazendo as manchas andarem por todo o contorno
+      const cosT = Math.cos(theta);
+      const sinT = Math.sin(theta);
+      const px = Math.sign(cosT) * Math.pow(Math.abs(cosT), 0.65);
+      const py = Math.sign(sinT) * Math.pow(Math.abs(sinT), 0.65);
+
       const x =
-        width * b.xRatio +
-        Math.sin(time * b.speedX + b.phase) * (width * b.ampX) +
-        Math.cos(time * b.speedY * 0.8 - b.phase) * (width * 0.04);
+        width * 0.5 +
+        width * b.rx * px +
+        Math.sin(time * 0.00055 + b.phase * 2) * (width * b.wobbleX);
 
       const y =
-        height * b.yRatio +
-        Math.cos(time * b.speedY + b.phase) * (height * b.ampY) +
-        Math.sin(time * b.speedX * 0.7 + b.phase) * (height * 0.04);
+        height * 0.5 +
+        height * b.ry * py +
+        Math.cos(time * 0.00045 - b.phase) * (height * b.wobbleY);
 
       const breathe = Math.sin(time * 0.00032 + b.phase);
       const rad = b.baseRadius * scaleFactor * (1 + breathe * 0.10);
