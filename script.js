@@ -77,32 +77,88 @@
     }
   }
 
-  // Paleta Desktop (PC): Cores pastéis suaves, alegres e luminosas (claramente visíveis, veludo macio, zero roxo escuro)
+  // 4 Famílias de Cores 100% Harmônicas (Análogas — NUNCA colidem cores opostas, eliminando qualquer aspecto marrom ou acinzentado)
+  // Cada família faz transição suave e contínua para a próxima, mantendo sempre luminosidade pura e viva.
+  const desktopFamilies = [
+    // 1. Oceano Tropical: Azul Celeste, Turquesa e Verde Menta Fresco
+    [
+      { r: 40,  g: 175, b: 255 }, // Azul Celeste Luminoso
+      { r: 15,  g: 220, b: 215 }, // Turquesa Puro
+      { r: 48,  g: 235, b: 175 }, // Verde Menta Tropical
+      { r: 70,  g: 195, b: 255 }, // Azul Bebê Límpido
+      { r: 25,  g: 225, b: 200 }  // Ciano Menta
+    ],
+    // 2. Aurora Solar: Verde Menta, Esmeralda Suave, Dourado & Pêssego Solar
+    [
+      { r: 52,  g: 235, b: 175 }, // Menta Suave
+      { r: 85,  g: 240, b: 160 }, // Lima / Esmeralda
+      { r: 255, g: 212, b: 85  }, // Dourado Solar Pastel
+      { r: 255, g: 185, b: 105 }, // Pêssego Dourado Quente
+      { r: 72,  g: 232, b: 192 }  // Menta Fresco
+    ],
+    // 3. Pôr do Sol Radiante: Pêssego Quente, Coral, Rosa Chiclete & Âmbar
+    [
+      { r: 255, g: 140, b: 65  }, // Laranja Solar Suave
+      { r: 255, g: 105, b: 130 }, // Coral Luminoso
+      { r: 255, g: 95,  b: 175 }, // Rosa Radiante
+      { r: 255, g: 175, b: 90  }, // Pêssego Dourado
+      { r: 255, g: 118, b: 150 }  // Rosa Coral Suave
+    ],
+    // 4. Lavanda & Azul Royal: Rosa Suave, Lavanda Violeta e Azul Real FORAM Eles
+    [
+      { r: 255, g: 100, b: 185 }, // Rosa Orquídea
+      { r: 185, g: 125, b: 255 }, // Lavanda Violeta
+      { r: 55,  g: 165, b: 255 }, // Azul Celeste Límpido
+      { r: 27,  g: 98,  b: 248 }, // Azul Royal FORAM Eles
+      { r: 160, g: 110, b: 255 }  // Violeta Suave
+    ]
+  ];
+
+  function getDesktopColors(time) {
+    // Ciclo contínuo de 44 segundos navegando harmonicamente entre as famílias vizinhas
+    const cycle = (time * 0.00030) % desktopFamilies.length;
+    const f1 = Math.floor(cycle);
+    const f2 = (f1 + 1) % desktopFamilies.length;
+    const blend = 0.5 - 0.5 * Math.cos((cycle - f1) * Math.PI); // Senoide ultra-suave
+    const fam1 = desktopFamilies[f1];
+    const fam2 = desktopFamilies[f2];
+    const colors = [];
+    for (let i = 0; i < 5; i++) {
+      const c1 = fam1[i];
+      const c2 = fam2[i];
+      colors.push({
+        r: Math.round(c1.r + (c2.r - c1.r) * blend),
+        g: Math.round(c1.g + (c2.g - c1.g) * blend),
+        b: Math.round(c1.b + (c2.b - c1.b) * blend)
+      });
+    }
+    return colors;
+  }
+
+  // Orbes Desktop com maior presença, saturação límpida e raios amplos
   const desktopPalette = [
-    { r: 140, g: 205, b: 255, radius: 660, angle: 0.00, orbitX: 1.15, orbitY: 0.95, speed:  0.00078, breathe: 0.00045, alpha: 0.33 }, // Azul bebê luminoso e nítido
-    { r: 135, g: 235, b: 195, radius: 650, angle: 0.95, orbitX: 1.25, orbitY: 1.10, speed: -0.00068, breathe: 0.00048, alpha: 0.31 }, // Verde menta pastel fresco
-    { r: 255, g: 185, b: 130, radius: 670, angle: 1.95, orbitX: 0.95, orbitY: 1.05, speed:  0.00060, breathe: 0.00038, alpha: 0.32 }, // Laranja suave / pêssego solar
-    { r: 215, g: 185, b: 255, radius: 640, angle: 2.95, orbitX: 1.22, orbitY: 0.88, speed: -0.00065, breathe: 0.00044, alpha: 0.29 }, // Lilás suave e claro (zero roxo escuro)
-    { r: 130, g: 220, b: 255, radius: 630, angle: 3.90, orbitX: 1.05, orbitY: 1.22, speed:  0.00070, breathe: 0.00040, alpha: 0.31 }, // Azul celeste límpido
-    { r: 150, g: 240, b: 210, radius: 620, angle: 4.85, orbitX: 1.18, orbitY: 0.92, speed: -0.00058, breathe: 0.00042, alpha: 0.29 }, // Verde menta pastel
-    { r: 255, g: 200, b: 140, radius: 650, angle: 5.65, orbitX: 0.92, orbitY: 1.18, speed:  0.00064, breathe: 0.00039, alpha: 0.31 }  // Pêssego solar alegre
+    { radius: 620, angle: 0.00, orbitX: 1.15, orbitY: 0.95, speed:  0.00076, breathe: 0.00045, alpha: 0.42 },
+    { radius: 600, angle: 1.25, orbitX: 1.25, orbitY: 1.10, speed: -0.00068, breathe: 0.00048, alpha: 0.40 },
+    { radius: 640, angle: 2.50, orbitX: 0.95, orbitY: 1.05, speed:  0.00062, breathe: 0.00038, alpha: 0.44 },
+    { radius: 590, angle: 3.75, orbitX: 1.22, orbitY: 0.88, speed: -0.00064, breathe: 0.00044, alpha: 0.39 },
+    { radius: 610, angle: 5.00, orbitX: 1.05, orbitY: 1.20, speed:  0.00068, breathe: 0.00040, alpha: 0.41 }
   ];
 
   const desktopLowerBlobs = [
-    { r: 140, g: 205, b: 255, radius: 740, xr: 0.28, yr: 0.44, speed: 0.00028, phase: 0.8,  alpha: 0.15 }, // Azul bebê
-    { r: 135, g: 235, b: 195, radius: 720, xr: 0.72, yr: 0.48, speed: 0.00024, phase: 2.1,  alpha: 0.14 }, // Verde menta
-    { r: 255, g: 185, b: 130, radius: 760, xr: 0.48, yr: 0.58, speed: 0.00022, phase: 3.6,  alpha: 0.15 }, // Laranja suave
-    { r: 215, g: 185, b: 255, radius: 700, xr: 0.22, yr: 0.68, speed: 0.00025, phase: 4.9,  alpha: 0.13 }, // Lilás suave
-    { r: 130, g: 220, b: 255, radius: 710, xr: 0.76, yr: 0.72, speed: 0.00026, phase: 1.2,  alpha: 0.14 }  // Azul celeste
+    { radius: 760, xr: 0.28, yr: 0.44, speed: 0.00028, phase: 0.8,  alpha: 0.20 },
+    { radius: 730, xr: 0.72, yr: 0.48, speed: 0.00024, phase: 2.1,  alpha: 0.18 },
+    { radius: 780, xr: 0.48, yr: 0.58, speed: 0.00022, phase: 3.6,  alpha: 0.21 },
+    { radius: 710, xr: 0.22, yr: 0.68, speed: 0.00025, phase: 4.9,  alpha: 0.17 },
+    { radius: 720, xr: 0.76, yr: 0.72, speed: 0.00026, phase: 1.2,  alpha: 0.19 }
   ];
 
-  // Mobile: Pares de cores que andam JUNTOS (Verde e Rosa -> Laranja e Azul -> Turquesa e Pêssego -> Menta e Lilás)
+  // Mobile: Pares de cores vizinhas que NUNCA se anulam
   const mobileDuoPairs = [
-    { c1: { r: 35,  g: 225, b: 165 }, c2: { r: 255, g: 95,  b: 175 } }, // Verde & Rosa vibrante
-    { c1: { r: 255, g: 130, b: 30  }, c2: { r: 27,  g: 98,  b: 248 } }, // Laranja Solar & Azul Royal
-    { c1: { r: 0,   g: 215, b: 245 }, c2: { r: 255, g: 165, b: 45  } }, // Turquesa Sky & Âmbar Solar
-    { c1: { r: 42,  g: 230, b: 180 }, c2: { r: 195, g: 120, b: 255 } }, // Menta & Lilás/Lavanda
-    { c1: { r: 20,  g: 140, b: 255 }, c2: { r: 255, g: 110, b: 165 } }  // Azul Celeste & Rosa Coral
+    { c1: { r: 15,  g: 215, b: 225 }, c2: { r: 50,  g: 175, b: 255 } }, // Turquesa & Azul Celeste
+    { c1: { r: 45,  g: 235, b: 175 }, c2: { r: 15,  g: 220, b: 220 } }, // Menta Tropical & Turquesa
+    { c1: { r: 255, g: 145, b: 65  }, c2: { r: 255, g: 105, b: 135 } }, // Laranja Solar & Coral
+    { c1: { r: 255, g: 95,  b: 175 }, c2: { r: 185, g: 125, b: 255 } }, // Rosa Radiante & Lavanda
+    { c1: { r: 175, g: 115, b: 255 }, c2: { r: 27,  g: 98,  b: 248 } }  // Lavanda & Azul Royal
   ];
 
   function getMobileDuoColors(time) {
@@ -128,8 +184,8 @@
 
   // Paleta Mobile exclusiva: 2 orbes vivos que andam juntos, suaves e desfocados, deixando amplos espaços brancos
   const mobilePalette = [
-    { radius: 340, angle: 0.0, speed:  0.00095, breathe: 0.00075, alpha: 0.46, duoIndex: 0 },
-    { radius: 320, angle: Math.PI, speed: 0.00095, breathe: 0.00080, alpha: 0.42, duoIndex: 1 }
+    { radius: 340, angle: 0.0, speed:  0.00095, breathe: 0.00075, alpha: 0.48, duoIndex: 0 },
+    { radius: 320, angle: Math.PI, speed: 0.00095, breathe: 0.00080, alpha: 0.44, duoIndex: 1 }
   ];
 
   // Mobile nao tem manchas inferiores para preservar amplos espacos brancos sem preencher a tela toda
@@ -156,6 +212,11 @@
   }, { passive: true });
   resize();
 
+  let lastMouseX = 0;
+  let lastMouseY = 0;
+  let mouseSpeed = 0;
+  let interactiveScale = 1.0;
+
   function pointerMove(x, y) {
     if (isMobile || !isHeroVisible) return;
     const scrollY = window.scrollY || window.pageYOffset || 0;
@@ -165,22 +226,31 @@
       anchor.targetY = Math.min(absY, viewH * 0.95);
       anchor.isMoving = true;
       anchor.lastMoveTime = performance.now();
+
+      const dist = Math.hypot(x - lastMouseX, y - lastMouseY);
+      lastMouseX = x;
+      lastMouseY = y;
+      mouseSpeed = Math.min(dist / 14, 1.0);
     } else {
       anchor.isMoving = false;
+      mouseSpeed = 0;
     }
   }
 
   window.addEventListener('mousemove', (e) => pointerMove(e.clientX, e.clientY), { passive: true });
-  document.addEventListener('mouseleave', () => { anchor.isMoving = false; });
+  document.addEventListener('mouseleave', () => {
+    anchor.isMoving = false;
+    mouseSpeed = 0;
+  });
 
   // Gradiente radial com decaimento suave em 5 paradas (zero arestas secas ou pixeladas)
   function drawSoftBlob(x, y, rad, r, g, b, alpha) {
     if (rad <= 0 || alpha <= 0) return;
     const grad = ctx.createRadialGradient(x, y, 0, x, y, rad);
     grad.addColorStop(0.00, `rgba(${r}, ${g}, ${b}, ${alpha.toFixed(3)})`);
-    grad.addColorStop(0.25, `rgba(${r}, ${g}, ${b}, ${(alpha * 0.72).toFixed(3)})`);
-    grad.addColorStop(0.55, `rgba(${r}, ${g}, ${b}, ${(alpha * 0.36).toFixed(3)})`);
-    grad.addColorStop(0.80, `rgba(${r}, ${g}, ${b}, ${(alpha * 0.10).toFixed(3)})`);
+    grad.addColorStop(0.28, `rgba(${r}, ${g}, ${b}, ${(alpha * 0.78).toFixed(3)})`);
+    grad.addColorStop(0.58, `rgba(${r}, ${g}, ${b}, ${(alpha * 0.40).toFixed(3)})`);
+    grad.addColorStop(0.82, `rgba(${r}, ${g}, ${b}, ${(alpha * 0.12).toFixed(3)})`);
     grad.addColorStop(1.00, `rgba(${r}, ${g}, ${b}, 0)`);
     ctx.fillStyle = grad;
     ctx.beginPath();
@@ -196,10 +266,25 @@
 
     ctx.clearRect(0, 0, width, height);
 
-    // Quando o mouse para por ~0.5s, transiciona suavemente para o modo dinâmico autônomo
-    if (anchor.isMoving && time - anchor.lastMoveTime > 500) {
+    // Quando o mouse para por ~0.4s, transiciona suavemente para o modo dinâmico autônomo
+    if (anchor.isMoving && time - anchor.lastMoveTime > 400) {
       anchor.isMoving = false;
+      mouseSpeed = 0;
     }
+
+    // EFEITO DE TAMANHO DINÂMICO SOLICITADO PELO USUÁRIO:
+    // - Quando o mouse vai andando: a cor fica pequena (compacta, ágil, ~0.68-0.78x)
+    // - Quando o mouse está parado em cima: a cor floresce e fica bem maior (~1.36x)
+    let targetScale = 1.0;
+    if (isMobile) {
+      targetScale = 0.95 + 0.10 * Math.sin(time * 0.001);
+    } else if (anchor.isMoving) {
+      targetScale = 0.78 - mouseSpeed * 0.16;
+    } else {
+      targetScale = 1.36;
+    }
+    const scaleFollow = anchor.isMoving ? 0.08 : 0.045;
+    interactiveScale += (targetScale - interactiveScale) * scaleFollow;
 
     const wantIdle = isMobile || !anchor.isMoving ? 1 : 0;
     anchor.idleBlend += (wantIdle - anchor.idleBlend) * (wantIdle ? 0.03 : 0.12);
@@ -225,7 +310,11 @@
 
     // Raio da órbita das bolinhas: no mobile mantém as duas cores unidas (~48px), no desktop abre conforme mouse
     const orbitBase = isMobile ? 48 : (0.15 * width * (0.65 + 0.45 * anchor.idleBlend) + 50);
-    const sizeScale = isMobile ? 0.85 : 1.0;
+    const sizeScale = isMobile ? 0.95 : interactiveScale;
+
+    // Paletas harmônicas ativas no instante de tempo (NUNCA misturam opostos, garantindo 0% marrom/cinza)
+    const desktopColors = isMobile ? null : getDesktopColors(time);
+    const mobileDuo = isMobile ? getMobileDuoColors(time) : null;
 
     // Manchas inferiores de transição com o vídeo (apenas no desktop, preservando espaços brancos no mobile)
     for (let i = 0; i < lowerBlobs.length; i++) {
@@ -235,14 +324,15 @@
       const wave = Math.sin(time * 0.00028 + b.phase);
       const rad = b.radius * sizeScale * (1 + wave * 0.12);
 
-      let lr = b.r;
-      let lg = b.g;
-      let lb = b.b;
+      let lr = 140, lg = 205, lb = 255;
+      if (!isMobile && desktopColors) {
+        const c = desktopColors[(i + 2) % desktopColors.length];
+        lr = c.r;
+        lg = c.g;
+        lb = c.b;
+      }
       drawSoftBlob(bx, by, rad, lr, lg, lb, b.alpha + wave * 0.02);
     }
-
-    // Cores principais: no mobile exatamente 2 orbes unidos mudando em duplas de cor (verde/rosa -> laranja/azul)
-    const mobileDuo = isMobile ? getMobileDuoColors(time) : null;
 
     for (let i = 0; i < blobs.length; i++) {
       const blob = blobs[i];
@@ -270,11 +360,14 @@
       blob.x += (desiredX - blob.x) * blobFollow;
       blob.y += (desiredY - blob.y) * blobFollow;
 
-      let r = blob.r;
-      let g = blob.g;
-      let b = blob.b;
+      let r = 140, g = 205, b = 255;
       if (isMobile && mobileDuo) {
         const c = blob.duoIndex === 0 ? mobileDuo.c1 : mobileDuo.c2;
+        r = c.r;
+        g = c.g;
+        b = c.b;
+      } else if (!isMobile && desktopColors) {
+        const c = desktopColors[i % desktopColors.length];
         r = c.r;
         g = c.g;
         b = c.b;

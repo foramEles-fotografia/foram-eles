@@ -580,7 +580,7 @@ body {
 .apple-stack-item[data-album="2"] .stack-layer img { object-position: center 34%; } /* Jéssica */
 .apple-stack-item[data-album="3"] .stack-layer img { object-position: center 48%; } /* Profissionais */
 .apple-stack-item[data-album="4"] .stack-layer img { object-position: center 50%; } /* Institucional */
-.apple-stack-item[data-album="5"] .stack-layer img { object-position: center 84%; } /* Branding & Detalhes: subindo ~12% para recuperar topo cortado */
+.apple-stack-item[data-album="5"] .stack-layer img { object-position: center 80%; } /* Branding & Detalhes: subindo 4% para enquadramento perfeito */
 
 .stack-layer.layer-left {
   z-index: 1;
@@ -935,8 +935,8 @@ body {
   flex: 1 1 auto;
   width: 100%;
   position: relative;
-  /* Margem inferior de ~2cm (3.2rem / ~52px) que trava o título antes da logo FORAM Eles */
-  margin-bottom: 3.2rem;
+  /* Margem elegante (~20px) para descer mais e travar rente e alinhado antes da logo FORAM Eles */
+  margin-bottom: 1.25rem;
 }
 
 .about-title-sticky {
@@ -977,7 +977,7 @@ body {
 
 .about-logo-bottom {
   margin-top: auto;
-  padding-top: 2rem;
+  padding-top: 0;
   padding-bottom: 0.25rem;
 }
 
