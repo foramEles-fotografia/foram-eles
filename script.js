@@ -566,7 +566,9 @@ document.addEventListener('DOMContentLoaded', () => {
   // Scrollspy: destaca automaticamente o link da seção visível no menu
   const navAnchorLinks = document.querySelectorAll('.nav-links .nav-link:not(.nav-cta)');
   const observedSectionIds = ['inicio', 'destaque', 'portfolio', 'servicos', 'sobre', 'diferenciais', 'contato'];
-  const observedSections = observedSectionIds.map(id => document.getElementById(id)).filter(Boolean);
+  const observedSections = observedSectionIds
+    .map(id => document.getElementById(id))
+    .filter(el => el && el.offsetParent !== null && window.getComputedStyle(el).display !== 'none');
 
   if ('IntersectionObserver' in window && observedSections.length > 0) {
     const navSpyObs = new IntersectionObserver((entries) => {

@@ -886,6 +886,7 @@ body {
    SEÇÃO: NOSSOS SERVIÇOS COMPLETOS (LOGO ABAIXO DO PORTFÓLIO)
    ========================================================================== */
 .container-services {
+  display: none !important; /* Temporariamente desativado para correções posteriores */
   background-color: var(--bg-soft);
   border-top: 1px solid var(--border-subtle);
   border-bottom: 1px solid var(--border-subtle);
