@@ -13,14 +13,11 @@
  */
 
 /* ==========================================================================
-   1º CONTAINER: CANVAS DE CORES VIBRANTES E VELUDO (1:1 NATIVO, ZERO PIXELADO)
-   - Resolução 1:1 nativa da tela com interpolação de alta precisão (sem quadriculado).
-   - Mix rico de cores: roxo vibrante, laranja pôr do sol, azul royal da marca,
-     ciano neon, magenta quente e âmbar dourado.
-   - Bordas com desfoque amplo e gradientes radiais suaves multi-stop.
-   - Desktop: segue o mouse suavemente; quando o mouse para ou sai da tela,
-     as cores ganham movimento dinâmico contínuo e orgânico (nunca congelam).
-   - Celular: sem interferência de toque; as cores vagueiam e giram com elegância.
+   1º CONTAINER: MANCHA ÚNICA DE DUAS CORES (1:1 NATIVO, ZERO PIXELADO)
+   - Uma só mancha suave, pequena, que se desfaz em degradê até o fundo.
+   - Passeia devagar pela tela a partir de um ponto aleatório.
+   - Desktop: acompanha o mouse; quanto mais o mouse mexe, mais rápido as cores mudam.
+   - Celular: sem toque; a mancha passeia sozinha com elegância.
    ========================================================================== */
 (function () {
   const canvas = document.getElementById('breathing-canvas');
@@ -77,132 +74,54 @@
     }
   }
 
-  // 4 Famílias de Cores 100% Harmônicas (Análogas — NUNCA colidem cores opostas, eliminando qualquer aspecto marrom ou acinzentado)
-  // Cada família faz transição suave e contínua para a próxima, mantendo sempre luminosidade pura e viva.
-  const desktopFamilies = [
-    // 1. Oceano Tropical: Azul Celeste, Turquesa e Verde Menta Fresco
-    [
-      { r: 40,  g: 175, b: 255 }, // Azul Celeste Luminoso
-      { r: 15,  g: 220, b: 215 }, // Turquesa Puro
-      { r: 48,  g: 235, b: 175 }, // Verde Menta Tropical
-      { r: 70,  g: 195, b: 255 }, // Azul Bebê Límpido
-      { r: 25,  g: 225, b: 200 }  // Ciano Menta
-    ],
-    // 2. Aurora Solar: Verde Menta, Esmeralda Suave, Dourado & Pêssego Solar
-    [
-      { r: 52,  g: 235, b: 175 }, // Menta Suave
-      { r: 85,  g: 240, b: 160 }, // Lima / Esmeralda
-      { r: 255, g: 212, b: 85  }, // Dourado Solar Pastel
-      { r: 255, g: 185, b: 105 }, // Pêssego Dourado Quente
-      { r: 72,  g: 232, b: 192 }  // Menta Fresco
-    ],
-    // 3. Pôr do Sol Radiante: Pêssego Quente, Coral, Rosa Chiclete & Âmbar
-    [
-      { r: 255, g: 140, b: 65  }, // Laranja Solar Suave
-      { r: 255, g: 105, b: 130 }, // Coral Luminoso
-      { r: 255, g: 95,  b: 175 }, // Rosa Radiante
-      { r: 255, g: 175, b: 90  }, // Pêssego Dourado
-      { r: 255, g: 118, b: 150 }  // Rosa Coral Suave
-    ],
-    // 4. Lavanda & Azul Royal: Rosa Suave, Lavanda Violeta e Azul Real FORAM Eles
-    [
-      { r: 255, g: 100, b: 185 }, // Rosa Orquídea
-      { r: 185, g: 125, b: 255 }, // Lavanda Violeta
-      { r: 55,  g: 165, b: 255 }, // Azul Celeste Límpido
-      { r: 27,  g: 98,  b: 248 }, // Azul Royal FORAM Eles
-      { r: 160, g: 110, b: 255 }  // Violeta Suave
-    ]
+  // ==========================================================================
+  // MANCHA ÚNICA DE DUAS CORES (suave, pequena e sem bordas)
+  // - Nasce em um ponto aleatório e passeia bem devagar pela tela.
+  // - Com o mouse na tela, ela acompanha o cursor; quanto mais o mouse mexe,
+  //   mais rápido as cores mudam.
+  // - Ocupa só um pedaço da tela e se desfaz em degradê até o fundo branco.
+  // - Cores vizinhas no círculo cromático (nunca opostas) = sem tons sujos.
+  // ==========================================================================
+  const colorRing = [
+    { r: 110, g: 185, b: 255 }, // Azul bebê
+    { r: 105, g: 225, b: 240 }, // Ciano claro
+    { r: 120, g: 235, b: 190 }, // Verde menta
+    { r: 250, g: 225, b: 130 }, // Amarelo manteiga
+    { r: 255, g: 185, b: 130 }, // Pêssego
+    { r: 255, g: 160, b: 200 }, // Rosa
+    { r: 200, g: 170, b: 255 }  // Lilás
   ];
 
-  function getDesktopColors(time) {
-    // Ciclo contínuo de 44 segundos navegando harmonicamente entre as famílias vizinhas
-    const cycle = (time * 0.00030) % desktopFamilies.length;
-    const f1 = Math.floor(cycle);
-    const f2 = (f1 + 1) % desktopFamilies.length;
-    const blend = 0.5 - 0.5 * Math.cos((cycle - f1) * Math.PI); // Senoide ultra-suave
-    const fam1 = desktopFamilies[f1];
-    const fam2 = desktopFamilies[f2];
-    const colors = [];
-    for (let i = 0; i < 5; i++) {
-      const c1 = fam1[i];
-      const c2 = fam2[i];
-      colors.push({
-        r: Math.round(c1.r + (c2.r - c1.r) * blend),
-        g: Math.round(c1.g + (c2.g - c1.g) * blend),
-        b: Math.round(c1.b + (c2.b - c1.b) * blend)
-      });
-    }
-    return colors;
-  }
-
-  // Orbes Desktop com maior presença, saturação límpida e raios amplos
-  const desktopPalette = [
-    { radius: 620, angle: 0.00, orbitX: 1.15, orbitY: 0.95, speed:  0.00076, breathe: 0.00045, alpha: 0.42 },
-    { radius: 600, angle: 1.25, orbitX: 1.25, orbitY: 1.10, speed: -0.00068, breathe: 0.00048, alpha: 0.40 },
-    { radius: 640, angle: 2.50, orbitX: 0.95, orbitY: 1.05, speed:  0.00062, breathe: 0.00038, alpha: 0.44 },
-    { radius: 590, angle: 3.75, orbitX: 1.22, orbitY: 0.88, speed: -0.00064, breathe: 0.00044, alpha: 0.39 },
-    { radius: 610, angle: 5.00, orbitX: 1.05, orbitY: 1.20, speed:  0.00068, breathe: 0.00040, alpha: 0.41 }
-  ];
-
-  const desktopLowerBlobs = [
-    { radius: 760, xr: 0.28, yr: 0.44, speed: 0.00028, phase: 0.8,  alpha: 0.20 },
-    { radius: 730, xr: 0.72, yr: 0.48, speed: 0.00024, phase: 2.1,  alpha: 0.18 },
-    { radius: 780, xr: 0.48, yr: 0.58, speed: 0.00022, phase: 3.6,  alpha: 0.21 },
-    { radius: 710, xr: 0.22, yr: 0.68, speed: 0.00025, phase: 4.9,  alpha: 0.17 },
-    { radius: 720, xr: 0.76, yr: 0.72, speed: 0.00026, phase: 1.2,  alpha: 0.19 }
-  ];
-
-  // Mobile: Pares de cores vizinhas que NUNCA se anulam
-  const mobileDuoPairs = [
-    { c1: { r: 15,  g: 215, b: 225 }, c2: { r: 50,  g: 175, b: 255 } }, // Turquesa & Azul Celeste
-    { c1: { r: 45,  g: 235, b: 175 }, c2: { r: 15,  g: 220, b: 220 } }, // Menta Tropical & Turquesa
-    { c1: { r: 255, g: 145, b: 65  }, c2: { r: 255, g: 105, b: 135 } }, // Laranja Solar & Coral
-    { c1: { r: 255, g: 95,  b: 175 }, c2: { r: 185, g: 125, b: 255 } }, // Rosa Radiante & Lavanda
-    { c1: { r: 175, g: 115, b: 255 }, c2: { r: 27,  g: 98,  b: 248 } }  // Lavanda & Azul Royal
-  ];
-
-  function getMobileDuoColors(time) {
-    const cycle = (time * 0.00045) % mobileDuoPairs.length;
-    const i1 = Math.floor(cycle);
-    const i2 = (i1 + 1) % mobileDuoPairs.length;
-    const blend = cycle - i1;
-    const p1 = mobileDuoPairs[i1];
-    const p2 = mobileDuoPairs[i2];
+  function ringColor(pos) {
+    const n = colorRing.length;
+    const p = ((pos % n) + n) % n;
+    const i = Math.floor(p);
+    const f = p - i;
+    const a = colorRing[i];
+    const b = colorRing[(i + 1) % n];
     return {
-      c1: {
-        r: Math.round(p1.c1.r + (p2.c1.r - p1.c1.r) * blend),
-        g: Math.round(p1.c1.g + (p2.c1.g - p1.c1.g) * blend),
-        b: Math.round(p1.c1.b + (p2.c1.b - p1.c1.b) * blend)
-      },
-      c2: {
-        r: Math.round(p1.c2.r + (p2.c2.r - p1.c2.r) * blend),
-        g: Math.round(p1.c2.g + (p2.c2.g - p1.c2.g) * blend),
-        b: Math.round(p1.c2.b + (p2.c2.b - p1.c2.b) * blend)
-      }
+      r: Math.round(a.r + (b.r - a.r) * f),
+      g: Math.round(a.g + (b.g - a.g) * f),
+      b: Math.round(a.b + (b.b - a.b) * f)
     };
   }
 
-  // Paleta Mobile exclusiva: 2 orbes vivos que andam juntos, suaves e desfocados, deixando amplos espaços brancos
-  const mobilePalette = [
-    { radius: 340, angle: 0.0, speed:  0.00095, breathe: 0.00075, alpha: 0.48, duoIndex: 0 },
-    { radius: 320, angle: Math.PI, speed: 0.00095, breathe: 0.00080, alpha: 0.44, duoIndex: 1 }
-  ];
+  const stain = {
+    phaseX: Math.random() * Math.PI * 2,   // ponto de partida aleatório
+    phaseY: Math.random() * Math.PI * 2,
+    colorPos: Math.random() * colorRing.length,
+    x: 0,
+    y: 0,
+    placed: false,
+    influence: 0,        // 0 = passeando sozinha, 1 = seguindo o mouse
+    mouseEnergy: 0,      // energia do movimento do mouse (acelera a troca de cor)
+    lastTime: 0
+  };
 
-  // Mobile nao tem manchas inferiores para preservar amplos espacos brancos sem preencher a tela toda
-  const mobileLowerBlobs = [];
+  let lastMouseX = 0;
+  let lastMouseY = 0;
 
-  let blobs = [];
-  let lowerBlobs = [];
-  let appliedDeviceIsMobile = null;
-
-  function syncBlobsPalette(mobile) {
-    if (appliedDeviceIsMobile === mobile && blobs.length > 0) return;
-    appliedDeviceIsMobile = mobile;
-    const pal = mobile ? mobilePalette : desktopPalette;
-    blobs = pal.map((p) => ({ ...p, x: 0, y: 0, ready: false }));
-    const low = mobile ? mobileLowerBlobs : desktopLowerBlobs;
-    lowerBlobs = low.map((p) => ({ ...p }));
-  }
+  function syncBlobsPalette() { /* mantido por compatibilidade com resize() */ }
 
   // Redimensionamento inteligente sem quebrar no scroll mobile
   window.addEventListener('resize', () => {
@@ -212,46 +131,37 @@
   }, { passive: true });
   resize();
 
-  let lastMouseX = 0;
-  let lastMouseY = 0;
-  let mouseSpeed = 0;
-  let interactiveScale = 1.0;
-
   function pointerMove(x, y) {
     if (isMobile || !isHeroVisible) return;
     const scrollY = window.scrollY || window.pageYOffset || 0;
     const absY = y + scrollY;
     if (absY >= 0 && absY <= viewH * 1.25 && x >= 0 && x <= width) {
+      const dist = Math.hypot(x - lastMouseX, y - lastMouseY);
+      lastMouseX = x;
+      lastMouseY = y;
       anchor.targetX = x;
       anchor.targetY = Math.min(absY, viewH * 0.95);
       anchor.isMoving = true;
       anchor.lastMoveTime = performance.now();
-
-      const dist = Math.hypot(x - lastMouseX, y - lastMouseY);
-      lastMouseX = x;
-      lastMouseY = y;
-      mouseSpeed = Math.min(dist / 14, 1.0);
+      stain.mouseEnergy = Math.min(1, stain.mouseEnergy + dist / 160);
     } else {
       anchor.isMoving = false;
-      mouseSpeed = 0;
     }
   }
 
   window.addEventListener('mousemove', (e) => pointerMove(e.clientX, e.clientY), { passive: true });
-  document.addEventListener('mouseleave', () => {
-    anchor.isMoving = false;
-    mouseSpeed = 0;
-  });
+  document.addEventListener('mouseleave', () => { anchor.isMoving = false; });
 
-  // Gradiente radial com decaimento suave em 5 paradas (zero arestas secas ou pixeladas)
+  // Gradiente radial com queda em cosseno: chega a zero na borda com inclinação zero (sem contorno visível)
   function drawSoftBlob(x, y, rad, r, g, b, alpha) {
     if (rad <= 0 || alpha <= 0) return;
     const grad = ctx.createRadialGradient(x, y, 0, x, y, rad);
-    grad.addColorStop(0.00, `rgba(${r}, ${g}, ${b}, ${alpha.toFixed(3)})`);
-    grad.addColorStop(0.28, `rgba(${r}, ${g}, ${b}, ${(alpha * 0.78).toFixed(3)})`);
-    grad.addColorStop(0.58, `rgba(${r}, ${g}, ${b}, ${(alpha * 0.40).toFixed(3)})`);
-    grad.addColorStop(0.82, `rgba(${r}, ${g}, ${b}, ${(alpha * 0.12).toFixed(3)})`);
-    grad.addColorStop(1.00, `rgba(${r}, ${g}, ${b}, 0)`);
+    const steps = 10;
+    for (let s = 0; s <= steps; s++) {
+      const t = s / steps;
+      const a = alpha * 0.5 * (1 + Math.cos(Math.PI * t));
+      grad.addColorStop(t, `rgba(${r}, ${g}, ${b}, ${a.toFixed(4)})`);
+    }
     ctx.fillStyle = grad;
     ctx.beginPath();
     ctx.arc(x, y, rad, 0, Math.PI * 2);
@@ -261,122 +171,62 @@
   function animate(time) {
     if (!isHeroVisible) {
       rafId = 0;
+      stain.lastTime = 0;
       return;
     }
 
+    const dt = stain.lastTime ? Math.min(time - stain.lastTime, 64) : 16;
+    stain.lastTime = time;
+
     ctx.clearRect(0, 0, width, height);
 
-    // Quando o mouse para por ~0.4s, transiciona suavemente para o modo dinâmico autônomo
-    if (anchor.isMoving && time - anchor.lastMoveTime > 400) {
+    // Mouse parado por ~2.5s: a mancha volta a passear sozinha
+    if (anchor.isMoving && time - anchor.lastMoveTime > 2500) {
       anchor.isMoving = false;
-      mouseSpeed = 0;
     }
+    const wantInfluence = (!isMobile && anchor.isMoving) ? 1 : 0;
+    stain.influence += (wantInfluence - stain.influence) * (wantInfluence ? 0.06 : 0.012);
 
-    // EFEITO DE TAMANHO DINÂMICO SOLICITADO PELO USUÁRIO:
-    // - Quando o mouse vai andando: a cor fica pequena (compacta, ágil, ~0.68-0.78x)
-    // - Quando o mouse está parado em cima: a cor floresce e fica bem maior (~1.36x)
-    let targetScale = 1.0;
-    if (isMobile) {
-      targetScale = 0.95 + 0.10 * Math.sin(time * 0.001);
-    } else if (anchor.isMoving) {
-      targetScale = 0.78 - mouseSpeed * 0.16;
-    } else {
-      targetScale = 1.36;
+    // Energia do mouse decai sozinha (cores aceleram só enquanto o mouse mexe)
+    stain.mouseEnergy *= 0.94;
+
+    // Passeio lento e contínuo (período ~40-55s), começando em ponto aleatório
+    const t = time * 0.00014;
+    const wanderX = width * (0.5 + 0.30 * Math.sin(t * 1.00 + stain.phaseX) + 0.07 * Math.sin(t * 2.3 + stain.phaseY));
+    const wanderY = viewH * (0.46 + 0.26 * Math.sin(t * 0.83 + stain.phaseY) + 0.06 * Math.cos(t * 1.9 + stain.phaseX));
+
+    const mouseX = anchor.targetX;
+    const mouseY = anchor.targetY;
+    const goalX = wanderX + (mouseX - wanderX) * stain.influence;
+    const goalY = wanderY + (mouseY - wanderY) * stain.influence;
+
+    if (!stain.placed) {
+      stain.x = goalX;
+      stain.y = goalY;
+      stain.placed = true;
     }
-    const scaleFollow = anchor.isMoving ? 0.08 : 0.045;
-    interactiveScale += (targetScale - interactiveScale) * scaleFollow;
+    const follow = 0.02 + 0.05 * stain.influence;
+    stain.x += (goalX - stain.x) * follow;
+    stain.y += (goalY - stain.y) * follow;
 
-    const wantIdle = isMobile || !anchor.isMoving ? 1 : 0;
-    anchor.idleBlend += (wantIdle - anchor.idleBlend) * (wantIdle ? 0.03 : 0.12);
+    // Cores: giro lento no círculo cromático; acelera quando o mouse mexe
+    stain.colorPos += dt * (0.00018 + 0.0020 * stain.mouseEnergy);
+    const c1 = ringColor(stain.colorPos);
+    const c2 = ringColor(stain.colorPos + 1.15);
 
-    if (isMobile) {
-      // Começa no topo e passeia em curva suave, fluida e contínua pela tela (velocidade moderada e suave)
-      const t = time * 0.00045;
-      anchor.targetX = width * (0.50 + 0.30 * Math.sin(t));
-      anchor.targetY = viewH * (0.34 + 0.22 * Math.sin(t * 1.25 + 0.3));
-    }
+    // Tamanho: só um pedaço da tela
+    const base = isMobile ? width * 0.52 : Math.min(width, viewH * 1.25) * 0.27;
+    const radius = base * (1 + 0.06 * Math.sin(time * 0.0006));
+    const alpha = isMobile ? 0.40 : 0.30;
 
-    // Segue o mouse rapidamente quando em movimento (0.13), ou flutua suavemente quando parado (0.045)
-    const follow = isMobile ? 0.055 : (anchor.isMoving ? 0.13 : 0.045);
-    anchor.x += (anchor.targetX - anchor.x) * follow;
-    anchor.y += (anchor.targetY - anchor.y) * follow;
+    // Dois lóbulos próximos (uma cor em cada) que se misturam em degradê e giram devagar
+    const spin = time * 0.00035 + stain.phaseX;
+    const off = radius * 0.34;
+    const ox = Math.cos(spin) * off;
+    const oy = Math.sin(spin) * off * 0.8;
 
-    // Vagueio dinâmico rico quando o cursor está parado: as cores continuam dançando e passeando
-    const wanderSpeedMul = isMobile ? 1.0 : 1.0;
-    const wanderX = (Math.sin(time * 0.00050 * wanderSpeedMul) * 0.15 + Math.cos(time * 0.00029 * wanderSpeedMul) * 0.08) * width * anchor.idleBlend;
-    const wanderY = (Math.cos(time * 0.00044 * wanderSpeedMul) * 0.13 + Math.sin(time * 0.00058 * wanderSpeedMul) * 0.06) * viewH * anchor.idleBlend;
-    const centerX = anchor.x + wanderX;
-    const centerY = Math.min(Math.max(anchor.y + wanderY, viewH * 0.12), viewH * 0.95);
-
-    // Raio da órbita das bolinhas: no mobile mantém as duas cores unidas (~48px), no desktop abre conforme mouse
-    const orbitBase = isMobile ? 48 : (0.15 * width * (0.65 + 0.45 * anchor.idleBlend) + 50);
-    const sizeScale = isMobile ? 0.95 : interactiveScale;
-
-    // Paletas harmônicas ativas no instante de tempo (NUNCA misturam opostos, garantindo 0% marrom/cinza)
-    const desktopColors = isMobile ? null : getDesktopColors(time);
-    const mobileDuo = isMobile ? getMobileDuoColors(time) : null;
-
-    // Manchas inferiores de transição com o vídeo (apenas no desktop, preservando espaços brancos no mobile)
-    for (let i = 0; i < lowerBlobs.length; i++) {
-      const b = lowerBlobs[i];
-      const bx = width * b.xr + Math.sin(time * b.speed + b.phase) * width * 0.09;
-      const by = height * b.yr + Math.cos(time * b.speed * 0.85 + b.phase) * viewH * 0.08;
-      const wave = Math.sin(time * 0.00028 + b.phase);
-      const rad = b.radius * sizeScale * (1 + wave * 0.12);
-
-      let lr = 140, lg = 205, lb = 255;
-      if (!isMobile && desktopColors) {
-        const c = desktopColors[(i + 2) % desktopColors.length];
-        lr = c.r;
-        lg = c.g;
-        lb = c.b;
-      }
-      drawSoftBlob(bx, by, rad, lr, lg, lb, b.alpha + wave * 0.02);
-    }
-
-    for (let i = 0; i < blobs.length; i++) {
-      const blob = blobs[i];
-      const ang = isMobile
-        ? (time * blob.speed + (blob.duoIndex === 0 ? 0 : Math.PI))
-        : (blob.angle + time * blob.speed);
-
-      const orbitX = isMobile
-        ? orbitBase
-        : (orbitBase * blob.orbitX * (1 + 0.22 * Math.sin(time * 0.00032 + i * 0.9)));
-      const orbitY = isMobile
-        ? (orbitBase * 0.85)
-        : (orbitBase * blob.orbitY * (1 + 0.18 * Math.cos(time * 0.00028 + i * 1.1)));
-
-      const desiredX = centerX + Math.cos(ang) * orbitX;
-      const desiredY = centerY + Math.sin(ang * 0.92) * orbitY * 0.68;
-
-      if (!blob.ready) {
-        blob.x = desiredX;
-        blob.y = desiredY;
-        blob.ready = true;
-      }
-
-      const blobFollow = anchor.isMoving ? 0.12 : 0.06;
-      blob.x += (desiredX - blob.x) * blobFollow;
-      blob.y += (desiredY - blob.y) * blobFollow;
-
-      let r = 140, g = 205, b = 255;
-      if (isMobile && mobileDuo) {
-        const c = blob.duoIndex === 0 ? mobileDuo.c1 : mobileDuo.c2;
-        r = c.r;
-        g = c.g;
-        b = c.b;
-      } else if (!isMobile && desktopColors) {
-        const c = desktopColors[i % desktopColors.length];
-        r = c.r;
-        g = c.g;
-        b = c.b;
-      }
-
-      const wave = Math.sin(time * blob.breathe + i * 1.25);
-      const rad = blob.radius * sizeScale * (1 + wave * 0.12);
-      drawSoftBlob(blob.x, blob.y, rad, r, g, b, blob.alpha + wave * 0.03);
-    }
+    drawSoftBlob(stain.x - ox, stain.y - oy, radius, c1.r, c1.g, c1.b, alpha);
+    drawSoftBlob(stain.x + ox, stain.y + oy, radius, c2.r, c2.g, c2.b, alpha);
 
     rafId = requestAnimationFrame(animate);
   }
