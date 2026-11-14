@@ -911,6 +911,50 @@ body {
   margin-bottom: 0.85rem;
 }
 
+/* Blocos de Serviços: Mercado Empresarial e Mercado Social & Particular */
+.services-block {
+  margin-top: 3.6rem;
+}
+
+.services-block:first-of-type {
+  margin-top: 1.2rem;
+}
+
+.services-block-header {
+  margin-bottom: 1.6rem;
+}
+
+.block-badge {
+  display: inline-block;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0.38rem 0.95rem;
+  border-radius: 999px;
+  margin-bottom: 0.55rem;
+}
+
+.block-badge.badge-blue {
+  background: rgba(37, 99, 235, 0.09);
+  color: #2563EB;
+  border: 1px solid rgba(37, 99, 235, 0.24);
+}
+
+.block-badge.badge-graphite {
+  background: rgba(30, 38, 54, 0.07);
+  color: var(--slate-800);
+  border: 1px solid rgba(30, 38, 54, 0.16);
+}
+
+.block-subtitle {
+  font-size: 1rem;
+  color: var(--slate-600, #475569);
+  line-height: 1.6;
+  max-width: 840px;
+  font-style: italic;
+}
+
 .services-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -1006,18 +1050,18 @@ body {
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.55rem;
+  gap: 0.75rem;
   border-top: 1px solid rgba(30, 38, 54, 0.07);
-  padding-top: 1.15rem;
+  padding-top: 1.25rem;
 }
 
 .service-bullets li {
-  font-size: 0.88rem;
+  font-size: 0.89rem;
   color: var(--slate-700);
   display: flex;
   align-items: flex-start;
-  gap: 0.55rem;
-  line-height: 1.45;
+  gap: 0.65rem;
+  line-height: 1.5;
 }
 
 .service-bullets li::before {
@@ -1025,27 +1069,27 @@ body {
   color: #2563EB;
   font-weight: 800;
   font-size: 0.92rem;
-  line-height: 1.35;
+  line-height: 1.4;
   flex-shrink: 0;
 }
 
-/* Card de Transparência / Captação Audiovisual vs Social Media */
+/* Card de Transparência / Captação Audiovisual vs Social Media / Fechamento de Seção */
 .services-disclaimer-card {
-  margin-top: 3.2rem;
+  margin-top: 3.5rem;
   background: #ffffff;
   border: 1.5px solid rgba(37, 99, 235, 0.28);
   border-radius: 26px;
-  padding: 2.2rem 2.6rem;
+  padding: 2.4rem 2.8rem;
   display: grid;
   grid-template-columns: auto 1fr auto;
-  gap: 2rem;
+  gap: 2.2rem;
   align-items: center;
   box-shadow: 0 12px 36px rgba(37, 99, 235, 0.08);
 }
 
 .disclaimer-icon-wrap {
-  width: 54px;
-  height: 54px;
+  width: 56px;
+  height: 56px;
   border-radius: 16px;
   background: rgba(37, 99, 235, 0.1);
   color: #2563EB;
@@ -1056,11 +1100,40 @@ body {
 }
 
 .disclaimer-text h4 {
-  font-size: 1.18rem;
+  font-size: 1.22rem;
   font-weight: 700;
   color: var(--slate-800);
-  margin-bottom: 0.45rem;
-  letter-spacing: -0.01em;
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.015em;
+}
+
+.disclaimer-items {
+  display: flex;
+  flex-direction: column;
+  gap: 0.95rem;
+}
+
+.disclaimer-subheading {
+  font-size: 0.96rem;
+  font-weight: 700;
+  color: var(--slate-800);
+  display: block;
+  margin-bottom: 0.2rem;
+}
+
+.disclaimer-item p {
+  font-size: 0.93rem;
+  color: var(--slate-700);
+  line-height: 1.62;
+  margin: 0;
+}
+
+.inline-logo-service {
+  height: 1.15em;
+  width: auto;
+  display: inline-block;
+  vertical-align: -0.15em;
+  object-fit: contain;
 }
 
 .disclaimer-text p {
@@ -1435,48 +1508,52 @@ body {
   line-height: 1.6;
 }
 
-/* Painel de botões elegantes no padrão Apple (Pill / Learn More & Buy) */
+/* Painel de botões elegantes no padrão Apple (Pill / Learn More & Buy - Lado a Lado) */
 .contact-buttons-panel {
   display: flex;
-  flex-direction: column;
-  gap: 1.15rem;
-  justify-content: center;
-  align-items: stretch;
-  max-width: 320px;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 0.95rem;
+  justify-content: flex-end;
+  align-items: center;
+  max-width: none;
+  width: auto;
   margin-left: auto;
-  width: 100%;
 }
 
 .btn-brand {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.75rem;
-  padding: 1.05rem 2.2rem;
+  gap: 0.65rem;
+  padding: 0.72rem 1.7rem;
   border-radius: 9999px;
-  font-family: var(--font-sans);
-  font-size: 1.05rem;
+  font-family: -apple-system, BlinkMacSystemFont, var(--font-sans);
+  font-size: 0.98rem;
   font-weight: 500;
   letter-spacing: -0.01em;
   text-decoration: none;
   cursor: pointer;
-  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.22s ease, border-color 0.22s ease, color 0.22s ease;
+  white-space: nowrap;
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.28s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
 
 .btn-brand svg {
   flex-shrink: 0;
+  width: 19px;
+  height: 19px;
   transition: transform 0.25s ease;
 }
 
-/* WhatsApp: Preenchido no Azul oficial do Ponto (#2563EB) */
+/* WhatsApp: Preenchido no Azul oficial do Ponto (#2563EB) — Estilo 'Learn more' da Apple */
 .btn-brand.btn-whatsapp {
   background-color: #2563EB;
   color: #ffffff;
   border: 1.5px solid #2563EB;
-  box-shadow: 0 4px 16px -2px rgba(37, 99, 235, 0.32);
+  box-shadow: 0 4px 14px -2px rgba(37, 99, 235, 0.28);
 }
 
-/* Instagram: Não preenchido (Outline), borda e texto no Azul oficial do Ponto (#2563EB) */
+/* Instagram: Não preenchido (Outline), borda e texto no Azul oficial do Ponto (#2563EB) — Estilo 'Buy' da Apple */
 .btn-brand.btn-instagram {
   background-color: transparent;
   color: #2563EB;
@@ -1486,7 +1563,7 @@ body {
 
 @media (hover: hover) {
   .btn-brand:hover {
-    transform: translateY(-2px) scale(1.02);
+    transform: translateY(-2px);
   }
 
   .btn-brand.btn-whatsapp:hover {
@@ -1815,9 +1892,26 @@ body {
     margin-bottom: 2rem;
   }
 
+  .services-block {
+    margin-top: 2.2rem;
+  }
+
+  .services-block:first-of-type {
+    margin-top: 1rem;
+  }
+
+  .services-block-header {
+    margin-bottom: 1.2rem;
+  }
+
+  .block-subtitle {
+    font-size: 0.92rem;
+    line-height: 1.55;
+  }
+
   .services-grid {
     grid-template-columns: 1fr;
-    gap: 1.2rem;
+    gap: 24px; /* Espaçamento vertical mínimo de 24px entre os cards */
   }
 
   .service-card {
@@ -1826,11 +1920,11 @@ body {
   }
 
   .services-disclaimer-card {
-    margin-top: 2rem;
-    padding: 1.6rem 1.3rem;
+    margin-top: 2.2rem;
+    padding: 1.7rem 1.35rem;
     border-radius: 20px;
     grid-template-columns: 1fr;
-    gap: 1.2rem;
+    gap: 1.25rem;
   }
 
   .services-disclaimer-card .disclaimer-action .btn {
@@ -2013,16 +2107,22 @@ body {
   }
 
   .contact-buttons-panel {
-    gap: 0.95rem;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
     width: 100%;
     max-width: 100%;
     margin-left: 0;
   }
 
   .btn-brand {
-    width: 100%;
-    padding: 1.05rem 1.6rem;
-    font-size: 1rem;
+    flex: 1 1 135px;
+    width: auto;
+    padding: 0.75rem 1.25rem;
+    font-size: 0.94rem;
   }
 
   /* Modal no celular */
