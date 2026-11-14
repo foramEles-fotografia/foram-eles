@@ -1440,15 +1440,16 @@ body {
   }
 
   .hero-title {
-    font-size: clamp(1.75rem, 7.6vw, 2.35rem);
-    line-height: 1.18;
+    /* Cabe sempre em 2 linhas no celular (cada linha do título numa linha só) */
+    font-size: clamp(1.1rem, 5.7vw, 2rem);
+    line-height: 1.22;
     letter-spacing: -0.03em;
     margin-top: 0;
     margin-bottom: 0;
   }
 
   .hero-title-line {
-    white-space: normal;
+    white-space: nowrap;
   }
 
   .hero-title-line.line-1 {
@@ -1473,11 +1474,9 @@ body {
     object-fit: contain;
   }
 
+  /* Celular: subtítulo do container 1 removido */
   .hero-subtitle {
-    margin-bottom: 0;
-    padding: 0 0.2rem;
-    max-width: 440px;
-    gap: 0.65rem;
+    display: none;
   }
 
   .hero-sub-lead {
