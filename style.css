@@ -553,6 +553,7 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center 18%;
   display: block;
 }
 
@@ -873,33 +874,70 @@ body {
 
 .about-grid.editorial-split {
   display: grid;
-  grid-template-columns: 0.9fr 1.2fr;
-  gap: 4.8rem;
-  align-items: flex-start;
+  grid-template-columns: 0.95fr 1.25fr;
+  gap: clamp(2.5rem, 5vw, 4.8rem);
+  align-items: stretch;
   max-width: 1140px;
   margin: 0 auto;
 }
 
 .about-col-title {
-  position: sticky;
-  top: 6.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  height: 100%;
   text-align: left;
 }
 
 .about-col-title .section-title {
   text-align: left;
   line-height: 1.15;
-  font-size: clamp(2rem, 3.8vw, 3rem);
+  font-size: clamp(2.1rem, 3.8vw, 3.1rem);
+  margin-top: 0;
   margin-bottom: 0;
+  padding-top: 0;
 }
 
 .about-col-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
   text-align: left;
+}
+
+.about-col-content .about-paragraph:first-child {
+  margin-top: 0;
 }
 
 .about-col-content .founders-row {
   justify-content: flex-start;
-  margin-top: 2rem;
+  margin-top: auto;
+  padding-top: 2rem;
+}
+
+.about-logo-bottom {
+  margin-top: auto;
+  padding-top: 2rem;
+  padding-bottom: 0.25rem;
+}
+
+.about-logo-bottom.desktop-logo {
+  display: flex;
+  align-items: flex-end;
+}
+
+.about-logo-bottom.mobile-logo {
+  display: none;
+}
+
+.about-logo-img {
+  height: clamp(38px, 4.2vw, 54px);
+  width: auto;
+  display: block;
+  object-fit: contain;
+  opacity: 0.96;
 }
 
 .about-grid.no-visuals {
@@ -1518,10 +1556,34 @@ body {
   .about-grid.editorial-split {
     grid-template-columns: 1fr;
     gap: 2.1rem;
+    align-items: start;
   }
 
   .about-col-title {
     position: static;
+    height: auto;
+    display: block;
+  }
+
+  .about-logo-bottom.desktop-logo {
+    display: none;
+  }
+
+  .about-logo-bottom.mobile-logo {
+    display: block;
+    margin-top: 1.6rem;
+    padding-top: 0;
+    text-align: center;
+  }
+
+  .about-logo-bottom.mobile-logo .about-logo-img {
+    margin: 0 auto;
+    height: 38px;
+  }
+
+  .about-col-content {
+    height: auto;
+    display: block;
   }
 
   .about-photo-main > img {
