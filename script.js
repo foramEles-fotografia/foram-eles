@@ -623,67 +623,76 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Dados dos Álbuns (Fotos de cada card)
+  // Dados dos Álbuns 100% reais (Projetos e ensaios realizados pela Foram Eles)
   const albumsData = [
     {
-      category: 'Retratos Corporativos',
-      title: 'Posicionamento & Naturalidade',
+      category: 'Harmonização Orofacial',
+      title: 'Dra. Joyce Menezes',
       photos: [
-        'assets/foto-socios.jpg',
-        'assets/foto-socios-2.jpg',
-        'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=1000&q=80',
-        'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=1000&q=80',
-        'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=1000&q=80'
+        'assets/albuns/joyce/foto-01.jpg',
+        'assets/albuns/joyce/foto-02.jpg',
+        'assets/albuns/joyce/foto-03.jpg',
+        'assets/albuns/joyce/foto-04.jpg',
+        'assets/albuns/joyce/foto-05.jpg',
+        'assets/albuns/joyce/foto-06.jpg',
+        'assets/albuns/joyce/foto-07.jpg',
+        'assets/albuns/joyce/foto-08.jpg',
+        'assets/albuns/joyce/foto-09.jpg',
+        'assets/albuns/joyce/foto-10.jpg',
+        'assets/albuns/joyce/foto-11.jpg'
       ]
     },
     {
-      category: 'Profissionais Trabalhando',
-      title: 'Rotina Executiva & Equipes',
+      category: 'Invisalign Doctor',
+      title: 'Dra. Izabela',
       photos: [
-        'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1000&q=80',
-        'https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=1000&q=80',
-        'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=1000&q=80',
-        'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=1000&q=80'
+        'assets/albuns/izabela/foto-03.jpg',
+        'assets/albuns/izabela/foto-01.jpg',
+        'assets/albuns/izabela/foto-02.jpg',
+        'assets/albuns/izabela/foto-04.jpg'
       ]
     },
     {
-      category: 'Audiovisual',
-      title: 'Storytelling de Marca',
+      category: 'Odontologia & Estética',
+      title: 'Dra. Jéssica Cardoso',
       photos: [
-        'https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=1000&q=80',
-        'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=1000&q=80',
-        'https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&w=1000&q=80',
-        'https://images.unsplash.com/photo-1542038784456-1ea8e935640e?auto=format&fit=crop&w=1000&q=80'
+        'assets/albuns/jessica/foto-01.jpg',
+        'assets/albuns/jessica/foto-02.jpg',
+        'assets/albuns/jessica/foto-03.jpg'
       ]
     },
     {
-      category: 'Profissionais Trabalhando',
-      title: 'Bastidores & Autenticidade',
+      category: 'Retratos & Atendimento',
+      title: 'Profissionais',
       photos: [
-        'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=1000&q=80',
-        'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1000&q=80',
-        'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=1000&q=80',
-        'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1000&q=80'
+        'assets/albuns/profissionais/foto-01.jpg',
+        'assets/albuns/profissionais/foto-02.jpg',
+        'assets/albuns/profissionais/foto-03.jpg',
+        'assets/albuns/profissionais/foto-04.jpg'
       ]
     },
     {
-      category: 'Retratos Corporativos',
-      title: 'Direção Executiva',
+      category: 'Estrutura, Espaços & Equipe',
+      title: 'Institucional',
       photos: [
-        'assets/foto-socios-2.jpg',
-        'assets/foto-socios.jpg',
-        'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=1000&q=80',
-        'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=1000&q=80'
+        'assets/albuns/institucional/foto-02.jpg',
+        'assets/albuns/institucional/foto-01.jpg',
+        'assets/albuns/institucional/foto-03.jpg',
+        'assets/albuns/institucional/foto-04.jpg'
       ]
     },
     {
-      category: 'Audiovisual & Set',
-      title: 'Captação de Alta Performance',
+      category: 'Texturas, Produtos & Essência',
+      title: 'Branding & Detalhes',
       photos: [
-        'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1000&q=80',
-        'https://images.unsplash.com/photo-1542038784456-1ea8e935640e?auto=format&fit=crop&w=1000&q=80',
-        'https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=1000&q=80',
-        'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=1000&q=80'
+        'assets/albuns/branding/foto-01.jpg',
+        'assets/albuns/branding/foto-02.jpg',
+        'assets/albuns/branding/foto-03.jpg',
+        'assets/albuns/branding/foto-04.jpg',
+        'assets/albuns/branding/foto-05.jpg',
+        'assets/albuns/branding/foto-06.jpg',
+        'assets/albuns/branding/foto-07.jpg',
+        'assets/albuns/branding/foto-08.jpg'
       ]
     }
   ];

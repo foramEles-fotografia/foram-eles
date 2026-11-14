@@ -752,11 +752,11 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--slate-800);
+  background: #ffffff;
   border-radius: var(--radius-md);
   overflow: hidden;
-  aspect-ratio: 16 / 10;
-  max-height: 58vh;
+  height: clamp(340px, 58vh, 600px);
+  max-height: 60vh;
   margin-bottom: 1.1rem;
   touch-action: pan-y;
 }
@@ -767,13 +767,18 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  background: #ffffff;
 }
 
 .album-main-img {
-  width: 100%;
-  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
   object-fit: contain;
   display: block;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px -8px rgba(18, 24, 38, 0.12);
 }
 
 .album-nav-btn {
@@ -783,16 +788,17 @@ body {
   width: 42px;
   height: 42px;
   border-radius: 50%;
-  border: none;
-  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(18, 24, 38, 0.10);
+  background: rgba(255, 255, 255, 0.94);
   color: var(--blue-primary);
   font-size: 1.05rem;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
-  transition: background-color 0.2s ease, color 0.2s ease;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.14);
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+  z-index: 5;
 }
 
 .album-nav-btn:hover {
@@ -1575,9 +1581,11 @@ body {
   }
 
   .album-viewer {
-    aspect-ratio: 4 / 3;
-    max-height: 48vh;
+    aspect-ratio: unset;
+    height: clamp(280px, 50vh, 460px);
+    max-height: 52vh;
     margin-bottom: 0.85rem;
+    background: #ffffff;
   }
 
   .album-nav-btn {
